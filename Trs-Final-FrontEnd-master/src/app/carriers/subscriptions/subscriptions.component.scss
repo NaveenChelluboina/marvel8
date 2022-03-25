@@ -1,0 +1,29 @@
+.h-500p {
+    min-height: 500px;
+}
+
+.example-header-image {
+    background-image: url('../../../assets/img/62894-package-icon.png');
+    background-size: cover;
+}
+
+.grey-background {
+    background: #e3e5e7;
+}
+
+.currentPlan-shadow {
+    -webkit-box-shadow: -1px 0px 19px -1px rgba(128, 124, 128, 0.53) !important;
+    -moz-box-shadow: -1px 0px 19px -1px rgba(128, 124, 128, 0.53) !important;
+    box-shadow: -1px 0px 19px -1px rgba(128, 124, 128, 0.53) !important;
+}
+
+.h-400 {
+    max-height: 430px;
+    overflow: auto;
+}
+
+th {
+    background-color: unset !important;
+    color: #212529;
+    font-weight: bold !important;
+}

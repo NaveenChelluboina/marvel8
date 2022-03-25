@@ -1,0 +1,81 @@
+.cdk-overlay-pane {
+    max-width: 200vw !important;
+    pointer-events: auto;
+    width: 929px !important;
+    height: auto;
+    position: static;
+}
+#myFileInput {
+    display:none;
+}
+
+.upload-icon {
+    padding-top: 5px;
+    padding-right: 25px!important;
+    vertical-align: text-bottom;
+}
+.inner-screen {
+    color: #246ade !important;
+    text-decoration: underline !important;
+    cursor: pointer;
+}
+.input-icon.right>i {
+    right:25px;
+    float: right;
+    
+    
+}
+.input-icon>i {
+    color: #ccc;
+    display: block;
+    position: absolute;
+    //margin: 11px 2px 4px 10px;
+    margin-top: 5px;
+    // margin-right: 2px;
+    margin-bottom: 4px;
+    margin-left: 10px;
+    z-index: 3;
+    width: 16px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.newMarginClass {
+    margin-top: 7px!important;
+}
+
+
+
+div.file {
+    position: relative;
+    overflow: hidden;
+}
+
+input.file {
+    position: absolute;
+    font-size: 50px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+
+.upload-icon {
+    padding-top: 5px;
+    padding-right: 30px!important;
+    vertical-align: text-bottom;
+}
+.upload {
+    margin-right: 10px;
+    height: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0px 16px !important;
+    
+}
+
+.btn-successs {
+    background: #229494!important;
+    border-color: #229494 !important;
+    color: #fff!important;
+}

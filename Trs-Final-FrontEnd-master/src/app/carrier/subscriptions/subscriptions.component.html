@@ -1,0 +1,124 @@
+<div fxLayout="row wrap" style="margin-bottom: 10px;margin-top: 5px;">
+    <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="w-100">
+        <div class="row col-sm-12" class="flex-p">
+            <div fxLayout="row" style="float: right !important;margin-right: 5px">
+                <div>
+                    <button mat-raised-button style="background-color: #37474f !important;color: white;" class="pull-right " (click)="filterToggle = !filterToggle">
+                        <mat-icon>filter_list</mat-icon> Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="filterToggle" class="row wrap " style="padding: 10px;">
+    <div class="col-sm-12">
+        <mat-card class="filter">
+            <mat-card-content>
+                <div class="row col-sm-12">
+                    
+                    <!-- <div class="col-lg-2">
+                        <mat-select color="primary" placeholder="-- Search by No.of Fleet --" multiple [formControl]="stateForm" class="form-control">
+                            <mat-option [value]="0" (click)="selectAll(ep, 'state')" #ep >All</mat-option>
+                            <mat-option *ngFor="let lead of state" (click)="selectOne(ep, 'state')" [value]="lead.state_id">{{lead.state_name}}</mat-option>
+                        </mat-select>
+                    </div> -->
+                    <div class="col-sm-4">
+                        <div class="col-sm-4 newMarginClass">
+                            Package  Level: 
+                        </div>
+                        <div class="col-sm-8">
+                            <mat-select placeholder="--Search by Package--" class="form-control" [(ngModel)]="status_filter">
+                                <mat-option *ngFor="let option of packageLevels" [value]="option.package_id">{{option.package_level}}</mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="col-sm-4 newMarginClass">
+                            Transaction Ref: 
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" placeholder="Enter Transaction Ref" class="form-control" [formControl]="TransRef">
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-2">
+                        <mat-select color="primary" placeholder="-- Search by Package Level --" multiple [formControl]="cityForm" class="form-control">
+                            <mat-option [value]="0" (click)="selectAll(et, 'city')" #et >All</mat-option>
+                            <mat-option *ngFor="let lead of city" (click)="selectOne(et, 'city')" [value]="lead.city_id">{{lead.city_name}}</mat-option>
+                        </mat-select>
+                    </div> -->
+                    <!-- <div class="col-sm-2">
+                        <input type="text" class="form-control" placeholder="Search by Transaction Ref">
+                    </div> -->
+                    <!-- <div class="col-lg-2">
+                        <mat-select color="primary" placeholder="-- Search by Status --" multiple [formControl]="statu" class="form-control">
+                            <mat-option [value]="0" (click)="selectAll(es, 'status')" #es >All</mat-option>
+                            <mat-option *ngFor="let lead of status" (click)="selectOne(es, 'status')" [value]="lead.status_id">{{lead.status_name}}</mat-option>
+                        </mat-select>
+                    </div> -->
+                    <!-- <div class="col-lg-1">
+                        <button type="button" class="btn btn-success  pull-right">Search</button>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-left: -18px;">
+                        <button class="btn filter-hover" style="background-color:#37474f; color:#fff !important" (click)="clearFilters()">Clear</button>
+                    </div> -->
+                    <div class="col-lg-1" style="margin-left:195px!important;margin-top: -5px;">
+                        <button mat-raised-button (click)="filterSearch()" class="pull-right btn-primary"><mat-icon>youtube_searched_for</mat-icon> Search</button>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-left: -18px;margin-top: -5px;">
+                        <button mat-raised-button style="background-color:#37474f; color:#fff !important" (click)="clearFilters()"><mat-icon>settings_backup_restore</mat-icon> Clear</button>
+                    </div>
+                    <a (click)="filterToggle = !filterToggle" class="pull-right" style="font-size: 25px; cursor: pointer; margin-left: 5px;">
+                        <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    
+</div>
+<div fxLayout="row wrap">
+    <div class="w-100" style="margin-left: 10px;margin-right: 10px;">
+        <table class="table table-bordered table-responsive-md btn-table table-hover">
+            <thead class="tbl-head">
+                <tr>
+                    <th (click)="ClientClicked(clientAssending = !clientAssending)" style="cursor: pointer;">Client Name</th>
+                    <th (click)="NumberFleetsClicked(numberAssending = !numberAssending)" style="cursor: pointer;" class="text-center"># of Assets</th>
+                    <th (click)="PackageLevelClicked(packageAssending = !packageAssending)" style="cursor: pointer;" class="text-center">Package Level</th>
+                    <th (click)="MonthlyClicked(monthAssending = !monthAssending)" style="cursor: pointer;" class="text-center">Amount</th>
+                    <th (click)="ValidFromClicked(validFromAssending = !validFromAssending)" style="cursor: pointer;">Valid From</th>
+                    <th (click)="ValidToClicked(validToAssending = !validToAssending)" style="cursor: pointer;">Valid To</th>
+                    <th (click)="TransactionClicked(transactionAssending = !transactionAssending)" style="cursor: pointer;">Transaction Ref</th>
+                    <th (click)="PaymentClicked(paymentAssending = !paymentAssending)" style="cursor: pointer;">Payment Date</th>
+                    <th (click)="SubscriptionClicked(subscriptionAssending = !subscriptionAssending)" style="cursor: pointer;">Subscription End Date</th>
+                    <th (click)="ActiveClicked(actionAssending = !actionAssending)" style="cursor: pointer;" class="text-center">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="showEmpty"><td colspan="10">No records found</td></tr>
+                <tr *ngFor="let item of subscriptions">
+                    <td>{{item.carrier_name}}</td>
+                    <td class="text-center">{{item.trs_tbl_package.number_of_fleets}}</td>
+                    <td class="text-center">{{item.trs_tbl_package.package_level}}</td>
+                    <td class="text-center">{{item.trs_tbl_package.monthly_price}}</td>
+                    <td *ngIf="item.start_date">{{item.start_date}}</td>
+                    <td *ngIf="!item.start_date">N/A</td>
+                    <td *ngIf="item.end_date">{{item.end_date}}</td>
+                    <td *ngIf="!item.end_date">N/A</td>
+                    <td>{{item.invoice_number}}</td>
+                    <td *ngIf="item.start_date">{{item.start_date}}</td>
+                    <td *ngIf="!item.start_date">N/A</td>
+                    <td *ngIf="item.subscription_end_date">{{item.subscription_end_date}}</td>
+                    <td *ngIf="!item.subscription_end_date">N/A</td>
+                    <td class="text-center" style="text-align:center!important">
+                        <span *ngIf="!item.is_active" style="color:red">Inactive</span>
+                        <span *ngIf="item.is_active" style="color:#1c4f86;">Active</span>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+        <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)" showFirstLastButtons></mat-paginator>
+    </div>
+</div>

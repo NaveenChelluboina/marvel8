@@ -1,0 +1,166 @@
+<div fxLayout="row wrap" #resizedDiv>
+  <div class="flex-p w-100">
+    <h1 style="text-align: center!important;color: #c3c3c3;font-size: 40px;">PermiShare</h1>
+    <h3 style="text-align: center!important;">Welcome to PermiShare! To complete your registration, please fill in your company information below and click the “Pay” button. You will be prompted to add your payment details and once processed you will receive an email from PermiShare to set a password and access your portal.</h3>
+  </div>
+</div>
+<div class="col-sm-12" style="background-color: white;margin-top: 10px !important;padding: 0px !important">
+  <div class="col-sm-12">
+    <div fxLayout="row" fxLayoutAlign="center">
+      <div class="col-sm-6" style="margin-top: 16px !important;">
+        <img src="../../../../assets/img/landing/loginPage.png" alt="" style="width:50%;margin-top: 47px;margin-left: 162px;">
+      </div>
+      <div class="col-sm-6" >
+        <form class="form-horizontal" novalidate [formGroup]="paymentDetails">
+          <div class="col-sm-12 dialog-hidden">
+            <div class="form-group text-center">
+              <h2 style="margin-left: 75px;">Registration</h2>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4 add-member-label">Company Legal Name: </label>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <input type="text" class="form-control"  placeholder="Enter Company Legal Name" formControlName="companylegalName" required>
+                <div *ngIf="!companylegalName.valid && (companylegalName.dirty || companylegalName.touched)" class="error-text">
+                  <div *ngIf="companylegalName.errors.required">
+                    Company Legal Name is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4 add-member-label">Client Name: </label>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <input type="text" class="form-control"  placeholder="Enter Client Name" formControlName="clientName" required>
+                <div *ngIf="!clientName.valid && (clientName.dirty || clientName.touched)" class="error-text">
+                  <div *ngIf="clientName.errors.required">
+                    Client Name is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4 add-member-label">Email ID: </label>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <input type="text" class="form-control" email placeholder="Enter Email ID" formControlName="emailID" required>
+                <div *ngIf="!emailID.valid && (emailID.dirty || emailID.touched)" class="error-text">
+                  <div *ngIf="emailID.errors.required">
+                    Email ID is required
+                  </div>
+                  <div *ngIf="emailID.errors.email">
+                    Enter a valid email
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4 add-member-label">Phone: </label>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <input type="text" class="form-control" placeholder="Enter Phone" formControlName="phone"required>
+                <div *ngIf="!phone.valid && (phone.dirty || phone.touched)" class="error-text">
+                  <div *ngIf="phone.errors.required">
+                    Phone Number is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4 add-member-label">Address: </label>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <input type="text" class="form-control"  placeholder="Enter Address" formControlName="address" required>
+                <div *ngIf="!address.valid && (address.dirty || address.touched)" class="error-text">
+                  <div *ngIf="address.errors.required">
+                    Address is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4 add-member-label">Country: </label>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <mat-select class='form-control' required  formControlName="country" placeholder="--Select Country--" (ngModelChange)="getStatesDropdown(paymentDetails.value.country)">
+                  <mat-option [value]="38">Canada</mat-option>
+                  <mat-option [value]="231">USA</mat-option>
+                </mat-select>
+                <div *ngIf="!country.valid && (country.dirty || country.touched)" class="error-text">
+                  <div *ngIf="country.errors.required">
+                    Country is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4 add-member-label">State: </label>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <mat-select formControlName="state" placeholder="--Select State--" class="form-control" required>
+                  <mat-option *ngFor="let option of states" [value]="option.state_id">{{option.state_name}}</mat-option>
+                </mat-select>
+                <div *ngIf="!state.valid && (state.dirty || state.touched)" class="error-text">
+                  <div *ngIf="state.errors.required">
+                    State is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4 add-member-label">City: </label>
+              <div class="col-lg-6 col-md-8 col-sm-6 col-xs-6">
+                <input type="text" class="form-control"  placeholder="Enter City" formControlName="city"  required>
+                <div *ngIf="!city.valid && (city.dirty || city.touched)" class="error-text">
+                  <div *ngIf="city.errors.required">
+                    City is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4 add-member-label">Zip: </label>
+              <div class="col-lg-6 col-md-8 col-sm-6 col-xs-6">
+                <input type="text" class="form-control"  placeholder="Enter Zip" formControlName="zip" maxlength="10" required>
+                <div *ngIf="!zip.valid && (zip.dirty || zip.touched)" class="error-text">
+                  <div *ngIf="zip.errors.required">
+                    Zip is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Coupon Code(Optional): </label>
+              <div class="col-lg-6 col-md-8 col-sm-6 col-xs-6">
+                <input type="text" class="form-control"  placeholder="Enter Coupon Code" formControlName="coupon" maxlength="20">
+                <!-- <div *ngIf="!zip.valid && (zip.dirty || zip.touched)" class="error-text">
+                  <div *ngIf="zip.errors.required">
+                    Zip is required
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-4">
+                <mat-checkbox formControlName="termsAndConditions">I agree to the <a (click)="openTermsAndConditionsModalPopup('add')" style="color:#0987e8d1">Terms of Service</a></mat-checkbox>
+              </div>
+              <!-- <div class="col-lg-6 col-md-8 col-sm-6 col-xs-6">
+                <input type="text" class="form-control"  placeholder="Enter Coupon Code" formControlName="coupon" maxlength="20">
+                <div *ngIf="!zip.valid && (zip.dirty || zip.touched)" class="error-text">
+                  <div *ngIf="zip.errors.required">
+                    Zip is required
+                  </div>
+                </div>
+              </div> -->
+            </div>
+            <!-- <div class="col-sm-12" style="left: 270px;">
+              <button mat-raised-button color="primary" class="pull-center mat-elevation-z12 box-button login button-default" style="top:15px;margin-right: 10px" type="submit"><a href="https://www.permishare.com/pricing/" style="color:white">Cancel</a></button>
+              <button mat-raised-button *ngIf="!accesToken" [ngClass]="(!paymentDetails.valid) ? '':'btn-primary'" [disabled]="(!paymentDetails.valid)"  style="top:15px;margin-bottom:20px;width: 80px !important;" (click)="payhere(paymentDetails.value.coupon)">PAY</button>
+              <button mat-raised-button *ngIf="accesToken" class="btn-primary"  style="top:15px;margin-bottom:20px;width: 80px !important;" (click)="payhere(paymentDetails.value.coupon)">PAY</button>
+            </div> -->
+            
+            <div class="col-sm-12" style="left: 270px;">
+              <button mat-raised-button color="primary" class="pull-center mat-elevation-z12 box-button login button-default" style="top:15px;margin-right: 10px" type="submit"><a href="https://www.permishare.com/pricing/" style="color:white">Cancel</a></button>
+              <button mat-raised-button *ngIf="!accesToken" [ngClass]="(!paymentDetails.valid || !paymentDetails.value.termsAndConditions) ? '':'btn-primary'" [disabled]="(!paymentDetails.valid || !paymentDetails.value.termsAndConditions)"  style="top:15px;margin-bottom:20px;width: 80px !important;" (click)="pay(amountToPay)">PAY</button>
+              <button mat-raised-button *ngIf="accesToken" [disabled]="(!paymentDetails.valid || !paymentDetails.value.termsAndConditions)" [ngClass]="(!paymentDetails.valid || !paymentDetails.value.termsAndConditions) ? '':'btn-primary'"  style="top:15px;margin-bottom:20px;width: 80px !important;" (click)="pay(amountToPay)">PAY</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,129 @@
+<div fxLayout="row wrap" #resizedDiv>
+  <div class="flex-p w-100">
+    
+    <div class="row" style="margin-bottom:14px;">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="w-100 flex-p">
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="w-100 flex-p">
+          <button *ngIf="canCreate" mat-raised-button class="pull-right btn-primary" (click)="openPermissionDialog(null)">
+            <mat-icon>fingerprint</mat-icon> Add Role
+          </button>
+          <button mat-raised-button color="primary" style="color: white !important;" class="pull-right filter-hover margin-right-10" (click)="filterToggle = !filterToggle">
+            <mat-icon>filter_list</mat-icon> Filter
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p w-100" *ngIf="filterToggle">
+        <mat-card class="filter">
+          <mat-card-content>
+            <div class="row col-sm-12">
+              <div class="col-sm-4">
+                <div class="col-sm-2 newMarginClass">
+                  Role: 
+                </div>
+                <div class="col-sm-8">
+                  <input type="text" placeholder="Enter Role" class="form-control" [formControl]="userControl">
+                </div>
+              </div>
+              <div class="col-sm-4" style="margin-left:-65px!important">
+                <div class="col-sm-2 newMarginClass">
+                  Status: 
+                </div>
+                <div class="col-sm-8">
+                  <mat-select placeholder="--Search by Status--" class="form-control" [(ngModel)]="status_filter">
+                    <mat-option *ngFor="let option of status" [value]="option.id">{{option.value}}</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <div class="col-lg-1" style="margin-left:-50px!important">
+                <button type="button" class="btn btn-success  pull-right" (click)="filterSearch()">Search</button>
+              </div>
+              <div class="col-lg-1">
+                <button type="button" class="btn filter-hover" style="background-color:#37474f; color:#fff !important" (click)="clearFilters()">Clear</button>
+              </div>
+            </div>
+            
+            
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    
+    <div fxLayout="row wrap">
+      <div class="table-responsive">
+        <table id="example2" class="table table-bordered table-hover">
+          <thead class="tbl-head">
+            <tr class="tr-grid-header">
+              <th (click)="RoleClicked(roleAssending = !roleAssending)" style="cursor: pointer;">Role</th>
+              <th class="text-center">Permissions</th>
+              <!-- <th>Users Assigned</th> -->
+              <th (click)="ActiveClicked(statusAssending = !statusAssending)" style="cursor: pointer;" class="text-center">Status</th>
+              <th class="text-center">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="showEmpty"><td colspan="4" class="showEmptyClass">No records found</td></tr>
+            <tr *ngFor="let item of roles">
+              <td>{{item.role_name}}</td>
+              <td class="text-center"><a routerLink="rolepermissions/{{item.role_id}}">{{item.permissions}}</a></td>
+              <!-- <td>{{item.permissions}}</td> -->
+              <!-- <td>5</td> -->
+              <!-- <td>{{item.type}}</td> -->
+              <td *ngIf="canUpdate" class="pad-left inner-screen text-center" style="cursor:pointer">
+                <a mwlConfirmationPopover
+                [popoverTitle]="popoverStatusTitle" 
+                [popoverMessage]="popoverStatusMessage"
+                placement="left"
+                (confirm)="updatePermissionsLevel(item.role_id,!item.is_active,'active')"
+                (cancel)="cancelClicked = true"   [appendToBody]="true">
+                  <span *ngIf="!item.is_active" style="color:red">Inactive</span>
+                  <span *ngIf="item.is_active" style="color:#1c4f86;">Active</span>
+                </a>
+              </td>
+              <td *ngIf="!canUpdate" class="pad-left inner-screen text-center" style="cursor:pointer">
+                <a>
+                  <span *ngIf="!item.is_active" style="color:red">Inactive</span>
+                  <span *ngIf="item.is_active" style="color:#1c4f86;">Active</span>
+                </a>
+              </td>
+              <!-- <td *ngIf="!canUpdate" class="pad-left inner-screen" style="cursor:pointer">
+                <a>
+                  <span *ngIf="!item.is_active" style="color:red">Inactive</span>
+                  <span *ngIf="item.is_active" style="color:#1c4f86;">Active</span>
+                </a>
+              </td> -->
+              <td *ngIf="canDelete" class="text-center">
+                <!-- <a matTooltip="Edit Permission" style="margin-right: 10px; cursor: pointer;font-size:16px!important;color:#0987e8d1" (click)="openPermissionDialog(item)">
+                  <i class="fa fa-edit"></i>
+                </a> -->
+                <a *ngIf="canDelete">
+                    <i *ngIf="item.is_block" style="cursor: not-allowed !important;" matTooltip="You don't have permission to delete." class="fa fa-trash"></i>
+                    <i *ngIf="!item.is_block" style="cursor: pointer;" matTooltip="Delete role permissions" (click)="openDeleteDialog(item)" class="fa fa-trash red"></i>
+                </a>
+            </td>
+            <td *ngIf="!canDelete">-</td>
+            <!-- <td *ngIf="!canDelete">
+              <a matTooltip="Edit Permission" style="margin-right: 10px; cursor: pointer;font-size:16px!important;color:#0987e8d1" (click)="openPermissionDialog(item)">
+                <i class="fa fa-edit"></i>
+              </a>
+              -
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+      <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</div>
+</div>
+
+<div *ngIf="!tableList" fxLayout="column" fxLayoutAlign="center center" class="campaign-spinner">
+  <mat-spinner color="primary"></mat-spinner>
+</div>
+

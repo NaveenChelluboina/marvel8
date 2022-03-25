@@ -1,0 +1,27 @@
+<div class="NewHeader">
+  <h1 mat-dialog-title>Grid View Configuration </h1>
+</div> 
+<p>Please select the required columns in the grid, to view grid with specific columns</p>
+<div mat-dialog-content style="overflow:hidden!important;">
+  <form class="form-horizontal" novalidate [formGroup]="gridColumnForm" style="margin-top:10px">
+    <mat-checkbox class="col-sm-4" formControlName="assetId">Assed ID</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="fleet">Fleet</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="assetType">Asset Type</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="year">Year</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="make">Make</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="model">Model</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="plate">Plate #</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="plateJurisdiction">Plate Jurisdiction</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="vin">VIN #</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="country">Country</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="registeredGross">Registered Gross Vehicle Weight</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="units">Units</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="axels"># of Axles</mat-checkbox>
+    <mat-checkbox class="col-sm-4" formControlName="documents">Documents</mat-checkbox>
+  </form>
+</div>
+
+<mat-dialog-actions align="end">
+  <button *ngIf="canUpdate" mat-raised-button class="btn-primary" (click)="saveGridColumns()"><mat-icon>send</mat-icon>&nbsp;Configure</button>
+  <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+</mat-dialog-actions>

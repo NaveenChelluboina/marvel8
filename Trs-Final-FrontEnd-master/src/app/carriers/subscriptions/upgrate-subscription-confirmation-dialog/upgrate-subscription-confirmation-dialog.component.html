@@ -1,0 +1,19 @@
+<div class="cust-red">
+  <h3 style="font-weight: 300; margin-bottom: 5px !important;margin-top: 5px;" mat-dialog-title>Upgrade Plan Confiramtion</h3>
+</div>
+
+<div mat-dialog-content>
+  <div class="form-group">
+    <p>By proceeding you acknowledge that you will be charged the new package level price on your next renewal date</p>
+  </div>
+</div>
+
+<mat-dialog-actions align="center" style="padding-top: 17px !important;">
+  <button mat-raised-button class="btn-primary" (click)="saveInfo()">
+    <mat-icon>rotate_right</mat-icon><span >&nbsp;Send</span>
+  </button>
+  <button mat-raised-button class="CancelClass" (click)="close()" style="cursor: pointer;"><mat-icon>cancel</mat-icon>&nbsp;
+    <span>Cancel</span>
+  </button>
+  
+</mat-dialog-actions>

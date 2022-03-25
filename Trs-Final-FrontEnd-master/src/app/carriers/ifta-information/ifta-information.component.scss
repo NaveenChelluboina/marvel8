@@ -1,0 +1,178 @@
+.ifta-block {
+    padding: 20px 0px !important;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding-top: 0px !important;
+}
+
+.ifta-tabs-block {
+    border: 1px solid #ddd;
+    margin-top: 12px;
+    padding: 0px;
+}
+
+
+::ng-deep .nav-pills>li.active>a,
+::ng-deep .nav-pills>li.active>a:focus,
+::ng-deep .nav-pills>li.active>a:hover {
+    color: #fff;
+    background-color: #50636d !important;
+}
+
+::ng-deep .nav-stacked>li {
+    float: none;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.v-align-middle {
+    vertical-align: middle !important;
+}
+
+
+.ul {
+    list-style: none;
+  }
+  
+  //   .btn-default {
+  //     border-left-width: 0px!important;
+  //       margin-left: 0px!important;
+  //       padding-left: 70px!important;
+  //       padding-right: 70px!important;
+  //       padding-top: 10px!important;
+  //       padding-bottom: 10px!important;
+  //       border-right-width: 0px!important;
+  //       border-bottom-width: 0px!important;
+  //       border-top-width: 0px!important;
+  //   }
+  
+  .ui-inputgroup {
+    margin-bottom: 10px;
+  
+  }
+  .no-padding {
+    padding: 0px !important;
+  }
+  
+  .row {
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+  
+ 
+.inner-screen {
+    color: #246ade !important;
+    text-decoration: underline !important;
+    cursor: pointer;
+}
+
+
+  
+  
+  .ul li input.active {
+    color: #fff;
+    background-color: #50636d !important;
+    border: 1px solid #50636d;
+    min-width: 174px;
+    padding: 12px!important;
+  }
+  
+  .btn {
+    color: #333;
+      background-color: #fff;
+      border-color: #ccc;
+  }
+  .list-group-item {
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .mat-drawer {
+    border-right: solid 0px rgba(0, 0, 0, 0.12) !important;
+  }
+
+  .newClasssss {
+    margin-top: 7px!important;
+  }
+  .cdk-overlay-pane {
+    max-width: 200vw !important;
+    pointer-events: auto;
+    width: 929px !important;
+    height: auto;
+    position: static;
+}
+#myFileInput {
+    display:none;
+}
+
+.upload-icon {
+    padding-top: 5px;
+    padding-right: 25px!important;
+    vertical-align: text-bottom;
+}
+.inner-screen {
+    color: #246ade !important;
+    text-decoration: underline !important;
+    cursor: pointer;
+}
+.input-icon.right>i {
+    right:25px;
+    float: right;
+    
+    
+}
+.input-icon>i {
+    color: #ccc;
+    display: block;
+    position: absolute;
+    //margin: 11px 2px 4px 10px;
+    margin-top: 5px;
+    // margin-right: 2px;
+    margin-bottom: 4px;
+    margin-left: 10px;
+    z-index: 3;
+    width: 16px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.newMarginClass {
+    margin-top: 7px!important;
+}
+
+
+
+div.file {
+    position: relative;
+    overflow: hidden;
+}
+
+input.file {
+    position: absolute;
+    font-size: 50px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+
+.upload-icon {
+    padding-top: 5px;
+    padding-right: 30px!important;
+    vertical-align: text-bottom;
+}
+.upload {
+    margin-right: 10px;
+    height: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0px 16px !important;
+    
+}
+
+.btn-successs {
+    background: #229494!important;
+    border-color: #229494 !important;
+    color: #fff!important;
+}

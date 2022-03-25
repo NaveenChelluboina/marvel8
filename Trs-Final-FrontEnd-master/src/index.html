@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Digibook</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    
+    <link rel="icon" type="image/x-icon" href="./assets/img/landing/tab.png">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <app-root>
+        <style>
+            .load {
+                margin-top: 25%;
+                text-align: center;
+            }
+            
+            .spinner>div {
+                width: 18px;
+                height: 18px;
+                background-color: #333;
+                border-radius: 100%;
+                display: inline-block;
+                -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+                animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+            }
+            
+            .spinner .bounce1 {
+                -webkit-animation-delay: -0.32s;
+                animation-delay: -0.32s;
+            }
+            
+            .spinner .bounce2 {
+                -webkit-animation-delay: -0.16s;
+                animation-delay: -0.16s;
+            }
+            
+            @-webkit-keyframes sk-bouncedelay {
+                
+                0%,
+                80%,
+                100% {
+                    -webkit-transform: scale(0)
+                }
+                
+                40% {
+                    -webkit-transform: scale(1.0)
+                }
+            }
+            
+            @keyframes sk-bouncedelay {
+                
+                0%,
+                80%,
+                100% {
+                    -webkit-transform: scale(0);
+                    transform: scale(0);
+                }
+                
+                40% {
+                    -webkit-transform: scale(1.0);
+                    transform: scale(1.0);
+                }
+            }
+            
+        </style>
+        <div class="container text-center">
+            <div class="m-auto h-100">
+                <div class="load">
+                    <div class="spinner">
+                        <div class="bounce1"></div>
+                        <div class="bounce2"></div>
+                        <div class="bounce3"></div>
+                    </div>
+                    <h3 class="mt-3">Checking your browser before accessing permishare.com</h3>
+                    <h5>This process is automatic. Your browser will redirect to your requested content shortly</h5>
+                    <h5>Please allow upto 5 seconds...</h5><br>
+                    <h6 style="color:blue">Owner : PermiShare</h6>
+                </div>
+            </div>
+        </div> 
+    </app-root>
+    <script>
+        function openModal(event) {
+            document.getElementById("mod2").className = "modal fade in show";
+        }
+        
+        function openPropModal(event) {
+            document.getElementById("mod1").className = "modal fade in show";
+        }
+        
+        function openPermissionModal(event) {
+            document.getElementById("modal").className = "modal fade in show";
+        }
+        
+        function openOppModal(event) {
+            document.getElementById("mod2").className = "modal fade in show";
+        }
+        
+        
+        function saveModal(idname) {
+            document.getElementById("" + idname).className = "modal fade";
+        }
+        
+        function closeModal(idname) {
+            document.getElementById("" + idname).className = "modal fade";
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQDn2o5lkzBI4Sc09UUNiHPtNqlxQTYeA"></script>
+    <!-- <script src="https://js.stripe.com/v3/"></script> -->
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnpPKdUzr7M5jRm_dxM5w4dcQ_sBQ9P_c"></script> -->
+</body>
+
+</html>

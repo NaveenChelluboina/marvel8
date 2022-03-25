@@ -1,0 +1,364 @@
+<!--This page is used to add or edit leads-->
+<!-- <button class="close" style ="background-color: white !important;" [mat-dialog-close]="true"><mat-icon>close</mat-icon></button> -->
+<div class="NewHeader">
+    <h1 mat-dialog-title>
+        <span *ngIf="!asset" class="title-left">Add</span>
+        <span *ngIf="asset" class="title-left">Update</span> Asset
+    </h1>
+</div> 
+<mat-horizontal-stepper #stepper>
+    <mat-step>
+        <div mat-dialog-content>
+            <form class="form-horizontal" novalidate [formGroup]="assetsDetailsForm">
+                <ng-template matStepLabel>Asset Detail</ng-template>
+                <div class="form-group">
+                        <label class="control-label col-sm-4 add-member-label">Asset ID:&nbsp;</label>
+                        <div class="col-sm-8">
+                            <input type="text" maxlength="25" class="form-control" placeholder="Enter Asset ID" formControlName="assetId" required>
+                            <div *ngIf="!assetId.valid && (assetId.dirty || assetId.touched)" class="error-text">
+                                <div *ngIf="assetId.errors.required">
+                                    Asset Id is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                <div class="form-group">
+                    <label class="control-label col-sm-4 add-member-label">Fleet Name:&nbsp;</label>
+                    <div class="col-sm-8">
+                        <mat-select color="primary" placeholder="-- Select Fleet --"  formControlName="fleetName" class="form-control" required>
+                            <mat-option *ngFor="let fleet of fleets" [value]="fleet.fleet_id">{{fleet.fleet_name}}</mat-option>
+                        </mat-select>
+                        <div *ngIf="!fleetName.valid && (fleetName.dirty || fleetName.touched)" class="error-text">
+                            <div *ngIf="year.errors.required">
+                                Fleet Name is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    <label class="control-label col-sm-4 add-member-label">Asset Type:&nbsp;</label>
+                    <div class="col-sm-8">
+                        <mat-select color="primary" placeholder="-- Select Asset Type --" (selectionChange)='firstDropDownChanged($event.value)' formControlName="assestType" class="form-control" required>
+                            <mat-option *ngFor="let asset of assets" [value]="asset.asset_type_id">{{asset.asset_name}}</mat-option>
+                        </mat-select>
+                        <div *ngIf="!assestType.valid && (assestType.dirty || assestType.touched)" class="error-text">
+                            <div *ngIf="assestType.errors.required">
+                                Asset Type is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4 add-member-label">Year:&nbsp;</label>
+                    <div class="col-sm-8">
+                        <mat-select color="primary" placeholder="-- Select Year --"  formControlName="year" class="form-control" required>
+                            <mat-option *ngFor="let lead of years" [value]="lead.year_id">{{lead.year_name}}</mat-option>
+                        </mat-select>
+                        <div *ngIf="!year.valid && (year.dirty || year.touched)" class="error-text">
+                            <div *ngIf="year.errors.required">
+                                Year is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4 add-member-label">Make:&nbsp;</label>
+                    <div class="col-sm-8">
+                        <mat-select color="primary" placeholder="-- Select Make --"  formControlName="make" class="form-control" required>
+                            <mat-option *ngFor="let make of makeVar" [value]="make.asset_make_id">{{make.asset_make_name}}</mat-option>
+                        </mat-select>
+                        <div *ngIf="!make.valid && (make.dirty || make.touched)" class="error-text">
+                            <div *ngIf="make.errors.required">
+                                Make is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4 add-member-label">Model:&nbsp;</label>
+                    <div class="col-sm-8">
+                        <input type="text" maxlength="15" class="form-control" formControlName="model" placeholder="Enter Model" required>
+                        <div *ngIf="!model.valid && (model.dirty || model.touched)" class="error-text">
+                            <div *ngIf="model.errors.required">
+                                Model is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4 add-member-label">Plate #:&nbsp;</label>
+                    <div class="col-sm-8">
+                        <input type="text" maxlength="10" class="form-control" formControlName="Plate" placeholder="Enter Plate #" required>
+                        <div *ngIf="!Plate.valid && (Plate.dirty || Plate.touched)" class="error-text">
+                            <div *ngIf="Plate.errors.required">
+                                Plate # is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4 add-member-label">Plate Jurisdiction:&nbsp;</label>
+                    <div class="col-sm-8">
+                        <mat-select color="primary" placeholder="-- Select Plate Jurisdiction --"  formControlName="jurisdiction" class="form-control" required>
+                            <mat-option *ngFor="let plate of statesForCanadaAndUSa" [value]="plate.state_id">{{plate.state_name}}</mat-option>
+                        </mat-select>
+                        <div *ngIf="!jurisdiction.valid && (jurisdiction.dirty || jurisdiction.touched)" class="error-text">
+                            <div *ngIf="jurisdiction.errors.required">
+                                Plate Jurisdiction is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <mat-dialog-actions class="col-sm-12" align="end">
+            <button mat-raised-button [disabled]="!assetsDetailsForm.valid" matStepperNext [ngClass]="!assetsDetailsForm.valid ? '' : 'btn-primary'" ><mat-icon>arrow_forward</mat-icon>&nbsp;Proceed</button>
+            <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+        </mat-dialog-actions>
+        
+    </mat-step>
+    <mat-step>
+        <div mat-dialog-content>
+            <form class="form-horizontal" novalidate [formGroup]="assetDetailsContactForm">
+                <ng-template matStepLabel>Asset Details Cont.</ng-template>
+                <div class="form-group">
+                    <label class="control-label col-sm-4 add-member-label">VIN #:&nbsp;</label>
+                    <div class="col-sm-8">
+                        <input type="text" maxlength="17" class="form-control" formControlName="vin"  placeholder="Enter VIN #" required>
+                        <div *ngIf="!vin.valid && (vin.dirty || vin.touched)" class="error-text">
+                            <div *ngIf="vin.errors.required">
+                                Vin # is required
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="form-group mrg-btm-4">
+                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="Country" style="padding: 0px;">Country:&nbsp;</label>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"> 
+                        <mat-radio-group  id="Country" name="Country" formControlName="Country">
+                            <mat-radio-button  value="38" class="margin margins" checked>Canada</mat-radio-button>
+                            <mat-radio-button  value="231" class="margins">USA</mat-radio-button>
+                        </mat-radio-group>
+                        <div *ngIf="!Country.valid && (Country.dirty || Country.touched)" class="error-text">
+                            <div *ngIf="Country.errors.required">
+                                Country  is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4 add-member-label">Registered Gross Vehicle Weight:&nbsp;</label>
+                    <div class="col-sm-8">
+                        <input type="text" maxlength="12" class="form-control" formControlName="Weight" (keypress)="onlyNumbers($event)" placeholder="Enter Registered Gross Vehicle Weight" required>
+                        <div *ngIf="!Weight.valid && (Weight.dirty || Weight.touched)" class="error-text">
+                            <div *ngIf="Weight.errors.required">
+                                Registered Gross Vehicle Weight is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4 ">Units:&nbsp;</label>
+                    <div class="col-sm-8">
+                        <input *ngIf="assetDetailsContactForm.value.Country == 38" type="text"  placeholder="Kgs" class="form-control" disabled>
+                        <input *ngIf="assetDetailsContactForm.value.Country == 231" type="text"  placeholder="Lbs" class="form-control" disabled>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label col-sm-4 add-member-label"># of Axles:&nbsp;</label>
+                    <div class="col-sm-8">
+                        <input type="text" maxlength="2" class="form-control" placeholder="Enter # of Axles" (keypress)="onlyNumbers($event)" formControlName="Axles" required>
+                        <div *ngIf="!Axles.valid && (Axles.dirty || Axles.touched)" class="error-text">
+                            <div *ngIf="Axles.errors.required">
+                                # of Axles is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label col-sm-4 add-member-label">Active Date:&nbsp;</label>
+                    <div class="col-sm-8">
+                            <div class="input-icon right"> 
+                                <i class="fa fa-calendar" [owlDateTimeTrigger]="dt6"></i>
+                                <input class="form-control"  formControlName="startDate" class="form-control" placeholder="MM/DD/YYYY" [owlDateTimeTrigger]="dt6" [owlDateTime]="dt6" name="dt6">
+                                <owl-date-time [pickerType]="'calendar'" #dt6></owl-date-time>
+                            </div>
+                            <div *ngIf="!startDate.valid && (startDate.dirty || startDate.touched)" class="error-text">
+                              <div *ngIf="startDate.errors.required">
+                                Active Date is required
+                              </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4">Inactive Date:&nbsp;</label>
+                    <div class="col-sm-8">
+                            <div class="input-icon right"> 
+                                <i class="fa fa-calendar" [owlDateTimeTrigger]="dt5"></i>
+                                <input class="form-control"  formControlName="inactiveDate" class="form-control" placeholder="MM/DD/YYYY"  [owlDateTimeTrigger]="dt5" [owlDateTime]="dt5" name="dt5">
+                                <owl-date-time [pickerType]="'calendar'" #dt5></owl-date-time>
+                            </div>
+                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="pwd">Comments:&nbsp;</label>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <textarea rows="2" type="text" maxlength="100" class="form-control txtarea" placeholder="Write Comments" formControlName="comments"  style="height:60px !important;"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+       
+        <mat-dialog-actions class="col-sm-12" align="end">
+            <button mat-raised-button class="btn-primary" matStepperPrevious><mat-icon>arrow_back</mat-icon>&nbsp;Back</button>
+            <button mat-raised-button [disabled]="!assetDetailsContactForm.valid" (click)="checkDates()" [ngClass]="!assetDetailsContactForm.valid ? '' : 'btn-primary'" ><mat-icon>arrow_forward</mat-icon>&nbsp;Proceed</button>
+            <!-- <button mat-raised-button [disabled]="!assetDetailsContactForm.valid" [ngClass]="!assetDetailsContactForm.valid ? '' : 'btn-primary'" matStepperNext><mat-icon>arrow_forward</mat-icon>&nbsp;Proceed</button> -->
+            <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+        </mat-dialog-actions>
+    </mat-step>
+    <mat-step>
+        <div mat-dialog-content>
+            <!-- <div *ngIf="asset" fxLayout="row wrap" #resizedDiv style="margin-top:20px!important;">
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead class="tbl-head">
+                                <tr class="tr-grid-header">
+                                    <th>Document Name</th>
+                                    <th style="text-align:center !important;">Document</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tableList">
+                                    <td>{{item.document_originalname ? item.document_originalname : '-' }}</td>
+                                    <td style="text-align:center !important;"><a [href]="item.document_name"target="_blank"><i class="fa fa-file-pdf-o" style="cursor: pointer;;font-size:16px!important;"></i></a></td>
+                                    <td>
+                                        <a mwlConfirmationPopover
+                                        [popoverTitle]="popoverTitle"
+                                        [popoverMessage]="popoverMessage"
+                                        placement="left"
+                                        (confirm)="deleteVisit(item)"
+                                        (cancel)="cancelClicked = true" [appendToBody]="true">
+                                        <i style="cursor: pointer;font-size:16px!important;" matTooltip="Delete Document" class="fa fa-trash red"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> -->
+         <div *ngIf="asset">
+                <div fxLayout="row wrap" #resizedDiv style="margin-top:20px!important;">
+                    <div class="table-responsive">
+                      <table id="example2" class="table table-bordered table-hover">
+                        <thead class="tbl-head">
+                          <tr class="tr-grid-header">
+                            <!-- <th>Document Type</th> -->
+                            <th>Document Name</th>
+                            <th>Issue Date</th>
+                            <th>Expiry Date</th>
+                            <th>App Access</th>
+                            <th>Document</th>
+                            <th>Delete</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngIf="showEmpty"><td colspan="6" class="showEmptyClass">No records found</td></tr>
+                          <tr *ngFor="let items of tableList">
+                            <!-- <td>{{items.document_type ? items.document_type : '-' }}</td> -->
+                            <td>{{items.document_name ? items.document_name : '-'}}</td>
+                            <td>{{items.new_issue_date ? items.new_issue_date : '-'}}</td>
+                            <td>{{items.new_expiry_date ? items.new_expiry_date : '-'}}</td>
+                            <td style="text-align: center !important"><mat-checkbox (click)="changeappAccess(items)" [checked]="items.app_access"></mat-checkbox></td>
+                            <td style="text-align:center !important;"><a [href]="items.document_s3_url" target="_blank"><i class="fa fa-file-pdf-o" style="cursor: pointer;;font-size:16px!important;"></i></a></td>
+                            <td style="text-align:center !important;">
+                              <a mwlConfirmationPopover
+                              [popoverTitle]="popoverTitle"
+                              [popoverMessage]="popoverMessage"
+                              placement="left"
+                              (confirm)="deleteVisit(items)"
+                              (cancel)="cancelClicked = true" [appendToBody]="true">
+                              <i style="cursor: pointer;font-size:16px!important;" matTooltip="Delete Document" class="fa fa-trash red"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+               
+                </div>
+              </div>
+        <!-- <div class="col-sm-12">
+            <form class="form-horizontal" novalidate [formGroup]="addDocumentsForm">
+                <ng-template matStepLabel>Add Documents</ng-template>
+                
+                <table class="table table-bordered">
+                    <thead class="tbl-head">
+                        <th>Document</th>
+                        <th style="text-align: center !important;">Action</th>
+                    </thead>
+                    <tbody>
+                        <tr formArrayName="jobCodeDetails" *ngFor="let item of addDocumentsForm.get('jobCodeDetails')['controls']; let index = index;">
+                            <ng-container [formGroupName]="index">
+                                <td><input type="file" (change)="handleFileSelect($event, index)" formControlName="filesSelect" class="form-control"></td>
+                                <td style="text-align: center !important;cursor: pointer;" *ngIf="index == 0"><a (click)="addItem()"><mat-icon class="add">add</mat-icon></a></td>
+                                <td  style="text-align: center !important;cursor: pointer;" *ngIf="index > 0"><a (click)="removeItem(index)"><mat-icon class="delete">delete</mat-icon></a></td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>     
+            </form>
+        </div> -->
+        <div class="col-sm-12" style="padding:0px !important;"> 
+                <form class="form-horizontal" novalidate [formGroup]="addDocumentsForm">
+                <ng-template matStepLabel>Add Documents</ng-template>
+                  <table class="table table-bordered" style="width: 100%;">
+                    <thead class="tbl-head">
+                      <!-- <th>Document Type</th> -->
+                      <th>Document Name</th>
+                      <th>Issue Date</th>
+                      <th>Expiry Date</th>
+                      <th style="min-width: 92px;">App Access</th>
+                      <th>Document</th>
+                      <th>Action</th>
+                    </thead>
+                    <tbody>
+                      <tr formArrayName="jobCodeDetails" *ngFor="let item of addDocumentsForm.get('jobCodeDetails')['controls']; let index = index;">
+                        <ng-container [formGroupName]="index">
+                          <!-- <td><input type="text" formControlName="docType" class="form-control"></td> -->
+                          <td><input type="text" maxlength="50" formControlName="docRef" class="form-control"></td>
+                          <td>
+                            <input class="form-control" formControlName="issueDate" class="form-control" [owlDateTimeTrigger]="nsc1" (keypress)="false" [owlDateTime]="nsc1" name="nsc1">
+                            <owl-date-time [pickerType]="'calendar'" #nsc1></owl-date-time>
+                          </td>
+                          <td>
+                            <input class="form-control" formControlName="expiryDate" class="form-control" [owlDateTimeTrigger]="nsc2" (keypress)="false" [owlDateTime]="nsc2" name="nsc2">
+                            <owl-date-time [pickerType]="'calendar'" #nsc2></owl-date-time>
+                          </td>
+                          <td style="text-align: center!important ;padding-top: 14px;"><mat-checkbox formControlName="appAccess"></mat-checkbox></td>
+                          <td><input type="file" (change)="handleFileSelect($event, index)" formControlName="filesSelect" class="form-control" style="overflow:hidden"></td>
+                          <td style="text-align: center !important;cursor: pointer;" *ngIf="index == 0"><a (click)="addItem()"><mat-icon class="add">add</mat-icon></a></td>
+                          <td  style="text-align: center !important;cursor: pointer;" *ngIf="index > 0"><a (click)="removeItem(index)"><mat-icon class="delete">delete</mat-icon></a></td>
+                        </ng-container>
+                      </tr>
+                    </tbody>
+                  </table>
+                </form>
+              </div>
+    </div>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button class="btn-primary" matStepperPrevious><mat-icon>arrow_back</mat-icon>&nbsp;Back</button>
+        <button *ngIf="!asset" mat-raised-button [disabled]="(!assetsDetailsForm.valid || !assetDetailsContactForm.valid)" [ngClass]="(!assetsDetailsForm.valid || !assetDetailsContactForm.valid)?'':'btn-primary'" (click)="saveAssets()"><mat-icon>save</mat-icon>&nbsp;Save</button>
+        <button *ngIf="asset" mat-raised-button (click)="saveAssets()" [disabled]="(!assetsDetailsForm.valid || !assetDetailsContactForm.valid)" [ngClass]="(!assetsDetailsForm.valid || !assetDetailsContactForm.valid)?'':'btn-primary'"><mat-icon>update</mat-icon>&nbsp;Update</button>
+        <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+    </mat-dialog-actions>
+</mat-step>
+</mat-horizontal-stepper>
+

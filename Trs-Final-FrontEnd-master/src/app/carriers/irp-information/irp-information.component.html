@@ -1,0 +1,239 @@
+<div fxLayout="row wrap">
+  <div class="w-100">
+    <div fxLayout="row wrap" style="margin-top: 20px;">
+      <div class="col-md-12" style="margin-bottom: 10px;padding-right: 4px;">
+        <!-- <button mat-raised-button class="pull-right add-hover btn-success" (click)="addFleet()">
+                    <mat-icon>add</mat-icon> Add Fleet Level
+                </button> -->
+       
+        <button *ngIf="canCreate"
+          mat-raised-button
+          class="pull-right  margin-right-10 btn-primary"
+          (click)="openAddWeightGroupdialog(null)"
+        >
+          <mat-icon>add</mat-icon> Add Weight Group
+        </button>
+        <button *ngIf="canCreate"
+        mat-raised-button
+        class="pull-right  margin-right-10 btn-primary"
+        (click)="openAddDocumentdialog(null)"
+      >
+        <mat-icon>add</mat-icon> Add Document
+      </button>
+        <button *ngIf="canCreate"
+        mat-raised-button
+        class="pull-right   margin-right-10 btn-primary"
+        (click)="openAddYeardialog(null)"
+      >
+        <mat-icon>add</mat-icon> Add Year
+      </button>
+      </div>
+            <div  class="col-md-3" >
+                <p-tree
+                  [value]="filesTree"
+                  class="ptreecustom"
+                  selectionMode="single"
+                  [(selection)]="selectedFile2"
+                  (onNodeSelect)="nodeSelect($event)"
+                >
+                  <!-- <ng-template let-node pTemplate="default">
+                                <span (contextmenu)="nodeMenu($event, node)">{{node.label}}</span>
+                            </ng-template> -->
+                </p-tree>
+              </div>
+              <div class="col-md-9">
+                  <div class="right-block">
+                    <div *ngIf="showEmpty">
+                      <label style="font-weight:100">No records found </label>
+                    </div>
+                    <div *ngIf="!showEmpty">
+                      <form class="form-horizontal" *ngIf="isfleet">
+                        <h3 class="form-group">Fleet</h3>
+                        <div class="form-group">
+                          <label class="control-label">Fleet Name: </label>
+                          <div class="col-sm-12 form-field">
+                            <input
+                              type="text"
+                              maxlength="100"
+                              class="form-control"
+                              [value]="fleetName"
+                              disabled
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label">Max Weight group:</label>
+                          <div *ngIf="showWeight" class="col-sm-12">
+                              <label style="font-weight:100">No Records Found </label>
+                          </div>
+                          <!-- <div *ngIf="!showWeight"> -->
+                            <div *ngFor="let weight of weightGroup" class="col-sm-12">
+                              <div class="row" style="padding:5px !important;">
+                                <div class="col-sm-5">
+                                  <div class="row">
+                                    <div class="col-sm-12" style="padding:0px !important;">
+                                      <div class="col-sm-4" style="padding:0px !important;">
+                                        <label>Weight:</label>
+                                      </div>
+                                      <div class="col-sm-8">
+                                        <input
+                                          type="text"
+                                          value="{{weight.max_weight_group}}"
+                                          maxlength="10"
+                                          class="form-control"
+                                          disabled
+                                          required
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-5">
+                                  <div class="row">
+                                    <div class="col-md-12" style="padding:0px !important;">
+                                      <div class="col-sm-4" style="padding:0px !important;">
+                                        <label># of Axles:</label>
+                                      </div>
+                                      <div class="col-sm-8">
+                                        <input
+                                          type="text"
+                                          value="{{weight.number_of_combined_axels}}"
+                                          maxlength="10"
+                                          class="form-control"
+                                          disabled
+                                          required
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div *ngIf="canUpdate" class="col-sm-2">
+                                    <a *ngIf="canDelete">
+                                        <i style="cursor: pointer;"  matTooltip="Delete Weight Group" (click)="deleteWeightGroup(weight)" class="fa fa-trash red"></i>
+                                    </a>
+                            
+                                </div>
+                              </div>
+                            </div>
+                          <!-- </div> -->
+                        </div>
+                      </form>
+          
+                      <form class="form-horizontal" *ngIf="isyear">
+                        <h3 class="form-group">Year</h3>
+                        <div class="form-group">
+                          <label class="control-label"
+                            >Fleet Name:
+                          </label>
+                          <div class="col-sm-12 form-field">
+                            <input
+                              type="text"
+                              maxlength="100"
+                              [value]="fleetName"
+                              class="form-control"
+                              disabled
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label"
+                            >Start Date:
+                          </label>
+                          <div class="col-sm-12 form-field">
+                                  <input
+                                  type="text"
+                                  maxlength="100"
+                                  [value]="startDate"
+                                  class="form-control"
+                                  disabled
+                                  required
+                                />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label "
+                            >Expiry Date:
+                          </label>
+                          <div class="col-sm-12 form-field">
+                                  <input
+                                  type="text"
+                                  maxlength="100"
+                                  [value]="expiryDate"
+                                  class="form-control"
+                                  disabled
+                                  required
+                                />
+                          </div>
+                        </div>
+                        <div *ngIf="canUpdate" class="form-group">
+                          <mat-dialog-actions align="end" style="float:right">
+                            <!-- <button (click) ="update(startDate,expiryDate,fleetName)" mat-raised-button class="btn-primary">Update</button> -->
+                            <button  *ngIf="canDelete" mat-raised-button style="background: #d44141 !important" class="btn-success" (click) ="deleteFiles()">
+                                  Delete
+                                </button>
+                          </mat-dialog-actions>
+                        </div>
+                      </form>
+          
+                      <form class="form-horizontal" *ngIf="isdoc">
+                        <h3 class="form-group">Document</h3>
+                        <div class="form-group">
+                          <label class="control-label add-member-label"
+                            >Document Name:
+                          </label>
+                          <div class="input-icon right ">
+                            <input
+                              type="text"
+                              maxlength="100"
+                              class="form-control"
+                              [value]="fleetName"
+                              disabled
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label  add-member-label"
+                            >Document:
+                          </label>
+                          <div class="input-icon right"style="padding-top:6px !important">
+                              <a [href]="docUrl" style="font-size: 25px;">
+                                  <i style="cursor: pointer;"  matTooltip="Download document" class="fa fa-cloud-download delete"></i>
+                              </a>
+                           <!-- <a target="_blank" style="font-size: 18px;" [attr.href]="docUrl">View</a> -->
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label add-member-label"
+                            >Effective Date:
+                          </label>
+                          <div class="col-sm-12 form-field">
+                                  <input
+                                  type="text"
+                                  maxlength="100"
+                                  [value]="expiryDate"
+                                  class="form-control"
+                                  disabled
+                                  required
+                                />
+                          </div>
+                        </div>
+                        <div *ngIf="canUpdate" class="form-group">
+                          <mat-dialog-actions align="end" style="float:right">
+                           <button *ngIf="canDelete" mat-raised-button style="background: #d44141 !important" class="btn-success" (click) ="deleteFiles()">
+                                Delete
+                            </button>
+                          </mat-dialog-actions>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+      <!-- <div *ngIf= "showEmpty" class="col-md-3">
+          <label class="control-label">No Records Found </label>
+       </div> -->
+    </div>
+  </div>
+</div>

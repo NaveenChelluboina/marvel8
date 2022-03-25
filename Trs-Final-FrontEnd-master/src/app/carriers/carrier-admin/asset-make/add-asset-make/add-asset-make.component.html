@@ -1,0 +1,54 @@
+<div class="NewHeader">
+    <h1 mat-dialog-title><span *ngIf="!permission">Add</span><span *ngIf="permission">Update</span> Asset-Make</h1>
+  </div>
+  <div mat-dialog-content>
+    
+    <form class="form-horizontal" novalidate [formGroup]="addPermissionForm">
+      <div class="form-group">
+        <label class="control-label col-sm-4 add-member-label">Asset Make: </label>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+          <input type="text" maxlength="50" class="form-control" placeholder="Enter Asset Name" formControlName="permissionLevel">
+          <div *ngIf="!permissionLevel.valid && (permissionLevel.dirty || permissionLevel.touched)" class="error-text">
+            <div *ngIf="permissionLevel.errors.required">
+              Asset Make is required
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Asset-Type: </label>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+          <!-- <input type="text" class="form-control" placeholder="Enter Industry"> -->
+          <mat-select color="primary" formControlName="asset_type" placeholder="--Select Asset-Type--" class="form-control" required>
+            <mat-option [value]="1">Power Unit</mat-option>
+            <mat-option [value]="2">Trailer</mat-option>
+          </mat-select>
+          <div *ngIf="!asset_type.valid && (asset_type.dirty || asset_type.touched)" class="error-text">
+            <div *ngIf="asset_type.errors.required">
+              Asset-Type is required
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Status: </label>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+          <!-- <input type="text" class="form-control" placeholder="Enter Industry"> -->
+          <mat-select color="primary" formControlName="status" placeholder="--Select Status--" class="form-control" required>
+            <mat-option [value]="1">Active</mat-option>
+            <mat-option [value]="0">Inactive</mat-option>
+          </mat-select>
+          <div *ngIf="!status.valid && (status.dirty || status.touched)" class="error-text">
+            <div *ngIf="status.errors.required">
+              Status is required
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <mat-dialog-actions align="end" style="margin-right:-8px!important">
+    <button mat-raised-button [disabled]="!addPermissionForm.valid" style="cursor:pointer;" [ngClass]="!addPermissionForm.valid ? '' : 'btn-primary' " (click)="saveAttorney()"><mat-icon *ngIf="permission">update</mat-icon><mat-icon *ngIf="!permission">save</mat-icon><span *ngIf="!permission">&nbsp;Save</span><span
+      *ngIf="permission">&nbsp;Update</span></button>
+      <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+    </mat-dialog-actions> 

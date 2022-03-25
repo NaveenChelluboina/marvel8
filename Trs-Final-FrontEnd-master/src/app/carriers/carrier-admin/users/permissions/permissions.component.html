@@ -1,0 +1,26 @@
+<div fxLayout="row wrap">
+  <div class="table-responsive flex-p">
+      <button type="button" class="btn btn-success" style="margin-bottom: 5px;margin-left: 5px;float: right" (click)="savePermissions()"><i class="fa fa-floppy-o"></i>Save</button>
+          <button type="button" class="btn btn-default" style="margin-bottom: 5px;float:right" (click)="goBack()"><i class="fa fa-arrow-left"></i>Back</button>
+      <table id="example2" class="table table-bordered table-hover">
+          <thead class="tbl-head">
+              <tr class="tr-grid-header">
+                  <th>Screen Name</th>
+                  <th class="style">Create</th>
+                  <th class="style">Read</th>
+                  <th class="style">Update</th>
+                  <th class="style">Delete</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let screenName of screens">
+                  <td>{{screenName.name}}</td>
+                  <td class="style"><input type="checkbox" checked></td>
+                  <td class="style"><input type="checkbox" checked></td>
+                  <td class="style"><input type="checkbox" checked></td>
+                  <td class="style"><input type="checkbox" checked></td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+<div fxLayout="row wrap" #resizedDiv>
+    <div class="flex-p w-100">
+        <div class="row" style="margin-bottom:14px;">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="w-100 flex-p">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="w-100 flex-p">
+                    <button mat-raised-button class="pull-right btn-success" (click)="openUserDialog('add')">
+                        <mat-icon>person_add</mat-icon> Add
+                      User
+                    </button>
+                    <button mat-raised-button color="primary" class="pull-right filter-hover margin-right-10" (click)="filterToggle = !filterToggle">
+                        <mat-icon>filter_list</mat-icon> Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div fxLayout="row wrap" *ngIf="filterToggle">
+            <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p margins">
+                <mat-card class="filter">
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <input type="text" [(ngModel)] = "name_filter" onCopy="return false" onPaste="return false" class="form-control" (keypress)="omit_special_number_char($event)" placeholder="Search by User Name" >
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <mat-select color="primary" placeholder="-- Search by Status --"  class="form-control" >
+                                    <mat-option *ngFor="let operation of operations" [value]="operation.operation_id">{{operation.operation_name}}</mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                <button class=" btn btn-success">Search</button>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-left: -30px;">
+                                <button class="btn filter-hover" style="background-color:#37474f; color:#fff !important">Clear</button>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"></div>                            
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+        <div fxLayout="row wrap">
+            <div class="table-responsive topmargin">
+                <table id="example2" class="table table-bordered table-hover">
+                    <thead class="tbl-head">
+                        <tr class="tr-grid-header">
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th class="text-center">Contact Number</th>
+                            <th class="text-center">Permissions</th>
+                            <th>User Type</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr *ngIf="showEmpty"><td colspan="7">No records found</td></tr> -->
+                        <tr *ngFor="let user of Users">
+                            <td>{{user.CarrierName}}</td>
+                            <td>{{user.EmailID}}</td>
+                            <td class="text-center">{{user.Phone}}</td>
+                            <td class="text-center"><a routerLink="permissions">{{user.Permissions}}</a></td>
+                            <!-- <td class="inner-screen">{{user.Permissions}}</td> -->
+                            <td>{{user.userType}}</td>
+                            <td class="text-center">
+                                <a style="cursor: pointer;" [style.color]="(user.status) == 1 ? 'green' : 'red'">{{(user.status) == 1 ? 'Active' : 'Inactive'}}</a>
+                            </td>
+                            <td class="text-center">
+                                <a title="Edit" style="cursor: pointer;" (click)="openUserDialog('update')">
+                                    <i class="fa fa-edit" style="color: cornflowerblue"></i>
+                                </a>
+                                <a>
+                                    <i style="cursor: pointer;" title="Delete" class="fa fa-trash red" (click)="openDeleteDialog()"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)" showFirstLastButtons></mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

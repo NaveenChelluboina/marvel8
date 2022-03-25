@@ -1,0 +1,38 @@
+input[type=file] {
+    padding: 2px 3px;
+}
+.add {
+    color:#337ab7;
+}
+.delete {
+    color:red;
+}
+
+[hidden] {
+    display: none !important;
+  }
+
+  .title-left{
+    padding-left: 27px;
+  }
+  .input-icon.right>i {
+    right:25px;
+    float: right;
+    
+
+}
+.input-icon>i {
+    color: #ccc;
+    display: block;
+    position: absolute;
+    //margin: 11px 2px 4px 10px;
+    margin-top: 5px;
+    // margin-right: 2px;
+    margin-bottom: 4px;
+    margin-left: 10px;
+    z-index: 3;
+    width: 16px;
+    font-size: 16px;
+    text-align: center;
+}
+

@@ -1,0 +1,131 @@
+<div class="NewHeader">
+    <h1 mat-dialog-title><span *ngIf="!lead">Add</span><span *ngIf="lead">Update</span> Client</h1> 
+</div>
+<div mat-dialog-content>
+    <form class="form-horizontal" novalidate [formGroup]="addPackageForm">
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Company Legal Name: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text" class="form-control" maxlength="200" placeholder="Enter Company Legal Name" formControlName="companylegalname" required>
+                <div *ngIf="!companylegalname.valid && (companylegalname.dirty || companylegalname.touched)" class="error-text">
+                    <div *ngIf="companylegalname.errors.required">
+                        Company Legal Name is required
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Client Name: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text" class="form-control" maxlength="50" placeholder="Enter Client Name" formControlName="clientName" required>
+                <div *ngIf="!clientName.valid && (clientName.dirty || clientName.touched)" class="error-text">
+                    <div *ngIf="clientName.errors.required">
+                        Client Name is required
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Package Level:&nbsp;</label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <mat-select placeholder="--Package Level--" required formControlName="packageLevel" class="form-control">
+                    <mat-option *ngFor="let option of packages" [value]="option.package_id">{{option.package_level}}</mat-option>
+                </mat-select>
+                <div *ngIf="!packageLevel.valid && (packageLevel.dirty || packageLevel.touched)" class="error-text">
+                    <div *ngIf="packageLevel.errors.required">
+                        Package level is required
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Email ID: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text" class="form-control" maxlength="100" email placeholder="Enter Email ID" formControlName="emailID" required>
+                <div *ngIf="!emailID.valid && (emailID.dirty || emailID.touched)" class="error-text">
+                    <div *ngIf="emailID.errors.required">
+                        Email ID is required
+                    </div>
+                    <div *ngIf="emailID.errors.email">
+                        Enter a valid email
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Phone: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text" class="form-control" maxlength="15" placeholder="Enter Phone" formControlName="phone"required>
+                <div *ngIf="!phone.valid && (phone.dirty || phone.touched)" class="error-text">
+                    <div *ngIf="phone.errors.required">
+                        Phone Number is required
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Address: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text" class="form-control" maxlength="200" placeholder="Enter Address" formControlName="address" required>
+                <div *ngIf="!address.valid && (address.dirty || address.touched)" class="error-text">
+                    <div *ngIf="address.errors.required">
+                        Address is required
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Country: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <mat-select class='form-control' required  formControlName="country" placeholder="--Select Country--" (ngModelChange)="getStatesDropdown(addPackageForm.value.country)">
+                    <mat-option [value]="38">Canada</mat-option>
+                    <mat-option [value]="231">USA</mat-option>
+                </mat-select>
+                <div *ngIf="!country.valid && (country.dirty || country.touched)" class="error-text">
+                    <div *ngIf="country.errors.required">
+                        Country is required 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">State: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <mat-select formControlName="state" placeholder="--Select State--" class="form-control" required>
+                    <mat-option *ngFor="let option of states" [value]="option.state_id">{{option.state_name}}</mat-option>
+                </mat-select>
+                <div *ngIf="!state.valid && (state.dirty || state.touched)" class="error-text">
+                    <div *ngIf="state.errors.required">
+                        State is required
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">City: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text" class="form-control" maxlength="50" placeholder="Enter City" formControlName="city"  required>
+                <div *ngIf="!city.valid && (city.dirty || city.touched)" class="error-text">
+                    <div *ngIf="city.errors.required">
+                        City is required
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Zip: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text" class="form-control" maxlength="10" placeholder="Enter Zip" formControlName="zip" maxlength="10" required>
+                <div *ngIf="!zip.valid && (zip.dirty || zip.touched)" class="error-text">
+                    <div *ngIf="zip.errors.required">
+                        Zip is required
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<mat-dialog-actions align="end" style="margin-right:-8px!important">
+    <button mat-raised-button [disabled]="!addPackageForm.valid" style="cursor:pointer;" [ngClass]="!addPackageForm.valid ? '' : 'btn-primary' " (click)="saveCarrier()"><mat-icon *ngIf="lead">update</mat-icon><mat-icon *ngIf="!lead">save</mat-icon><span *ngIf="!lead">&nbsp;Save</span><span *ngIf="lead">&nbsp;Update</span></button>
+    <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+</mat-dialog-actions> 

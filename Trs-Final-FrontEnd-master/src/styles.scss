@@ -1,0 +1,681 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://cdn.quilljs.com/1.2.2/quill.snow.css');
+@import url('https://cdn.quilljs.com/1.2.2/quill.bubble.css');
+// indigo-pink, deeppurple-amber, purple-green and pink-bluegrey.
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "app/theme/styles/base";
+@import "app/theme/styles/theme";
+@import "app/theme/styles/libs-override";
+@import "app/theme/styles/rtl";
+@import "./_bootstrap.scss";
+
+/* @import "~jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
+
+@import "~jqwidgets-scripts/jqwidgets/styles/jqx.material.css"; */
+
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+@import "~fullcalendar/dist/fullcalendar.min.css";
+@import '../node_modules/angular2-toaster/src/toaster.scss';
+@import './prime-ng.scss';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import "./custom_styles.scss";
+.app.indigo-light .mat-card:not([class*='mat-elevation-z']) {
+    box-shadow: 5px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 5px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 1px rgba(0, 0, 0, 0.12);
+}
+
+.breadtitle {
+    margin-left: 6px;
+}
+
+
+.breadcrumbicon {
+    margin-top: -3px;
+}
+.modal-backdrop {
+    z-index: -1 !important;
+}
+
+//Styles for Icons in Tree
+.blue {
+    color: #89c4f4 !important;
+}
+
+.green {
+    color: #45b6af !important;
+}
+
+.gold {
+    color: #dfba49 !important;
+}
+
+.red {
+    color: red !important;
+}
+
+a:hover,
+a:visited,
+a:link,
+a:active {
+    text-decoration: none !important;
+}
+
+ ::ng-deep .cdk-focused .cdk-mouse-focused {
+    text-decoration: none !important;
+}
+
+//For profile pic style
+.rounded {
+    border-radius: 50% !important;
+}
+
+// th {
+//     background-color: #286ba5 !important;
+//     color: white;
+//     font-weight: 500 !important;
+// }
+
+.marginbtn {
+    margin: 2px;
+}
+
+.pill_bg_color {
+    background-color: #d3d0d0;
+    margin: 2px;
+}
+
+div>.nav>.pill_bg_color.active>a {
+    background-color: #337ab7 !important;
+}
+
+div>.nav>.navpills.active>a {
+    background-color: #337ab7 !important;
+}
+
+// body a:active {
+//     color: #e9eef2 !important;
+//     background-color: #337ab7 !important;
+// }
+.app.horizontal-menu .inner-sidenav-content {
+    padding-top: 10px !important;
+}
+
+.toast-error,.toast-success {
+    font-size: 15px !important;
+}
+
+
+// For Menu
+.app.indigo-light .mat-toolbar.mat-primary {
+    background: #1485cc !important;
+    color: white !important;
+}
+
+.app.indigo-light .active-link {
+    background-color: #1485cc !important;
+}
+
+.mat-fab.mat-primary,
+.mat-flat-button.mat-primary,
+.mat-mini-fab.mat-primary,
+.mat-raised-button.mat-primary {
+    background-color: #1485cc !important;
+}
+
+.app.indigo-light .breadcrumb a {
+    color: #1485cc !important;
+}
+
+.mf-datatable thead th {
+    background: #1485cc;
+}
+
+.mf-datatable thead th a {
+    color: #fff !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.padding-right-0 {
+    padding-right: 0px !important;
+}
+
+.padding-left-0 {
+    padding-left: 0px !important;
+}
+
+.padding-0 {
+    padding: 0px !important;
+}
+
+.has-feedback .form-control-feedback {
+    right: 15px;
+    top: 8px;
+}
+
+
+/* enable absolute positioning */
+
+.inner-addon {
+    position: relative;
+}
+
+
+/* style glyph */
+
+.inner-addon .glyphicon {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+    color: #b9b9b9;
+}
+
+
+/* align glyph */
+
+.left-addon .glyphicon {
+    left: 0px;
+}
+
+.right-addon .glyphicon {
+    right: 0px;
+}
+
+
+/* add padding  */
+
+.left-addon input {
+    padding-left: 30px;
+}
+
+.right-addon input {
+    padding-right: 30px;
+}
+
+.form-control.customInput {
+    height: 38px !important;
+    border: 1px solid #13121236 !important;
+}
+
+.width-40p {
+    width: 40%;
+}
+
+.m-b-10 {
+    margin-bottom: 10px !important;
+}
+
+.no-pagination-border {
+    border: 1px solid transparent !important;
+    border-top: 1px solid #ddd !important;
+}
+
+.pagination-summary-text {
+    padding: 15px 0;
+    font-size: 13px;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.mf-datatable thead th a span.glyphicon.glyphicon-triangle-bottom.ng-star-inserted,
+.mf-datatable thead th a span.glyphicon.glyphicon-triangle-top.ng-star-inserted {
+    float: right;
+}
+
+.mf-datatable tbody td {
+    background: #fff;
+}
+
+.mat-radio-inner-circle,
+.app.indigo-light .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
+.app.indigo-light .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+.app.indigo-light .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+    background-color: #40c1ff !important;
+}
+
+.mat-radio-outer-circle {
+    box-sizing: border-box;
+    height: 20px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: border-color ease 280ms;
+    width: 20px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 50% !important;
+}
+
+.mat-radio-inner-circle {
+    border-radius: 50% !important;
+    box-sizing: border-box;
+    height: 20px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: transform ease 280ms, background-color ease 280ms;
+    width: 20px;
+    transform: scale(.001);
+}
+
+.app.indigo-light .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #207ede !important;
+}
+
+table.days.weeks th {
+    background: none !important;
+}
+
+.theme-blue .bs-datepicker-head {
+    background-color: #1485cc !important;
+}
+
+.form-section {
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
+.tdLink {
+    color: #1485cc !important;
+    cursor: pointer;
+}
+
+//Ends here
+
+// /* position */
+
+// .toast-center-center {
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+// }
+
+// .toast-top-center {
+//     top: 0;
+//     right: 0;
+//     width: 100%;
+// }
+
+// .toast-bottom-center {
+//     bottom: 0;
+//     right: 0;
+//     width: 100%;
+// }
+
+// .toast-top-full-width {
+//     top: 0;
+//     right: 0;
+//     width: 100%;
+// }
+
+// .toast-bottom-full-width {
+//     bottom: 0;
+//     right: 0;
+//     width: 100%;
+// }
+
+// .toast-top-left {
+//     top: 12px;
+//     left: 12px;
+// }
+
+// .toast-top-right {
+//     top: 12px;
+//     right: 12px;
+// }
+
+// .toast-bottom-right {
+//     right: 12px;
+//     bottom: 12px;
+// }
+
+// .toast-bottom-left {
+//     bottom: 12px;
+//     left: 12px;
+// }
+
+
+// /* toast styles */
+
+// .toast-title {
+//     font-weight: bold;
+// }
+
+// .toast-message {
+//     word-wrap: break-word;
+// }
+
+// .toast-message a,
+// .toast-message label {
+//     color: #FFFFFF;
+// }
+
+// .toast-message a:hover {
+//     color: #CCCCCC;
+//     text-decoration: none;
+// }
+
+// .toast-close-button {
+//     position: relative;
+//     right: -0.3em;
+//     top: -0.3em;
+//     float: right;
+//     font-size: 20px;
+//     font-weight: bold;
+//     color: #FFFFFF;
+//     text-shadow: 0 1px 0 #ffffff;
+//     /* opacity: 0.8; */
+// }
+
+// .toast-close-button:hover,
+// .toast-close-button:focus {
+//     color: #000000;
+//     text-decoration: none;
+//     cursor: pointer;
+//     opacity: 0.4;
+// }
+
+
+/*Additional properties for button version
+     iOS requires the button element instead of an anchor tag.
+     If you want the anchor version, it requires `href="#"`.*/
+
+// button.toast-close-button {
+//     padding: 0;
+//     cursor: pointer;
+//     background: transparent;
+//     border: 0;
+// }
+
+// .toast-container {
+//     pointer-events: none;
+//     position: fixed;
+//     z-index: 999999;
+// }
+
+// .toast-container * {
+//     box-sizing: border-box;
+// }
+
+// .toast-container .toast {
+//     position: relative;
+//     overflow: hidden;
+//     margin: 0 0 6px;
+//     padding: 15px 15px 15px 50px;
+//     width: 300px;
+//     border-radius: 3px 3px 3px 3px;
+//     background-position: 15px center;
+//     background-repeat: no-repeat;
+//     background-size: 24px;
+//     box-shadow: 0 0 12px #999999;
+//     color: #FFFFFF;
+// }
+
+// .toast-container .toast:hover {
+//     box-shadow: 0 0 12px #000000;
+//     opacity: 1;
+//     cursor: pointer;
+// }
+
+
+/* https://github.com/FortAwesome/Font-Awesome-Pro/blob/master/advanced-options/raw-svg/regular/info-circle.svg */
+
+// .toast-info {
+//     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'%3E%3Cpath fill='rgb(255,255,255)' d='M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z'/%3E%3C/svg%3E");
+// }
+
+
+/* https://github.com/FortAwesome/Font-Awesome-Pro/blob/master/advanced-options/raw-svg/regular/times-circle.svg */
+
+// .toast-error {
+//     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'%3E%3Cpath fill='rgb(255,255,255)' d='M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z'/%3E%3C/svg%3E");
+// }
+
+
+/* https://github.com/FortAwesome/Font-Awesome-Pro/blob/master/advanced-options/raw-svg/regular/check.svg */
+
+// .toast-success {
+//     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'%3E%3Cpath fill='rgb(255,255,255)' d='M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z'/%3E%3C/svg%3E");
+// }
+
+
+/* https://github.com/FortAwesome/Font-Awesome-Pro/blob/master/advanced-options/raw-svg/regular/exclamation-triangle.svg */
+
+// .toast-warning {
+//     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 576 512' width='576' height='512'%3E%3Cpath fill='rgb(255,255,255)' d='M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z'/%3E%3C/svg%3E");
+// }
+
+// .toast-container.toast-top-center .toast,
+// .toast-container.toast-bottom-center .toast {
+//     width: 300px;
+//     margin-left: auto;
+//     margin-right: auto;
+// }
+
+// .toast-container.toast-top-full-width .toast,
+// .toast-container.toast-bottom-full-width .toast {
+//     width: 96%;
+//     margin-left: auto;
+//     margin-right: auto;
+// }
+
+// .toast {
+//     background-color: #030303;
+//     pointer-events: auto;
+// }
+
+.toast-success {
+    background-color: #51A351;
+}
+
+.toast-error {
+    background-color: #BD362F;
+}
+
+// .toast-info {
+//     background-color: #2F96B4;
+// }
+
+// .toast-warning {
+//     background-color: #F89406;
+// }
+
+// .toast-progress {
+//     position: absolute;
+//     left: 0;
+//     bottom: 0;
+//     height: 4px;
+//     background-color: #000000;
+//     opacity: 0.4;
+// }
+
+
+/* Responsive Design */
+
+// @media all and (max-width: 240px) {
+//     .toast-container .toast.div {
+//         padding: 8px 8px 8px 50px;
+//         width: 11em;
+//     }
+//     .toast-container .toast-close-button {
+//         right: -0.2em;
+//         top: -0.2em;
+//     }
+// }
+
+// @media all and (min-width: 241px) and (max-width: 480px) {
+//     .toast-container .toast.div {
+//         padding: 8px 8px 8px 50px;
+//         width: 18em;
+//     }
+//     .toast-container .toast-close-button {
+//         right: -0.2em;
+//         top: -0.2em;
+//     }
+// }
+
+// @media all and (min-width: 481px) and (max-width: 768px) {
+//     .toast-container .toast.div {
+//         padding: 15px 15px 15px 50px;
+//         width: 25em;
+//     }
+// }
+
+.breadcrumb .breadcrumb-title.active {
+    text-transform: none !important;
+}
+
+label.form-control-label {
+    margin-top: 5px;
+}
+
+.app.indigo-light .bg-primary {
+    background: #fff !important;
+}
+
+.delete-confirm.modal-header {
+    background: #1485cc;
+    color: #fff;
+}
+
+.messages span.text {
+    font-size: 12px !important;
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: #1485cc !important;
+}
+
+.ps {
+    /* overflow: hidden !important; */
+    overflow: auto !important;
+}
+
+
+/*.ps--active-x > .ps__rail-x,*/
+
+.ps--active-y>.ps__rail-y {
+    display: none !important;
+}
+
+// .cdk-global-overlay-wrapper,
+// .cdk-overlay-container {
+//     z-index: 99999 !important;
+// }
+
+.detail-view th {
+    background: #fff !important;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.detail-view th {
+    width: 40% !important;
+    border: unset !important;
+}
+
+.detail-view th,
+.detail-view td {
+    border: unset !important;
+}
+
+.login-bg {
+    background: linear-gradient(rgba(21, 18, 18, 0.5), rgba(25, 17, 17, 0.5)), url('./../src/assets/img/landing/truck3.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:focus,
+.nav-pills>li.active>a:hover {
+    color: #fff;
+    background-color: #1485cc !important;
+}
+
+.nopadding {
+    padding: 0px !important;
+}
+
+.subscriptions ul li {
+    border: 1px solid #ddd;
+    margin-left: 0px;
+}
+
+.app.black-light .bg-primary {
+    background: unset !important;
+}
+
+.btn-success {
+    background: #229494!important;
+    color: #fff!important;
+}
+
+.mat-dialog-actions .mat-button+.mat-button,
+.mat-dialog-actions .mat-button+.mat-raised-button,
+.mat-dialog-actions .mat-raised-button+.mat-button,
+.mat-dialog-actions .mat-raised-button+.mat-raised-button {
+    margin-left: 8px;
+}
+
+.margin {
+    margin-right: 8px;
+}
+
+.app.black-light .mat-fab.mat-primary,
+.app.black-light .mat-flat-button.mat-primary,
+.app.black-light .mat-mini-fab.mat-primary,
+.app.black-light .mat-raised-button.mat-primary {
+    background-color: #37474f !important;
+}
+
+bs-datepicker-container,
+bs-daterangepicker-container {
+    z-index: 99999999 !important;
+}
+
+.theme-green .bs-datepicker-head {
+    background-color: #50636d !important;
+}
+
+.bs-datepicker-body table td {
+    color: #54708b;
+    text-align: center !important;
+    position: relative;
+    padding: 0;
+}
+.cdk-overlay-connected-position-bounding-box {
+    z-index: 99999 !important;
+  }
+  .cdk-overlay-pane.my-dialog {
+    position: relative!important;
+  }
+  .close.mat-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    line-height: 14px;
+    min-width: auto;
+  }
+  //Cudtom header for all modal dialog
+.custom-header {
+    background: #2b9494;
+    color: white;
+    text-align: center;
+    margin-left: -24px !important;
+    margin-top: -24px !important;
+    margin-right: -24px !important;
+    padding: 13px;
+    font-weight: 300 !important;
+    margin-bottom: 20px !important;
+}

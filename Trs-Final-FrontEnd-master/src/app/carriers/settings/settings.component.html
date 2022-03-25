@@ -1,0 +1,87 @@
+<div fxLayout="row wrap" style="margin-top: 50px;">
+    <div class="w-100" style="margin-left: 10px;margin-right: 10px;">
+        <table class="table table-bordered table-responsive-md btn-table table-hover">
+            <thead class="tbl-head">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Previous Value</th>
+                    <th>New Value</th>
+                    <th class="text-center">Enable</th>
+                    <th class="text-center" style="min-width: 65px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Notification Email</td>
+                    <td>Default Notification Email</td>
+                    <td>carrier@transreport.com</td>
+                    <td>
+                        <input type="email" class="form-control" placeholder="Enter Notification Email">
+                    </td>
+                    <td style="text-align: center !important">
+                        <mat-checkbox [ngModel]="enabledCheckbox">
+                        </mat-checkbox>
+                    </td>
+                    <td class="text-center">
+                        <button _ngcontent-c37="" class="btn btn-success" mwlconfirmationpopover="" placement="left" style="text-decoration: none" type="button"> Save </button>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td>Notification SMS</td>
+                    <td>Default Notification SMS</td>
+                    <td>(054) 0458745</td>
+                    <td>
+                        <input type="email" class="form-control" placeholder="Enter Phone Number">
+                    </td>
+                    <td style="text-align: center !important">
+                        <mat-checkbox [ngModel]="enabledCheckbox">
+                        </mat-checkbox>
+                    </td>
+                    <td class="text-center">
+                        <button _ngcontent-c37="" class="btn btn-success" mwlconfirmationpopover="" placement="left" style="text-decoration: none" type="button"> Save </button>
+                    </td>
+                </tr> -->
+                <tr>
+                    <td>Document Expiry Follow-up Days</td>
+                    <td>Default Document Expiry Follow-up Days</td>
+                    <td>20</td>
+                    <td>
+                        <mat-select placeholder="--Select--" class="form-control">
+                            <mat-option [value]="0">10</mat-option>
+                            <mat-option [value]="1">20</mat-option>
+                            <mat-option [value]="2">30</mat-option>
+                            <mat-option [value]="2">40</mat-option>
+                            <mat-option [value]="2">50</mat-option>
+                            <mat-option [value]="2">60</mat-option>
+                        </mat-select>
+                    </td>
+                    <td style="text-align: center !important">
+                        <mat-checkbox [ngModel]="enabledCheckbox">
+                        </mat-checkbox>
+                    </td>
+                    <td class="text-center">
+                        <button _ngcontent-c37="" class="btn btn-success" mwlconfirmationpopover="" placement="left" style="text-decoration: none" type="button"> Save </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Grid Length</td>
+                    <td>Default Grid Length</td>
+                    <td>10</td>
+                    <td>
+                        <input type="number" class="form-control" placeholder="Enter New Value">
+                    </td>
+                    <td style="text-align: center !important">
+                        <mat-checkbox [ngModel]="enabledCheckbox">
+                        </mat-checkbox>
+                    </td>
+                    <td class="text-center">
+                        <button _ngcontent-c37="" class="btn btn-success" mwlconfirmationpopover="" placement="left" style="text-decoration: none" type="button"> Save </button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>

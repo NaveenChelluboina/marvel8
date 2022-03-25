@@ -1,0 +1,54 @@
+<!-- <button class="close" style ="background-color: white !important;" [mat-dialog-close]="true"><mat-icon>close</mat-icon></button> -->
+<div class="NewHeader">
+        <h1 mat-dialog-title>
+          <span *ngIf="!fleetData" class="title-left">Add</span>
+          <span *ngIf="fleetData" class="title-left">Update</span> Fleet
+        </h1>
+      </div> 
+<div mat-dialog-content style="padding: 0px 26px 0 32px;">
+    <form class="form-horizontal" novalidate [formGroup]="addFleetForm">
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="fleetName">Fleet Name:&nbsp;</label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text"class="form-control" maxlength="25" id="fleetName" name="fleetName" placeholder="Enter Fleet Name" formControlName="fleetName" required>
+                <div *ngIf="!fleetName.valid && (fleetName.dirty || fleetName.touched)" class="error-text">
+                    <div *ngIf="fleetName.errors.required">
+                            Fleet Name is required
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group mrg-btm-4">
+            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="irp" style="padding: 0px;">IRP Fleet:&nbsp;</label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"> 
+                <mat-radio-group  id="irp" name="irp" formControlName="isIrp" required>
+                    <mat-radio-button  [disabled]="radioDisable === true" class="margin margins" value="true">Yes</mat-radio-button>
+                    <mat-radio-button  [disabled]="radioDisable === true" class="margins" value="false">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="comments">Comments:&nbsp;</label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <textarea rows="2" type="text" maxlength="300" class="form-control txtarea" placeholder="Write Comments"  formControlName="comments"></textarea>
+            </div>
+        </div>
+        <div class="form-group mrg-btm-4">
+                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="active" style="padding: 0px;">Active:&nbsp;</label>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"> 
+                    <mat-radio-group  id="active" name="active" formControlName="isActive" required>
+                        <mat-radio-button [disabled]="radioDisable === true" class="margin margins" value="true">Yes</mat-radio-button>
+                        <mat-radio-button [disabled]="radioDisable === true" class="margins" value="false">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+        </form>
+     </div>
+<mat-dialog-actions align="end" class="width">
+        <button mat-raised-button [ngClass]="(!addFleetForm.valid) ? '':'btn-primary'" [disabled]="(!addFleetForm.valid)" (click)="saveFleet()"><mat-icon *ngIf="fleetData">update</mat-icon><mat-icon *ngIf="!fleetData">save</mat-icon><span *ngIf="!fleetData"> Save</span><span
+            *ngIf="fleetData"> Update</span></button>
+            <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+    <!-- <button mat-raised-button [disabled]="!addFleetForm.valid" [ngClass]="!addFleetForm.valid ? '': 'btn-primary'  " (click)=" saveFleet()">{{ fleetData ? "Update": "Save"}}</button>
+    <button mat-raised-button class="add-dark-hover btn-default" (click)="close()">Close</button> -->
+</mat-dialog-actions>

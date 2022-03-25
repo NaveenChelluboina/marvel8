@@ -1,0 +1,935 @@
+<div fxLayout="row wrap">
+    <div class="w-100">
+        <div fxLayout="row wrap" style="margin-top: 40px;">
+            <div class="col-md-12 main-block">
+                <button *ngIf="totalCount && anyObjToCompare" mat-raised-button class="pull-right btn-primary" style="margin-top: 10px;" (click)="openDeleteDialog(information)"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;Change Carrier Type</button>
+                <div class="col-md-5" style="margin-top:38px !important;">
+                    <div class="form-block">
+                        <form class="form-horizontal" novalidate [formGroup]="commanDetailsForm">
+                            <div class="form-group">
+                                <label class="control-label  add-member-label">Company Legal Name:&nbsp;</label>
+                                <div class=" col-sm-12 form-field">
+                                    <input type="text" placeholder="Enter Company Legal Name" required formControlName="companyLegalName" maxlength="50" class="form-control">
+                                    <div *ngIf="!companyLegalName.valid && (companyLegalName.dirty || companyLegalName.touched)" class="error-text">
+                                        <div *ngIf="companyLegalName.errors.required">
+                                            Company Legal Name is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Company DBA:&nbsp;</label>
+                                <div class="col-lg-12 form-field">
+                                    <input type="text" placeholder="Enter Company DBA" class="form-control" maxlength="50" formControlName="companyDba">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label add-member-label">Country:&nbsp;</label>
+                                <div class="col-lg-12 form-field">
+                                    <mat-select class='form-control' required name="communication" formControlName="country" placeholder="--Select Country--" (ngModelChange)="getStatesDropdown(commanDetailsForm.value.country)">
+                                        <mat-option [value]="38">Canada</mat-option>
+                                        <mat-option [value]="231">USA</mat-option>
+                                    </mat-select>
+                                    <div *ngIf="!country.valid && (country.dirty || country.touched)" class="error-text">
+                                        <div *ngIf="country.errors.required">
+                                            Country is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label add-member-label">State:&nbsp;</label>
+                                <div class=" col-sm-12 form-field">
+                                    <mat-select formControlName="state" placeholder="--Select State--" class="form-control" required>
+                                        <mat-option *ngFor="let option of states" [value]="option.state_id">{{option.state_name}}</mat-option>
+                                    </mat-select>
+                                    <div *ngIf="!state.valid && (state.dirty || state.touched)" class="error-text">
+                                        <div *ngIf="state.errors.required">
+                                            State is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label  add-member-label">City:&nbsp;</label>
+                                <div class=" col-sm-12 form-field">
+                                    <input type="text" required class="form-control" placeholder="Enter City" maxlength="20" formControlName="city" required>
+                                    <div *ngIf="!city.valid && (city.dirty || city.touched)" class="error-text">
+                                        <div *ngIf="city.errors.required">
+                                            City is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label add-member-label">Address:&nbsp;</label>
+                                <div class="col-sm-12 form-field">
+                                    <textarea rows="2" class="form-control txtarea" placeholder="Enter Address" maxlength="150" required formControlName="address1"></textarea>
+                                    <div *ngIf="!address1.valid && (address1.dirty || address1.touched)" class="error-text">
+                                        <div *ngIf="address1.errors.required">
+                                            Address is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label class="control-label">Address 2:&nbsp;</label>
+                                <div class=" col-sm-12 form-field">
+                                    <textarea rows="2" class="form-control txtarea" maxlength="300" placeholder="Enter Address" formControlName="address2"></textarea>
+                                </div>
+                            </div> -->
+                            <div class="form-group">
+                                <label class="control-label add-member-label">ZIP Code:&nbsp;</label>
+                                <div class=" col-sm-12 form-field">
+                                    <input type="text" class="form-control" placeholder="Enter ZIP Code" maxlength="7" required formControlName="zipcode">
+                                    <div *ngIf="!zipcode.valid && (zipcode.dirty || zipcode.touched)" class="error-text">
+                                        <div *ngIf="zipcode.errors.required">
+                                            Zip Code is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label  add-member-label">Telephone:&nbsp;</label>
+                                <div class=" col-sm-12 form-field">
+                                    <input type="text" class="form-control" maxlength="12" placeholder="Enter Telephone" (keypress)="onlyNumbers($event)" required formControlName="telephone">
+                                    <div *ngIf="!telephone.valid && (telephone.dirty || telephone.touched)" class="error-text">
+                                        <div *ngIf="telephone.errors.required">
+                                            Telephone is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Fax: </label>
+                                <div class=" col-sm-12 form-field">
+                                    <input type="text" class="form-control" placeholder="Enter Fax" maxlength="15" formControlName="fax">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="col-md-7">
+                    <div class="form-block" style="padding-bottom: 0px !important;">
+                        <form class="form-horizontal" novalidate [formGroup]="carrierDetailsForm">
+                            <h3 style="margin-left: -15px;">Carrier Type:</h3>
+                            <div class="form-group" *ngIf="!anyObjToCompare">
+                                <!-- <label class="control-label  add-member-label">Carrier Type:&nbsp;</label> -->
+                                <br />
+                                <mat-radio-group name="primary" [(ngModel)]="carrierType" [ngModelOptions]="{standalone: true}">
+                                    <div class=" col-sm-12 form-field" style="padding-top:10px !important">
+                                        <div class=" col-sm-6 form-field">
+                                            <mat-radio-button (change)="carrierTypeChange($event)" class="margin margins" value="1">U.S. based - U.S. travel only
+                                            </mat-radio-button>
+                                        </div>
+                                        <div class=" col-sm-6 form-field">
+                                            <mat-radio-button (change)="carrierTypeChange($event)" class="margins margins" value="2">U.S. based - International travel
+                                            </mat-radio-button>
+                                        </div>
+                                    </div>
+                                    <div class=" col-sm-12 form-field" style="padding-top:10px !important">
+                                        <div class=" col-sm-6 form-field">
+                                            <mat-radio-button (change)="carrierTypeChange($event)" class="margins margins" value="3">Canada based - Canada travel only
+                                            </mat-radio-button>
+                                        </div>
+                                        <div class=" col-sm-6 form-field">
+                                            <mat-radio-button (change)="carrierTypeChange($event)" class="margins margins" value="4">Canada based - International travel
+                                            </mat-radio-button>
+                                        </div>
+                                    </div>
+                                </mat-radio-group>
+                            </div>
+                            
+                            <!--Canada Based - Canada travel only-->
+                            <div *ngIf="iscanCanadaTravel">
+                                <h3 class="control-label form-group">Canada Based - Canada travel only</h3>
+                                <div class="form-group">
+                                    <label class="control-label">National Safety Code#:&nbsp;</label>
+                                    <div class=" col-sm-12 form-field">
+                                        <input type="text" formControlName="nsc" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Federal Business#:&nbsp;</label>
+                                    <div class="col-lg-12 form-field">
+                                        <input type="text" formControlName="fbc" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">IFTA Account#:&nbsp;</label>
+                                    <div class="col-lg-12 form-field">
+                                        <input type="text" formControlName="ifta" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">IRP Account#:&nbsp;</label>
+                                    <div class="col-lg-12 form-field">
+                                        <input type="text" formControlName="irp" class="form-control">
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group">
+                                    <label class="control-label">IRP Fleet 1 expiry:&nbsp;</label>
+                                    <div class="col-lg-12 form-field">
+                                        <div class="input-icon right">
+                                            <i class="fa fa-calendar" [owlDateTimeTrigger]="dt1"></i>
+                                            <input class="form-control" formControlName="irpf1" class="form-control" (keypress)="false" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" name="dt1">
+                                            <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">IRP Fleet 2 expiry:&nbsp;</label>
+                                    <div class="col-lg-12 form-field">
+                                        <div class="input-icon right">
+                                            <i class="fa fa-calendar" [owlDateTimeTrigger]="dt2"></i>
+                                            <input class="form-control" formControlName="irpf2" class="form-control" (keypress)="false" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" name="dt2">
+                                            <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="form-group">
+                                    <label class="control-label">Insurance Company:&nbsp;</label>
+                                    <div class="col-lg-12 form-field">
+                                        <input type="text" formControlName="ic" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Insurance Policy#:&nbsp;</label>
+                                    <div class="col-lg-12 form-field">
+                                        <input type="text" formControlName="ip" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Insurance Policy Expiry date:&nbsp;</label>
+                                    <div class="col-lg-12 form-field">
+                                        <div class="input-icon right">
+                                            <i class="fa fa-calendar" [owlDateTimeTrigger]="dt3"></i>
+                                            <input class="form-control" formControlName="iped" class="form-control" [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" name="dt3">
+                                            <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Quebec NEQ#:&nbsp;</label>
+                                    <div class="col-lg-12 form-field">
+                                        <input type="text" formControlName="quebec" class="form-control">
+                                    </div>
+                                </div>
+                                <!-- <h4 class="control-label form-group">Documents</h4>
+                                    <div class="form-group">
+                                        <table class="table table-striped table-bordered">
+                                            <thead>
+                                                <th>Type</th>
+                                                <th>Reference #</th>
+                                                <th>Issue Date</th>
+                                                <th>Expiry Date</th>
+                                                <th>Document</th>
+                                                <th>Actions</th>
+                                            </thead>
+                                            <tbody>
+                                                
+                                                <tr formArrayName="jobCodeDetails" *ngFor="let item of carrierDetailsForm.get('jobCodeDetails')['controls']; let index = index;">
+                                                    <ng-container [formGroupName]="index">
+                                                        <td><input type="text" formControlName="docType" class="form-control"></td>
+                                                        <td><input type="text" formControlName="docRef" class="form-control"></td>
+                                                        <td>
+                                                            <input class="form-control" formControlName="issueDate" class="form-control" [owlDateTimeTrigger]="nsc1" [owlDateTime]="nsc1" name="nsc1">
+                                                            <owl-date-time [pickerType]="'calendar'" #nsc1></owl-date-time>
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control" formControlName="expiryDate" class="form-control" [owlDateTimeTrigger]="nsc2" [owlDateTime]="nsc2" name="nsc2">
+                                                            <owl-date-time [pickerType]="'calendar'" #nsc2></owl-date-time>
+                                                        </td>
+                                                        <td><input type="file" (change)="handleFileSelect($event, index)" formControlName="filesSelect" class="form-control"></td>
+                                                        <td style="text-align: center !important;cursor: pointer;" *ngIf="index == 0"><a (click)="addItem()"><mat-icon class="add">add</mat-icon></a></td>
+                                                        <td  style="text-align: center !important;cursor: pointer;" *ngIf="index > 0"><a (click)="removeItem(index)"><mat-icon class="delete">delete</mat-icon></a></td>
+                                                    </ng-container>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div> -->
+                                </div>
+                                
+                                <!--Canada Based - International travel only-->
+                                <div *ngIf="iscanInternationalTravel">
+                                    <h3 class="control-label form-group">Canada Based - International travel</h3>
+                                    <div class="form-group">
+                                        <label class="control-label">National Safety Code#:&nbsp;</label>
+                                        <div class=" col-sm-12 form-field">
+                                            <input type="text" formControlName="nsc" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Federal Business#:&nbsp;</label>
+                                        <div class="col-lg-12 form-field">
+                                            <input type="text" formControlName="fbc" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">US DOT#:&nbsp;</label>
+                                        <div class="col-lg-12 form-field">
+                                            <input type="text" formControlName="usdot" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">US DOT PIN#:&nbsp;</label>
+                                        <div class="col-lg-12 form-field">
+                                            <input type="text" formControlName="usdotpin" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">MC Number:&nbsp;</label>
+                                        <div class="col-lg-12 form-field">
+                                            <input type="text" formControlName="mcn" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">MC Portal User ID:&nbsp;</label>
+                                        <div class="col-lg-12 form-field">
+                                            <input type="text" formControlName="mcpu" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">MC PIN:&nbsp;</label>
+                                        <div class="col-lg-12 form-field">
+                                            <input type="text" formControlName="mcpin" class="form-control">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="control-label">Employer Identification
+                                            Number:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <input type="text" formControlName="ein" class="form-control">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="control-label">Quebec NEQ#:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <input type="text" formControlName="quebec" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">IFTA Account#:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <input type="text" formControlName="ifta" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">IRP Account#:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <input type="text" formControlName="irp" class="form-control">
+                                            </div>
+                                        </div>
+                                        <!-- <div class="form-group">
+                                            <label class="control-label">IRP Fleet 1 expiry:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <div class="input-icon right">
+                                                    <i class="fa fa-calendar" [owlDateTimeTrigger]="dt4"></i>
+                                                    <input class="form-control" formControlName="irpf1" class="form-control" (keypress)="false" [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4" name="dt4">
+                                                    <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">IRP Fleet 2 expiry:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <div class="input-icon right">
+                                                    <i class="fa fa-calendar" [owlDateTimeTrigger]="dt5"></i>
+                                                    <input class="form-control" formControlName="irpf2" class="form-control" (keypress)="false" [owlDateTimeTrigger]="dt5" [owlDateTime]="dt5" name="dt5">
+                                                    <owl-date-time [pickerType]="'calendar'" #dt5></owl-date-time>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div class="form-group">
+                                            <label class="control-label">Insurance Company:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <input type="text" formControlName="ic" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Insurance Policy#:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <input type="text" formControlName="ip" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Insurance Policy Expiry date:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <div class="input-icon right">
+                                                    <i class="fa fa-calendar" [owlDateTimeTrigger]="dt6"></i>
+                                                    <input class="form-control" formControlName="iped" class="form-control" (keypress)="false" [owlDateTimeTrigger]="dt6" [owlDateTime]="dt6" name="dt6">
+                                                    <owl-date-time [pickerType]="'calendar'" #dt6></owl-date-time>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">KYU#:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <input type="text" formControlName="kyu" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">NM WDT ID#:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <input type="text" formControlName="nmwdt" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">NY HUT Tax ID#:&nbsp;</label>
+                                            <div class=" col-sm-12 form-field">
+                                                <input type="text" formControlName="nyhut" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Oregon MC Permit#:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <input type="text" formControlName="oregon" class="form-control">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="control-label">U.S. CBP DTOPS Account#:&nbsp;</label>
+                                            <div class=" col-sm-12 form-field">
+                                                <input type="text"formControlName="uscbp" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">SCAC Code:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <input type="text" formControlName="scac" class="form-control">
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        <!-- <h4 class="control-label form-group">Documents</h4>
+                                            <div class="form-group">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <th>Type</th>
+                                                        <th>Reference #</th>
+                                                        <th>Issue Date</th>
+                                                        <th>Expiry Date</th>
+                                                        <th>Document</th>
+                                                        <th>Actions</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of allFields; let i = index">
+                                                            <td><input type="text" class="form-control"></td>
+                                                            <td><input type="text" class="form-control"></td>
+                                                            <td>
+                                                                <input class="form-control" class="form-control" [owlDateTimeTrigger]="nsc7" [owlDateTime]="nsc7" name="nsc7">
+                                                                <owl-date-time [pickerType]="'calendar'" #nsc7></owl-date-time>
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" class="form-control" [owlDateTimeTrigger]="nsc8" [owlDateTime]="nsc8" name="nsc8">
+                                                                <owl-date-time [pickerType]="'calendar'" #nsc8></owl-date-time>
+                                                            </td>
+                                                            <td><input type="file" class="form-control"></td>
+                                                            <td style="text-align: center !important;cursor: pointer;" *ngIf="i == 0"><a (click)="allFields.push(1)"><mat-icon class="add">add</mat-icon></a></td>
+                                                            <td style="text-align: center !important;cursor: pointer;" *ngIf="i != 0"><a (click)="removeItem(i)"><mat-icon class="delete">delete</mat-icon></a></td>
+                                                        </tr>
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        -->
+                                    </div>
+                                    
+                                    <!--U.S. Based - International Travel-->
+                                    <div *ngIf="isUsInternationalTravel">
+                                        <h3 class="control-label form-group">U.S. Based - International Travel</h3>
+                                        <div class="form-group">
+                                            <label class="control-label add-member-label">US DOT#:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <input type="text" formControlName="usdot" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">US DOT PIN#:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <input type="text" formControlName="usdotpin" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">MC Number:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <input type="text" formControlName="mcn" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">MC Portal User ID:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <input type="text" formControlName="mcpu" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">MC PIN:&nbsp;</label>
+                                            <div class="col-lg-12 form-field">
+                                                <input type="text" formControlName="mcpin" class="form-control">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="control-label">Employer Identification
+                                                Number:&nbsp;</label>
+                                                <div class="col-lg-12 form-field">
+                                                    <input type="text" formControlName="ein" class="form-control">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="control-label">Quebec NEQ#:&nbsp;</label>
+                                                <div class="col-lg-12 form-field">
+                                                    <input type="text" formControlName="quebec" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label ">IFTA Account#:&nbsp;</label>
+                                                <div class="col-lg-12 form-field">
+                                                    <input type="text" formControlName="ifta" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">IRP Account#:&nbsp;</label>
+                                                <div class="col-lg-12 form-field">
+                                                    <input type="text" formControlName="irp" class="form-control">
+                                                </div>
+                                            </div>
+                                            <!-- <div class="form-group">
+                                                <label class="control-label">IRP Fleet 1 expiry:&nbsp;</label>
+                                                <div class="col-lg-12 form-field">
+                                                    <div class="input-icon right">
+                                                        <i class="fa fa-calendar" [owlDateTimeTrigger]="dt7"></i>
+                                                        <input class="form-control" formControlName="irpf1" [owlDateTimeTrigger]="dt7" (keypress)="false" [owlDateTime]="dt7" name="dt7">
+                                                        <owl-date-time [pickerType]="'calendar'" #dt7></owl-date-time>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">IRP Fleet 2 expiry:&nbsp;</label>
+                                                <div class="col-lg-12 form-field">
+                                                    <div class="input-icon right">
+                                                        <i class="fa fa-calendar" [owlDateTimeTrigger]="dt8"></i>
+                                                        <input class="form-control" formControlName="irpf2" class="form-control" (keypress)="false" [owlDateTimeTrigger]="dt8" [owlDateTime]="dt8" name="dt8">
+                                                        <owl-date-time [pickerType]="'calendar'" #dt8></owl-date-time>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <div class="form-group">
+                                                <label class="control-label">Insurance Company:&nbsp;</label>
+                                                <div class="col-lg-12 form-field">
+                                                    <input type="text" formControlName="ic" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">Insurance Policy#:&nbsp;</label>
+                                                <div class="col-lg-12 form-field">
+                                                    <input type="text" formControlName="ip" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">Insurance Policy Expiry date:&nbsp;</label>
+                                                <div class="col-lg-12 form-field">
+                                                    <div class="input-icon right">
+                                                        <i class="fa fa-calendar" [owlDateTimeTrigger]="dt9"></i>
+                                                        <input class="form-control" formControlName="iped" class="form-control" (keypress)="false" [owlDateTimeTrigger]="dt9" [owlDateTime]="dt9" name="dt9">
+                                                        <owl-date-time [pickerType]="'calendar'" #dt9></owl-date-time>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">KYU#:&nbsp;</label>
+                                                <div class="col-lg-12 form-field">
+                                                    <input type="text" formControlName="kyu" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">NM WDT ID#:&nbsp;</label>
+                                                <div class="col-lg-12 form-field">
+                                                    <input type="text" formControlName="nmwdt" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">NY HUT Tax ID#:&nbsp;</label>
+                                                <div class=" col-sm-12 form-field">
+                                                    <input type="text" formControlName="nyhut" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">Oregon MC Permit#:&nbsp;</label>
+                                                <div class="col-lg-12 form-field">
+                                                    <input type="text" formControlName="oregon" class="form-control">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="control-label">U.S. CBP DTOPS Account#:&nbsp;</label>
+                                                <div class=" col-sm-12 form-field">
+                                                    <input type="text"formControlName="uscbp" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">SCAC Code:&nbsp;</label>
+                                                <div class="col-lg-12 form-field">
+                                                    <input type="text" formControlName="scac" class="form-control">
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- <h4 class="control-label form-group">Documents</h4>
+                                                
+                                                <div class="form-group">
+                                                    <table class="table table-striped table-bordered">
+                                                        <thead>
+                                                            <th>Type</th>
+                                                            <th>Reference #</th>
+                                                            <th>Issue Date</th>
+                                                            <th>Expiry Date</th>
+                                                            <th>Document</th>
+                                                            <th>Actions</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let item of allFields; let i = index">
+                                                                <td><input type="text" class="form-control"></td>
+                                                                <td><input type="text" class="form-control"></td>
+                                                                <td>
+                                                                    <input class="form-control" class="form-control" [owlDateTimeTrigger]="nsc23" [owlDateTime]="nsc23" name="nsc23">
+                                                                    <owl-date-time [pickerType]="'calendar'" #nsc23></owl-date-time>
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" class="form-control" [owlDateTimeTrigger]="nsc24" [owlDateTime]="nsc24" name="nsc24">
+                                                                    <owl-date-time [pickerType]="'calendar'" #nsc24></owl-date-time>
+                                                                </td>
+                                                                <td><input type="file" class="form-control"></td>
+                                                                <td style="text-align: center !important;cursor: pointer;" *ngIf="i == 0"><a (click)="allFields.push(1)"><mat-icon class="add">add</mat-icon></a></td>
+                                                                <td  style="text-align: center !important;cursor: pointer;" *ngIf="i != 0"><a (click)="removeItem(i)"><mat-icon class="delete">delete</mat-icon></a></td>
+                                                            </tr>
+                                                            
+                                                        </tbody>
+                                                    </table>
+                                                </div> -->
+                                                
+                                            </div>
+                                            <div *ngIf="isUsUsTravel">
+                                                <h3 class="control-label form-group">U.S. Based - U.S. Travel only</h3>
+                                                <div class="form-group">
+                                                    <label class="control-label">US DOT#:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <input type="text" formControlName="usdot" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">US DOT PIN#:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <input type="text" formControlName="usdotpin" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">MC Number:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <input type="text" formControlName="mcn" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">MC Portal User ID:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <input type="text" formControlName="mcpu" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">MC PIN:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <input type="text" formControlName="mcpin" class="form-control">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label class="control-label">Employer Identification Number:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <input type="text" formControlName="ein" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">IFTA Account#:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <input type="text" formControlName="ifta" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">IRP Account#:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <input type="text" formControlName="irp" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="form-group">
+                                                    <label class="control-label">IRP Fleet 1 expiry:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <div class="input-icon right">
+                                                            <i class="fa fa-calendar" [owlDateTimeTrigger]="dt10"></i>
+                                                            
+                                                            <input class="form-control" formControlName="irpf1" class="form-control"  (keypress)="false"[owlDateTimeTrigger]="dt10" [owlDateTime]="dt10" name="dt10">
+                                                            <owl-date-time [pickerType]="'calendar'" #dt10></owl-date-time>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">IRP Fleet 2 expiry:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <div class="input-icon right">
+                                                            <i class="fa fa-calendar" [owlDateTimeTrigger]="dt11"></i>
+                                                            <input class="form-control" formControlName="irpf2" class="form-control" (keypress)="false" [owlDateTimeTrigger]="dt11" [owlDateTime]="dt11" name="dt11">
+                                                            <owl-date-time [pickerType]="'calendar'" #dt11></owl-date-time>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                                <div class="form-group">
+                                                    <label class="control-label">Insurance Company:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <input type="text" formControlName="ic" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Insurance Policy#:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <input type="text" formControlName="ip" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Insurance Policy Expiry date:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <div class="input-icon right">
+                                                            <i class="fa fa-calendar" [owlDateTimeTrigger]="dt12"></i>
+                                                            <input class="form-control" formControlName="iped" class="form-control" (keypress)="false" [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12" name="dt12">
+                                                            <owl-date-time [pickerType]="'calendar'" #dt12></owl-date-time>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">KYU#:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <input type="text" formControlName="kyu" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">NM WDT ID#:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <input type="text" formControlName="nmwdt" class="form-control">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label class="control-label">NY HUT Tax ID#:&nbsp;</label>
+                                                    <div class=" col-sm-12 form-field">
+                                                        <input type="text" formControlName="nyhut" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Oregon MC Permit#:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <input type="text" formControlName="oregon" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">SCAC Code:&nbsp;</label>
+                                                    <div class="col-lg-12 form-field">
+                                                        <input type="text" formControlName="scac" class="form-control">
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- <h4 class="control-label form-group">Documents</h4>
+                                                    
+                                                    <div class="form-group">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <th>Type</th>
+                                                                <th>Reference #</th>
+                                                                <th>Issue Date</th>
+                                                                <th>Expiry Date</th>
+                                                                <th>Document</th>
+                                                                <th>Actions</th>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let item of allFields; let i = index">
+                                                                    <td><input type="text" class="form-control"></td>
+                                                                    <td><input type="text" class="form-control"></td>
+                                                                    <td>
+                                                                        <input class="form-control" class="form-control" [owlDateTimeTrigger]="nsc37" [owlDateTime]="nsc37" name="nsc37">
+                                                                        <owl-date-time [pickerType]="'calendar'" #nsc37></owl-date-time>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input class="form-control" class="form-control" [owlDateTimeTrigger]="nsc38" [owlDateTime]="nsc38" name="nsc38">
+                                                                        <owl-date-time [pickerType]="'calendar'" #nsc38></owl-date-time>
+                                                                    </td>
+                                                                    <td><input type="file" class="form-control"></td>
+                                                                    <td style="text-align: center !important;cursor: pointer;" *ngIf="i == 0"><a (click)="allFields.push(1)"><mat-icon class="add">add</mat-icon></a></td>
+                                                                    <td style="text-align: center !important;cursor: pointer;" *ngIf="i != 0"><a (click)="removeItem(i)"><mat-icon class="delete">delete</mat-icon></a></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div> -->
+                                                    
+                                                </div>
+                                                <!-- <h4 class="control-label form-group">Documents</h4>
+                                                    <div *ngIf="!totalCount" class="form-group">
+                                                        <table class="table table-striped table-bordered">
+                                                            <thead class="tbl-head">
+                                                                <th>Type</th>
+                                                                <th>Reference #</th>
+                                                                <th>Issue Date</th>
+                                                                <th>Expiry Date</th>
+                                                                <th>Document</th>
+                                                                <th>Actions</th>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr formArrayName="jobCodeDetails" *ngFor="let item of carrierDetailsForm.get('jobCodeDetails')['controls']; let index = index;">
+                                                                    <ng-container [formGroupName]="index">
+                                                                        <td><input type="text" formControlName="docType" class="form-control"></td>
+                                                                        <td><input type="text" formControlName="docRef" class="form-control"></td>
+                                                                        <td>
+                                                                            <input class="form-control" formControlName="issueDate" class="form-control" [owlDateTimeTrigger]="nsc1" (keypress)="false" [owlDateTime]="nsc1" name="nsc1">
+                                                                            <owl-date-time [pickerType]="'calendar'" #nsc1></owl-date-time>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input class="form-control" formControlName="expiryDate" class="form-control" [owlDateTimeTrigger]="nsc2" (keypress)="false"  [owlDateTime]="nsc2" name="nsc2">
+                                                                            <owl-date-time [pickerType]="'calendar'" #nsc2></owl-date-time>
+                                                                        </td>
+                                                                        <td><input type="file" (change)="handleFileSelect($event, index)" formControlName="filesSelect" class="form-control"></td>
+                                                                        <td style="text-align: center !important;cursor: pointer;" *ngIf="index == 0"><a (click)="addItem()"><mat-icon class="add">add</mat-icon></a></td>
+                                                                        <td  style="text-align: center !important;cursor: pointer;" *ngIf="index > 0"><a (click)="removeItem(index)"><mat-icon class="delete">delete</mat-icon></a></td>
+                                                                    </ng-container>
+                                                                </tr>
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div *ngIf="totalCount" fxLayout="row wrap" #resizedDiv>
+                                                        <div class="flex-p w-100">
+                                                            <div class="table-responsive">
+                                                                <table id="example2" class="table table-bordered table-hover">
+                                                                    <thead class="tbl-head">
+                                                                        <tr class="tr-grid-header">
+                                                                            <th>Document Type</th>
+                                                                            <th>Reference #</th>
+                                                                            <th>Issue Date</th>
+                                                                            <th>Expiry Date</th>
+                                                                            <th>Document</th>
+                                                                            <th>Delete</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr *ngFor="let item of information[0].trs_tbl_corporate_info_documents">
+                                                                            <td>{{item.document_type}}</td>
+                                                                            <td>{{item.ref_number}}</td>
+                                                                            <td>{{item.new_issue_date}}</td>
+                                                                            <td>{{item.new_expiry_date}}</td>
+                                                                            <td style="text-align:center !important;"><a [href]="item.document_name" target="_blank"><i class="fa fa-file-pdf-o" style="cursor: pointer;;font-size:16px!important;"></i></a></td>
+                                                                            <td>
+                                                                                <a mwlConfirmationPopover
+                                                                                [popoverTitle]="popoverTitle"
+                                                                                [popoverMessage]="popoverMessage"
+                                                                                placement="left"
+                                                                                (confirm)="deleteVisit()"
+                                                                                (cancel)="cancelClicked = true" [appendToBody]="true">
+                                                                                <i style="cursor: pointer;font-size:16px!important;" matTooltip="Delete Document" class="fa fa-trash red"></i>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                                <!-- <div *ngIf="totalCount" fxLayout="row wrap" #resizedDiv></div> -->
+                                                <h4 class="control-label form-group">Documents:</h4>
+                                                <div *ngIf="totalCount" class="form-group"> 
+                                                    <table id="example2" class="table table-bordered table-hover">
+                                                        <thead class="tbl-head">
+                                                            <tr class="tr-grid-header">
+                                                                <!-- <th>Document Type</th> -->
+                                                                <th (click)="Refclicked(referenceAssending = !referenceAssending)" style="cursor: pointer;">Document Name</th>
+                                                                <th (click)="issueDateClicked(issueAssending = !issueAssending)" style="cursor: pointer;">Issue Date</th>
+                                                                <th (click)="expDateClicked(expAssending = !expAssending)" style="cursor: pointer;min-width: 95px;">Expiry Date</th>
+                                                                <th>Document</th>
+                                                                <th (click)="appAccessAssending(appAssending = !appAssending)" style="cursor: pointer;min-width: 92px;">App Access</th>
+                                                                <th>Comments</th>
+                                                                <th>Delete</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngIf="showEmptyDocs"><td colspan="7">No records found</td></tr>
+                                                            <tr *ngFor="let item of information[0].trs_tbl_corporate_info_documents">
+                                                                <!-- <td>{{item.document_type}}</td> -->
+                                                                <td>{{item.document_name ? item.document_name:'-'}}</td>
+                                                                <td>{{item.new_issue_date ? item.new_issue_date : '-'}}</td>
+                                                                <td>{{item.new_expiry_date ? item.new_expiry_date : '-'}}</td>
+                                                                <td style="text-align:center !important;"><a [href]="item.document_s3_url" matTooltip="Download Document" target="_blank"><i class="fa fa-file-pdf-o" style="cursor: pointer;;font-size:16px!important;"></i></a></td>
+                                                                <td style="text-align: center !important"><mat-checkbox (click)="changeappAccess(item)" [checked]="item.app_access"></mat-checkbox></td>
+                                                                <td style="text-align:center !important;"><a  matTooltip="View Comment"  (click)="openComments(item)"><i class="fa fa-comment" style="cursor: pointer;;font-size:16px!important;color: cornflowerblue" ></i></a></td>
+                                                                <td *ngIf="canDelete" style="text-align:center !important;">
+                                                                    <a mwlConfirmationPopover
+                                                                    [popoverTitle]="popoverTitle"
+                                                                    [popoverMessage]="popoverMessage"
+                                                                    placement="left"
+                                                                    (confirm)="deleteVisit(item,null)"
+                                                                    (cancel)="cancelClicked = true" [appendToBody]="true">
+                                                                    <i style="cursor: pointer;font-size:16px!important;" matTooltip="Delete Document" class="fa fa-trash red"></i>
+                                                                </a>
+                                                            </td>
+                                                            <td *ngIf="!canDelete" style="text-align:center !important;">
+                                                               - 
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <h4 *ngIf="canCreate" class="control-label form-group">Add Documents:</h4>
+                                            <div *ngIf="canCreate" class="form-group">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead class="tbl-head">
+                                                        <!-- <th>Document Type</th> -->
+                                                        <th style="min-width: 130px;">Document Name</th>
+                                                        <th>Issue Date</th>
+                                                        <th>Expiry Date</th>
+                                                        <th style="min-width: 92px;">App Access</th>
+                                                        <th>Document</th>
+                                                        <th>Actions</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr formArrayName="jobCodeDetails" *ngFor="let item of carrierDetailsForm.get('jobCodeDetails')['controls']; let index = index;">
+                                                            <ng-container [formGroupName]="index">
+                                                                <!-- <td><input type="text" formControlName="docType" maxlength="15" class="form-control"></td> -->
+                                                                <td><input type="text" formControlName="docRef" maxlength="50" class="form-control"></td>
+                                                                <td>
+                                                                    <input class="form-control" [max] = 'minDate' formControlName="issueDate" class="form-control" [owlDateTimeTrigger]="nsc1" (keypress)="false" [owlDateTime]="nsc1" name="nsc1">
+                                                                    <owl-date-time [pickerType]="'calendar'" #nsc1></owl-date-time>
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" [min] = 'maxDate' formControlName="expiryDate" class="form-control" [owlDateTimeTrigger]="nsc2" (keypress)="false"  [owlDateTime]="nsc2" name="nsc2">
+                                                                    <owl-date-time [pickerType]="'calendar'" #nsc2></owl-date-time>
+                                                                </td>
+                                                                <td style="text-align: center!important ;padding-top: 14px;"><mat-checkbox formControlName="appAccess"></mat-checkbox></td>
+                                                                <td><input type="file" (change)="handleFileSelect($event, index)" formControlName="filesSelect" class="form-control" style="overflow:hidden"></td>
+                                                                <td style="text-align: center !important;cursor: pointer;" *ngIf="index == 0"><a (click)="addItem()"><mat-icon class="add">add</mat-icon></a></td>
+                                                                <td  style="text-align: center !important;cursor: pointer;" *ngIf="index > 0"><a (click)="removeItem(index)"><mat-icon class="delete">delete</mat-icon></a></td>
+                                                            </ng-container>
+                                                        </tr>
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                
+                                <mat-dialog-actions align="end" style="float:right;padding-right: 48px;">
+                                    <button *ngIf="!totalCount" mat-raised-button [ngClass]="(!commanDetailsForm.valid) ? '':'btn-primary'" [disabled]="(!commanDetailsForm.valid)" (click)="saveInformation()">Save</button>
+                                    <button *ngIf="(totalCount)&&(canUpdate)" mat-raised-button [ngClass]="(!commanDetailsForm.valid) ? '':'btn-primary'" [disabled]="(!commanDetailsForm.valid)" (click)="updateInformation()">Update</button>
+                                    <!-- <button mat-raised-button class="add-dark-hover btn-default">Close</button> -->
+                                </mat-dialog-actions>
+                            </div>
+                        </div>
+                    </div>
+                </div>

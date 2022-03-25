@@ -1,0 +1,18 @@
+<div class="NewHeader">
+    <h1 mat-dialog-title> Add Document</h1>
+  </div>
+  <div mat-dialog-content>
+      <form  novalidate [formGroup]="docxForm">
+        <div class="form-group">
+          <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label newMarginClass" for="pwd">Document: </label>
+          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <input type="file" formControlName="filesSelect" (change)="handleFileSelect($event)" style="margin-top:3px!important;" required>
+          </div>
+        </div>
+      </form>
+    </div>
+    <mat-dialog-actions align="end">
+      <button  mat-raised-button  [ngClass]="!docxForm.valid ? '':'btn-primary'" [disabled]="!docxForm.valid" (click)="saveYear()" ><mat-icon>update</mat-icon>&nbsp;Upload</button>
+      <!-- <button mat-raised-button [ngClass]="!docxForm.valid ? '':'btn-primary'" [disabled]="!docxForm.valid" (click)="saveYear()">Upload</button> -->
+      <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+    </mat-dialog-actions> 

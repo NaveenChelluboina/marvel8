@@ -1,0 +1,35 @@
+<div class="NewHeader">
+  <h1 mat-dialog-title> History</h1>
+</div>
+
+<h4><b>Asset ID :</b> {{assetHistory.asset_number_id}} </h4>
+<div mat-dialog-content>
+  <div fxLayout="row wrap" #resizedDiv style="margin-top:20px!important;">
+    <div class="flex-p w-100" style="padding: 1px !important;">
+      <div class="table-responsive">
+        <table id="example2" class="table table-bordered table-hover">
+          <thead class="tbl-head">
+            <tr class="tr-grid-header">
+              <th (click)="LastNameClicked(lastnameAssending = !lastnameAssending)" style="cursor: pointer;">Driver</th>
+              <th (click)="Fromdate(fromdateAssending = !fromdateAssending)" style="cursor: pointer;">Associated Date</th>
+              <th (click)="Todate(todateAssending = !todateAssending)" style="cursor: pointer;">End Date</th>
+              <th (click)="NumberClicked(daysAssending = !daysAssending)" style="cursor: pointer;">Days</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="showEmpty"><td colspan="4">No records found</td></tr>
+            <tr *ngFor="let item of assetHistory.trs_tbl_driver_asset_histories">
+              <td>{{item.trs_tbl_driver.driver_last_name + ' ' + item.trs_tbl_driver.driver_first_name}}</td>
+              <td>{{item.date}}</td>
+              <td>{{item.to_date ? item.to_date : '-'}}</td>
+              <td>{{item.Difference_In_Days}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+</mat-dialog-actions>

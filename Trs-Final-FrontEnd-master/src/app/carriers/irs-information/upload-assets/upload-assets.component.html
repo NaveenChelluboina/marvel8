@@ -1,0 +1,141 @@
+<!-- <div fxLayout="row wrap">
+    <div class="table-responsive flex-p">
+        <button type="button" class="btn btn-success" style="margin-bottom: 5px;margin-left: 5px;float: right" (click)="savePermissions()"><i class="fa fa-floppy-o"></i>Save</button>
+        <button type="button" class="btn btn-default" style="margin-bottom: 5px;float:right" (click)="goBack()"><i class="fa fa-arrow-left"></i>Back</button>
+        <table id="example2" class="table table-bordered table-hover">
+            <tbody>
+                <tr *ngFor="let screenName of screens">
+                    <td>{{screenName.name}}</td>
+                    <td class="style"><input type="checkbox" checked></td>
+                    <td class="style"><input type="checkbox" checked></td>
+                    <td class="style"><input type="checkbox" checked></td>
+                    <td class="style"><input type="checkbox" checked></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div> -->
+
+<div fxLayout="row wrap">
+    <div class="w-100">
+        <div *ngIf="is_year == 1" class="col-lg-12 col-md-12" style="margin-left:-15px;">
+            <div class="flex-p col-lg-6 col-md-6">
+                <h3>Add New Document</h3><br>
+                <span>Year : {{Currentyear}}</span>
+                <form novalidate style="margin-left:-6px;" [formGroup]="documentsForm">
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Document Name:&nbsp;</label>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <input type="text" formControlName="documentName" class="form-control" maxlength="50" placeholder="Enter document name" required>
+                        </div>
+                    </div><br><br>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Upload Document:&nbsp;</label>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 margins">
+                            <input type="file" (change)="handleFileSelect($event)" formControlName="document" required>
+                        </div>
+                    </div>
+                </form><br>
+                
+            </div>
+        </div>
+        <div *ngIf="is_year == 0" class="col-lg-12 col-md-12" style="margin-left:-15px;">
+            <div class="flex-p col-lg-6 col-md-6">
+                <!-- <h3>Add New Document</h3><br> -->
+                <h3>Year : {{Currentyear}}</h3><br>
+                
+                <div class="form-group">
+                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Document Name:&nbsp;</label>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <span>{{document.document_name}}</span>
+                        <!-- <input type="text" formControlName="documentName" class="form-control" maxlength="100" placeholder="Enter document name" required> -->
+                    </div>
+                </div><br>
+                <div class="form-group">
+                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Document:&nbsp;</label>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 margins">
+                        <a [href]="document.document_path"><i class="fa fa-download add" style="cursor: pointer;"></i></a>
+                        <!-- <input type="file" (change)="handleFileSelect($event)" formControlName="document" required> -->
+                    </div>
+                </div>
+                <br>
+                
+            </div>
+        </div>
+        <div fxLayout="row wrap" style="margin-top: 20px;padding: 8px;">
+            <h5>Please assign assets to this document</h5>
+            <div class="col-lg-12">
+                <!-- <div class="col-md-2" style="margin-top: 22px !important;">
+                    <div class="col-md-12" style="padding: 0;
+                    margin-top: 14px;">
+                </div>
+                <div class="ifta-tabs-block col-md-12">
+                    <tabset [vertical]="true" type="pills">
+                        <tab heading="Fleet 1" >
+                        </tab>
+                        <tab heading="Fleet 2" >
+                        </tab>
+                        <tab heading="Fleet 3" >
+                        </tab>
+                        <tab heading="Fleet 4" >
+                        </tab>
+                        <tab heading="Fleet 5" >
+                        </tab>
+                        <tab heading="Fleet 6" >
+                        </tab>
+                        <tab heading="Fleet 7" >
+                        </tab>
+                    </tabset>
+                </div>
+            </div> -->
+            <div class="col-lg-6">
+                <div class="">
+                    <div class="table-responsive flex-p">
+                        
+                        <!-- <button type="button" class="btn btn-success" style="margin-bottom: 5px;float: right;height: 40px;" (click)="savePermissions()"><i class="fa fa-floppy-o"></i>Save</button>
+                            <div class="file btn btn-lg btn-success pull-right upload"   style="margin-left: 10px;margin-bottom: 5px;height: auto;">
+                                <mat-icon class="upload-icon">cloud_upload</mat-icon>Upload Doc
+                                <input title="select file" style="cursor: pointer !important" class="file" type="file" name="file"  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                            </div>
+                            <button type="button" class="btn btn-success" style="margin-bottom: 5px;margin-left: 5px;float: right"><i class="fa fa-cloud-upload"></i>Upload Doc</button>
+                            <button type="button" class="btn btn-default" style="margin-bottom: 5px;float:right" (click)="goBack()"><i class="fa fa-arrow-left"></i>Back</button> -->
+                            <table *ngIf="is_year == 1" id="example2" class="table table-bordered table-hover col-lg-6">
+                                <tbody>
+                                    <tr *ngFor="let screenName of assetsToAdd">
+                                        <td style = "width: 30px !important;" class="style"><mat-checkbox [(ngModel)] = "screenName.status" (change)="onPermissionChange(screenName)"></mat-checkbox></td>
+                                        <td>{{screenName.asset_name}}</td>
+                                        <!-- <td style = "width: 30px !important;" class="style"><input type="checkbox" checked> </td>
+                                            <td>{{screenName.asset_number_id}}</td>
+                                            <td style = "width: 30px !important;" class="style"><input type="checkbox" checked> </td>
+                                            <td>{{screenName.asset_number_id}}</td>
+                                            <td style = "width: 30px !important;" class="style"><input type="checkbox" checked> </td>
+                                            <td>{{screenName.asset_number_id}}</td> -->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table *ngIf="is_year == 0" id="example2" class="table table-bordered table-hover col-lg-6">
+                                    <tbody>
+                                        <tr *ngFor="let screenName of new_added_documentation">
+                                            <td style = "width: 30px !important;" class="style"><mat-checkbox [(ngModel)] = "screenName.status" (change)="onPermissionsChange(screenName)"></mat-checkbox></td>
+                                            <td>{{screenName.trs_tbl_asset.asset_number_id}}</td>
+                                            <!-- <td style = "width: 30px !important;" class="style"><input type="checkbox" checked> </td>
+                                                <td>{{screenName.asset_number_id}}</td>
+                                                <td style = "width: 30px !important;" class="style"><input type="checkbox" checked> </td>
+                                                <td>{{screenName.asset_number_id}}</td>
+                                                <td style = "width: 30px !important;" class="style"><input type="checkbox" checked> </td>
+                                                <td>{{screenName.asset_number_id}}</td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <mat-dialog-actions>
+                    <button *ngIf="is_year == 1" mat-raised-button class="btn-primary" style="margin-left:5px!important" (click)="addNewDocument()"><mat-icon>save</mat-icon>&nbsp;Save</button>
+                    <button  *ngIf="(is_year == 0)&&(canUpdate)" mat-raised-button class="btn-primary" style="margin-left:5px!important" (click)="updateAssets()"><mat-icon>save</mat-icon>&nbsp;Save</button>
+                    <button type="button" class="btn btn-default" style="padding: 8px!important;margin-left: 5px" (click)="goBack()"><i class="fa fa-arrow-left"></i>Back</button>
+                </mat-dialog-actions>
+            </div>
+        </div>

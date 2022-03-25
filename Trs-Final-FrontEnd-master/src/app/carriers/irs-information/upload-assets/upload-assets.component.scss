@@ -1,0 +1,70 @@
+.style {
+    text-align: center !important;
+}
+
+.newMarginClass {
+    margin-top: 7px!important;
+}
+.ifta-block {
+    padding: 20px 0px !important;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding-top: 0px !important;
+}
+
+.ifta-tabs-block {
+    border: 1px solid #ddd;
+    margin-top: 12px;
+    padding: 0px;
+}
+
+.ifta-table-block {}
+
+::ng-deep .nav-pills>li.active>a,
+::ng-deep .nav-pills>li.active>a:focus,
+::ng-deep .nav-pills>li.active>a:hover {
+    color: #fff;
+    background-color: #50636d !important;
+}
+
+::ng-deep .nav-stacked>li {
+    float: none;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.v-align-middle {
+    vertical-align: middle !important;
+}
+.add {
+    color:rgb(80,99,109);
+}
+.upload {
+    margin-right: 10px;
+    height: 40px;
+    padding: 3px 9px 6px 7px!important;
+    font-weight: 500;
+}
+
+div.file {
+    position: relative;
+    overflow: hidden;
+}
+
+input.file {
+    position: absolute;
+    font-size: 50px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+
+.upload-icon {
+    padding-top: 6px;
+    padding-right: 30px!important;
+    vertical-align: text-bottom;
+}
+
+.btn-default {
+    border: none;
+}

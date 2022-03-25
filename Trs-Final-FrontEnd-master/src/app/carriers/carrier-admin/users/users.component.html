@@ -1,0 +1,113 @@
+<div fxLayout="row wrap" #resizedDiv>
+    <div class="flex-p w-100">
+        <div class="row" style="margin-bottom:14px;">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="w-100 flex-p">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="w-100 flex-p">
+                    <button *ngIf="canCreate" mat-raised-button class="pull-right btn-primary" (click)="openUserDialog(null)">
+                        <mat-icon>person_add</mat-icon> Add
+                        User
+                    </button>
+                    <button mat-raised-button color="primary" style="color: white !important;" class="pull-right filter-hover margin-right-10" (click)="filterToggle = !filterToggle">
+                        <mat-icon>filter_list</mat-icon> Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p w-100" *ngIf="filterToggle">
+                <mat-card class="filter">
+                    <mat-card-content>
+                        <div class="row col-sm-12">
+                            <div class="col-sm-4">
+                                <div class="col-sm-2 newMarginClass">
+                                    User: 
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" placeholder="Enter User Name" class="form-control" [formControl]="userControl">
+                                </div>
+                            </div>
+                            <div class="col-sm-4" style="margin-left:-65px!important">
+                                <div class="col-sm-2 newMarginClass">
+                                    Status: 
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-select placeholder="--Search by Status--" class="form-control" [(ngModel)]="status_filter">
+                                        <mat-option *ngFor="let option of status" [value]="option.id">{{option.value}}</mat-option>
+                                    </mat-select>
+                                </div>
+                            </div>
+                            <div class="col-lg-1" style="margin-left:-50px!important">
+                                <button type="button" class="btn btn-success  pull-right" (click)="filterSearch()">Search</button>
+                            </div>
+                            <div class="col-lg-1">
+                                <button type="button" class="btn filter-hover" style="background-color:#37474f; color:#fff !important" (click)="clearFilters()">Clear</button>
+                            </div>
+                        </div>
+                        
+                        
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+        <div fxLayout="row wrap">
+            <div class="table-responsive topmargin">
+                <table id="example2" class="table table-bordered table-hover">
+                    <thead class="tbl-head">
+                        <tr class="tr-grid-header">
+                            <th (click)="NameClicked(nameAssending = !nameAssending)" style="cursor: pointer;">User Name</th>
+                            <th (click)="RoleClicked(roleAssending = !roleAssending)" style="cursor: pointer;">User Type</th>
+                            <th (click)="EmailClicked(emailAssending = !emailAssending)" style="cursor: pointer;">Email ID</th>
+                            <th (click)="ContactClicked(contactAssending = !contactAssending)" style="cursor: pointer;" class="text-center">Cell Phone</th>
+                            <!-- <th class="text-center">Permissions</th> -->
+                            <th (click)="ActiveClicked(statusAssending = !statusAssending)" style="cursor: pointer;" class="text-center">Status</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr *ngIf="showEmpty"><td colspan="6" class="showEmptyClass">No records found</td></tr>
+                        <!-- <tr *ngIf="showEmpty"><td colspan="7">No records found</td></tr> -->
+                        <tr *ngFor="let user of Users">
+                            <td>{{user.user_name}}</td>
+                            <td>{{user.sortRole}}</td>
+                            <td>{{user.user_email}}</td>
+                            <td class="text-center">{{user.phone}}</td>
+                            <!-- <td class="text-center"><a routerLink="permissions">{{user.Permissions}}</a></td> -->
+                            <!-- <td class="inner-screen">{{user.Permissions}}</td> -->
+                            <td *ngIf="canUpdate" class="pad-left inner-screen text-center" style="cursor:pointer">
+                                <a mwlConfirmationPopover
+                                [popoverTitle]="popoverStatusTitle" 
+                                [popoverMessage]="popoverStatusMessage"
+                                placement="left"
+                                (confirm)="updateUsers(user.user_id,!user.is_active,'active')"
+                                (cancel)="cancelClicked = true" [appendToBody]="true">
+                                    <span *ngIf="!user.is_active" style="color:red">Inactive</span>
+                                    <span *ngIf="user.is_active" style="color:#1c4f86;">Active</span>
+                                </a>
+                            </td>
+                            <td *ngIf="!canUpdate" class="pad-left inner-screen text-center" style="cursor:pointer">
+                                <a>
+                                  <span *ngIf="!user.is_active" style="color:red">Inactive</span>
+                                  <span *ngIf="user.is_active" style="color:#1c4f86;">Active</span>
+                                </a>
+                              </td>
+                            <td *ngIf="canUpdate" class="text-center">
+                                <a matTooltip="Update User" style="margin-right: 10px; cursor: pointer;font-size:16px!important;color:#0987e8d1" (click)="openUserDialog(user)">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a *ngIf="canDelete">
+                                        <i style="cursor: pointer;font-size:16px!important;" matTooltip="Delete User" (click)="openDeleteDialog(user)" class="fa fa-trash red"></i>
+                                    </a>
+                        </td>
+                        <td *ngIf="!canUpdate" class="text-center">-</td>
+                    </tr>
+                </tbody>
+            </table>
+            <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>
+</div>

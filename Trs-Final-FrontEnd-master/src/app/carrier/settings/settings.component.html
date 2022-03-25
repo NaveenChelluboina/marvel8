@@ -1,0 +1,51 @@
+<!--This page is used to manage the default settings for the whole of the applciation-->
+<div fxLayout="row wrap" #resizedDiv>
+    <div class="flex-p w-100">
+        <div class="table-responsive">
+            <table id="example2" style="margin-top: 10px" class="table table-bordered table-hover">
+                <thead class="tbl-head">
+                    <tr class="tr-grid-header">
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Previous Value</th>
+                        <th>New Value</th>
+                        <th class="text-center">Save</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="showEmpty"><td colspan="5">No records found</td></tr>
+                    <tr *ngFor="let item of tableList">
+                        <td>{{item.name}}</td>
+                        <td>{{item.description}}</td>
+                        <td>{{item.setting_value}}</td>
+                        <td>
+                            <div *ngIf="item.name == 'Grid Length'">
+                                <mat-select class="form-control" id="size" name="size" [(ngModel)] = "item.new_value" placeholder="--Select Grid Length--">
+                                    <mat-option value="5">5</mat-option>
+                                    <mat-option value="10">10</mat-option>
+                                    <mat-option value="25">25</mat-option>
+                                    <mat-option value="50">50</mat-option>
+                                    <mat-option value="100">100</mat-option>
+                                </mat-select>
+                            </div>
+                            <div *ngIf="item.name == 'Notification Email'">
+                                <input type="email" [(ngModel)] = "item.new_value" class="form-control" id="email" name= "email"  placeholder="Enter Notification Email" required>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <button type="button" style="margin-right: 10px; text-decoration: none" class="btn btn-primary"
+                            mwlConfirmationPopover
+                            [popoverTitle]="popoverStatusTitle"
+                            [popoverMessage]="popoverStatusMessage"
+                            placement="left"
+                            (confirm)="saveSettings(item);"
+                            (cancel)="cancelClicked = true" [disabled]="(item.new_value &&  item.new_value != 'undefined') && (item.name == 'Notification Email' ? checkEmail(item.new_value) : true) ? false : true">
+                            Save
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>

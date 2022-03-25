@@ -1,0 +1,179 @@
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 flex-p" style="margin-top: 20px;">
+    <div class="row ">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="w-100 flex-p">
+                <div class="dashboard-stat blue-madison">
+                    <div class="visual">
+                        <i class="fa fa-users fa-1x"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            {{information.totalclients}}
+                        </div>
+                        <div class="desc">
+                            Total Clients
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="w-100 flex-p">
+                <div class="dashboard-stat blue-madison">
+                    <div class="visual">
+                        <i class="fa fa-users fa-1x"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            {{information.activeclients}}
+                        </div>
+                        <div class="desc">
+                            Active Clients
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="w-100 flex-p">
+                <div class="dashboard-stat ppurple-madison">
+                    <div class="visual">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    <div class="details">
+                        <div *ngIf="information.popular_fleet.length" class="number">
+                            {{information.popular_fleet}}
+                        </div>
+                        <div *ngIf="!information.popular_fleet.length" class="number">
+                            -
+                        </div>
+                        <div class="desc">
+                            Popular Fleet Size
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="row ">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="w-100 flex-p">
+                <div class="dashboard-stat green-haze">
+                    <div class="visual">
+                        <i class="fa fa-percent"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            {{information.new_subscribers}}
+                        </div>
+                        <div class="desc">
+                            New Subscribers
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="w-100 flex-p">
+                <div class="dashboard-stat blue-madison">
+                    <div class="visual">
+                        <i class="fa fa-file"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            {{information.monthly_revenue}}
+                        </div>
+                        <div class="desc">
+                            Monthly Revenue
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="w-100 flex-p">
+                <div class="dashboard-stat ppurple-madison">
+                    <div class="visual">
+                        <i class="fa fa-file"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            {{information.yearly_revenue}}
+                        </div>
+                        <div class="desc">
+                            Yearly Revenue
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-left:7px !important;padding-right:7px !important;">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="flex-p">
+            <app-analytics></app-analytics>
+        </div>
+    </div>
+    
+    <div class="row ">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="flex-p">
+            <div fxLayout="column">
+                <mat-card>
+                    <mat-card-header fxLayoutAlign="center center">
+                        <mat-card-subtitle>
+                            <h2>Subscriber Distribution</h2>
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    <div class="w-100 h-300p">
+                        <ngx-charts-pie-chart [scheme]="colorScheme" [results]="subscribers" [legend]="showLegend" [explodeSlices]="explodeSlices" [labels]="showLabels" [doughnut]="doughnut" [gradient]="gradient">
+                        </ngx-charts-pie-chart>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+        <!-- <div fxFlex="100" fxFlex.gt-sm="50" class="flex-p">
+            <div fxLayout="column">
+                <mat-card>
+                    <mat-card-header fxLayoutAlign="center center">
+                        <mat-card-subtitle>
+                            <h2>Fleet Size Distribution</h2>
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    <div class="w-100 h-300p">
+                        <ngx-charts-pie-chart [scheme]="colorScheme" [results]="fleets" [legend]="showLegend" [explodeSlices]="explodeSlices" [labels]="showLabels" [doughnut]="doughnut" [gradient]="gradient">
+                        </ngx-charts-pie-chart>
+                    </div>
+                </mat-card>
+            </div>
+        </div> -->
+    </div>
+    
+    <!-- <div class="row ">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="flex-p">
+            <div fxLayout="column">
+                
+                <mat-card>
+                    <mat-card-header fxLayoutAlign="center center">
+                        <mat-card-subtitle>
+                            <h2>Clients Distribution</h2>
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    <div class="w-100">
+                        <agm-map #PropAgmMap [minZoom]="1" [maxZoom]="14" [zoom]="4" [streetViewControl]="false" [latitude]="lat" [longitude]="lng" [zoomControlOptions]="zoomControlOptions" [fullscreenControl]="true">
+                            <agm-marker-cluster>
+                                <agm-marker *ngFor="let pointer of markers" [latitude]="pointer.lat" [longitude]="pointer.lng" (mouseOver)="onMouseOver(propInfoWindow,PropAgmMap)" (mouseOut)="onMouseOut(propInfoWindow,PropAgmMap)">
+                                    <agm-info-window [disableAutoPan]="true" #propInfoWindow>
+                                        <strong>{{pointer.label}}</strong>
+                                    </agm-info-window>
+                                </agm-marker>
+                            </agm-marker-cluster>
+                        </agm-map>
+                    </div>
+                </mat-card>
+                
+            </div>
+        </div>
+    </div> -->
+    
+</div>

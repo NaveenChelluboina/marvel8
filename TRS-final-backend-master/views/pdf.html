@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <mate charest="utf-8" />
+  <title>Daily Alerts Report</title>
+  <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    h1,h3 {
+      text-align: center;
+    }
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }   
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+  </style>
+</head>
+<body>
+  <img class="center" src="https://permishare.s3.amazonaws.com/pdf-image/holizontalLogo.png" alt="PermiShare logo">
+  <h1>Daily Alerts Report</h1>
+  <h3>Alerts</h3>
+  <table>
+    <tr>
+      <th>Document Name</th>
+      <th>Document Origin</th>
+      <th>Reference</th>
+      <th>Expiry Date</th>
+      <th>Expiry in (Days)</th>
+    </tr>
+    {{#each users}}
+    <tr>
+      <td>{{this.documentName}}</td>
+      <td>{{this.documentType}}</td>
+      <td>{{this.referene}}</td>
+      <td>{{this.expiringDate}}</td>
+      <td>{{this.difference}}</td>
+    </tr>
+    {{/each}}
+  </table>
+  <br><br><br>
+  
+</body>
+</html>

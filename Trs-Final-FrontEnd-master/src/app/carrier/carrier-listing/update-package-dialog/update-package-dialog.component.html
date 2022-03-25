@@ -1,0 +1,29 @@
+<div class="NewHeader">
+  <h1 mat-dialog-title><span *ngIf="!lead">Add</span><span *ngIf="lead">Update</span> Package</h1> 
+</div>
+<div mat-dialog-content>
+  <form class="form-horizontal" novalidate [formGroup]="addPackageForm">
+    <div class="form-group">
+      <label class="control-label col-sm-4 add-member-label">Client Name: </label>
+      <label class="control-label col-sm-8">{{lead.carrier_name}} </label>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-4 add-member-label">Package Level:&nbsp;</label>
+      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <mat-select *ngIf="packages.length" placeholder="--Package Level--" required formControlName="packageLevel" class="form-control">
+          <mat-option *ngFor="let option of packages" [value]="option.package_id">{{option.package_level}}</mat-option>
+        </mat-select>
+        <h4 style="margin-top: 7px!important;" *ngIf="!packages.length">Please contact PermiShare to add more assets</h4>
+        <div *ngIf="!packageLevel.valid && (packageLevel.dirty || packageLevel.touched)" class="error-text">
+          <div *ngIf="packageLevel.errors.required">
+            Package level is required
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<mat-dialog-actions align="end" style="margin-right:-8px!important">
+  <button *ngIf="packages.length" mat-raised-button [disabled]="!addPackageForm.valid" style="cursor:pointer;" [ngClass]="!addPackageForm.valid ? '' : 'btn-primary' " (click)="saveCarrier()"><mat-icon *ngIf="lead">update</mat-icon><mat-icon *ngIf="!lead">save</mat-icon><span *ngIf="!lead">&nbsp;Save</span><span *ngIf="lead">&nbsp;Update</span></button>
+  <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+</mat-dialog-actions> 

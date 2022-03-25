@@ -1,0 +1,166 @@
+
+<div fxLayout="row wrap">
+    <div class="w-100">
+        <div fxLayout="row wrap" style="margin-top: 20px;padding: 8px;">
+            <div class="col-md-12 ifta-block">
+                <div class="col-md-2">
+                    <div class="col-md-12" style="padding: 0;margin-top: 14px;">
+                        <button *ngIf="canCreate" style="width: 100%;" mat-raised-button class="pull-right  btn-primary" (click)="addYear()">
+                            <mat-icon>add</mat-icon> Add Year
+                        </button>
+                        <div class="col-md-12" style="padding: 0;margin-top: 3px;" *ngIf="isyearadd">
+                            <form class="form-horizontal" novalidate [formGroup]="addYearForm">
+                                <!-- <div>
+                                    <span>Start Date:</span>
+                                    <input class="form-control" formControlName="startDate" [formControl]="date" placeholder="MM/DD/YYYY" style="margin-bottom:5px!important;" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" name="dt1">
+                                    <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" (yearSelected)="chosenYearHandler($event)" (monthSelected)="chosenMonthHandler($event, dt1)" #dt1="owlDateTime"></owl-date-time>
+                                </div> -->
+                                <div>
+                                    <span>Start Date:</span>
+                                    <input class="form-control" formControlName="startDate" placeholder="MM/DD/YYYY" [owlDateTimeTrigger]="dt6" [owlDateTime]="dt6" name="dt6">
+                                    <owl-date-time [pickerType]="'calendar'" #dt6></owl-date-time>
+                                </div>
+                                <div>
+                                    <span>End Date:</span>
+                                    <input class="form-control" formControlName="endDate"  placeholder="MM/DD/YYYY" [owlDateTimeTrigger]="dt" [owlDateTime]="dt" name="dt">
+                                    <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                                </div>
+                                <!-- <div>
+                                    <span>End Date:</span>
+                                    <input class="form-control" formControlName="endDate" [formControl]="dates" placeholder="MM/DD/YYYY" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" name="dt2">
+                                    <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" (yearSelected)="chosenYearHandlers($event)" (monthSelected)="chosenMonthHandlers($event, dt2)" #dt2="owlDateTime"></owl-date-time>
+                                </div> -->
+                            </form>
+                            <!-- <mat-dialog-actions class="col-sm-12" align="end">
+                                <button mat-raised-button [disabled]="!driverBasicDetailsForm.valid" matStepperNext [ngClass]="!driverBasicDetailsForm.valid ? '' : 'btn-primary'" ><mat-icon>arrow_forward</mat-icon>&nbsp;Proceed</button>
+                                <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+                            </mat-dialog-actions> -->
+                            
+                            <div class="col-md-12" style="padding: 0;margin-top: 5px;">
+                                <button *ngIf="!settingButton" mat-raised-button [disabled]="!addYearForm.valid" [ngClass]="!addYearForm.valid?'':'btn-primary'" (click)="saveYear()" style="margin-right: 10px;cursor: pointer;"><mat-icon>save</mat-icon>Save</button>
+                                <button *ngIf="settingButton" mat-raised-button [disabled]="!addYearForm.valid" [ngClass]="!addYearForm.valid?'':'btn-primary'" (click)="updateYearForIrs()" style="margin-right: 10px;cursor: pointer;"><mat-icon>update</mat-icon>Save</button>
+                                <button mat-raised-button class="CancelClass"  (click)="closeAddForm()"><mat-icon>cancel</mat-icon>Close</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="ifta-tabs-block col-md-12">
+                        <tabset [vertical]="true" type="pills" *ngFor="let year of years" (onSelect)="doSomethingOnTabSelect($event)">
+                            <tab heading={{year.year}}>
+                            </tab>
+                            <tab heading="July 2018 - June 2019">
+                            </tab>
+                            <tab heading="July 2017 - June 2018">
+                            </tab>
+                            <tab heading="July 2016 - June 2017">
+                            </tab>
+                            <tab heading="July 2015 - June 2016">
+                            </tab>
+                            <tab heading="July 2014 - June 2015" >
+                            </tab>
+                            <tab heading="July 2013 - June 2014">
+                            </tab>
+                            <tab heading="July 2012 - June 2013">
+                            </tab>
+                        </tabset>
+                    </div> -->
+                    <div class="newClasssss col-md-12" style="padding: 0px !important;">
+                        <ul class="ul">
+                            <li>
+                                <div class="ui-inputgroup" *ngFor="let item of years">
+                                    <input type="text" style="cursor: pointer;padding: 10px;width: 220px;text-align: center!important" [ngClass]="{'active': selectedListItem == item}" (click)="listNewClick($event, item)" value={{item.year}} readonly>
+                                </div>
+                            </li><br>
+                        </ul>
+                    </div>
+                    
+                </div>
+                <div class="col-md-10">
+                    <div class="ifta-table-block">
+                        <div class="flex-p">
+                            <div *ngIf="years.length != 0" class="row wrap"> 
+                                
+                                <div *ngIf="canUpdate" class="col-xs-12 pull-right" style="margin-right:0px !important; padding: 0px;margin-left: -14px">
+                                    <div class="w-100 flex-p" style="padding-right: 0px !important;">
+                                        <!-- <button mat-raised-button color="primary" class="pull-right  margin-right-10" (click)="filterToggle = !filterToggle">
+                                            <mat-icon>filter_list</mat-icon> Filter
+                                        </button>  -->
+                                        <mat-card class="col-sm-3" style="background-color: rgb(224, 224, 224);font-weight: 500;height: 41px;padding: 11px;">YEAR: 
+                                            <a *ngIf="canDelete" class="pull-right" matTooltip="Delete Year" style="cursor: pointer;color:#ea0000;" (click)="deleteYear()">Delete</a>
+                                            <a *ngIf="canUpdate"  class="pull-right" matTooltip="Update Year" style="cursor: pointer;color:#337ab7;margin-right: 10px;" (click)="updateYear('yes')">Update</a>
+                                        </mat-card>
+                                        <button *ngIf="canCreate" mat-raised-button class="pull-right btn-primary" style="margin-right:-20px!important;" routerLink="upload-assets/{{mainYearId}}/1"><mat-icon>add</mat-icon> Add Document</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div fxLayout="row wrap" *ngIf="filterToggle" >
+                            <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p w-100 margins"style="padding-left: 0px !important;padding-right: 0px !important;">
+                                <mat-card class="filter">
+                                    <mat-card-content>
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <input type="text" class="form-control" placeholder=" Search by Doc Title">
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <mat-select color="primary" placeholder="-- Search by Status --" multiple [formControl]="statu" class="form-control">
+                                                    <mat-option [value]="0" (click)="selectAll(es, 'status')" #es >All</mat-option>
+                                                    <mat-option *ngFor="let lead of status" (click)="selectOne(es, 'status')" [value]="lead.status_id">{{lead.status_name}}</mat-option>
+                                                </mat-select>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <button type="button" class="btn btn-success  pull-right">Search</button>
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-left: -18px;">
+                                                <button class="btn filter-hover" style="background-color:#37474f; color:#fff !important" (click)=" clearFilters()">Clear</button>
+                                            </div>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                        </div>
+                        
+                        <div fxLayout="row wrap">
+                            <table class="table table-bordered table-hover" style="width: 100%;background: #fff;">
+                                <thead class="tbl-head">
+                                    <tr>
+                                        <th (click)="docTitleClicked(docTitleAssending = !docTitleAssending)" style="cursor: pointer;" class="v-align-middle" >Document Name</th>
+                                        <th class="v-align-middle" >Download file</th>
+                                        <th class="v-align-middle text-center" >Assets</th>
+                                        <!-- <th class="v-align-middle text-center" >Status</th> -->
+                                        <th class="v-align-middle text-center" >Delete</th>
+                                    </tr>
+                                    
+                                </thead>
+                                <tr *ngIf="showEmptyDocs"><td colspan="4">No records found</td></tr>
+                                <tr *ngFor="let ifta of allDocuments">
+                                    <td>{{ifta.document_name}}</td>
+                                    <td class="text-center" style="width: 130px;"> 
+                                        <a [href]="ifta.document_path"><i class="fa fa-download add" style="cursor: pointer;" title="Download Document"></i></a>
+                                    </td>
+                                    <td class="text-center"><a routerLink="upload-assets/{{ifta.document_id}}/0">View</a></td>
+                                    <!-- <td class="text-center"> <a>{{ifta.docs}}</a></td> -->
+                                    <!-- <td class="text-center">
+                                        <a style="cursor: pointer;" [style.color]="(ifta.status) == 1 ? 'green' : 'red'">{{(ifta.status) == 1 ? 'Active' : 'Inactive'}}</a>
+                                    </td> -->
+                                    <td *ngIf="canDelete" class="text-center">
+                                        <!-- <a style="cursor: pointer;" title="Edit" routerLink="upload-assets" >
+                                            <i class="fa fa-edit" style="color: cornflowerblue"></i>
+                                        </a> -->
+                                        <a>
+                                        <i style="cursor: pointer;"  matTooltip="Delete Document" (click)="openDeleteDialog(ifta)" class="fa fa-trash red"></i>
+                                        </a>
+                                    </td>
+                                    <td *ngIf="!canDelete" class="text-center">-</td>
+                                </tr>
+                                
+                            </table>
+                            <div class="col-md-12 pull-right">
+                                <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)" showFirstLastButtons></mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

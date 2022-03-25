@@ -1,0 +1,100 @@
+
+.fa-file-text-o {
+    color: #007ad9;
+}
+
+.fa-file-pdf-o {
+    color: red;
+}
+
+.fa-dot-circle-o {
+    color: orange;
+}
+
+.newMarginClass {
+    margin-top: 7px !important;
+}
+
+.input-icon.right>i {
+    right: 25px;
+    float: right;
+}
+
+.input-icon>i {
+    color: #ccc;
+    display: block;
+    position: absolute;
+    //margin: 11px 2px 4px 10px;
+    margin-top: 5px;
+    // margin-right: 2px;
+    margin-bottom: 4px;
+    margin-left: 10px;
+    z-index: 3;
+    width: 16px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.fa {
+    display: inline-block;
+    font: 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.modal .input-icon>i {
+    z-index: 10055;
+}
+
+
+.margins {
+    margin-top: 8px;
+}
+
+.margin {
+    margin-right: 8px;
+}
+
+.marginTopClass {
+    margin-top: 20px;
+}
+
+.fa-arrow-right {
+    color: #007ad9;
+}
+
+.inner-screen {
+    color: #246ade !important;
+    // text-decoration: underline !important;
+    cursor: pointer;
+}
+.form-control[readonly] {
+    background-color: white;
+    opacity: 1;
+}
+.app.black-light .mat-error {
+    color: red;
+}
+// ::ng-deep .cdk-overlay-container {
+//     position: fixed;
+//     pointer-events: none;
+//     top: 0;
+//     left: 0;
+//     height: 100%;
+//     width: 100%;
+//     display: flex;
+//     position: absolute;
+//     z-index: 9999999 !important;
+// }
+// ::ng-deep .cdk-global-overlay-wrapper,::ng-deep .cdk-overlay-container {
+//     pointer-events: none;
+//     top: 0;
+//     left: 0;
+//     height: 100%;
+//     width: 100%;
+//     display: flex;
+//     position: absolute;
+//     z-index: 9999999 !important;
+// }

@@ -1,0 +1,243 @@
+<div fxLayout="row wrap">
+  <div class="w-100">
+    <div class="col-md-12" style="padding:0px;padding-top: 10px !important;">
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="padding:0px;">
+        <div class="w-100 flex-p">
+          <div class="dashboard-stat blue-madison">
+            <div class="visual">
+              <i class="fa fa-comments"></i>
+            </div>
+            <div class="details">
+              <div *ngIf="countingVariable" class="number">
+                {{corpInfo.company_legal_name ? corpInfo.company_legal_name : 'N/A' }}
+              </div>
+              <div *ngIf="!countingVariable" class="number">
+                -
+              </div>
+              <div class="desc">
+                Company Name:
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3  col-xs-12" style="padding:0px;">
+        <div class="w-100 flex-p">
+          <div class="dashboard-stat ppurple-madison">
+            <div class="visual">
+              <i class="fa fa-bar-chart-o"></i>
+            </div>
+            <div class="details">
+              <div *ngIf="countingVariable" class="number">
+                <!-- USDOT33136 -->
+                {{corpInfo.us_dot ? corpInfo.us_dot : 'N/A'}}
+              </div>
+              <div *ngIf="!countingVariable" class="number">
+                -
+              </div>
+              <div class="desc">
+                US Dot Registration:
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3  col-xs-12" style="padding:0px;">
+        <div class="w-100 flex-p">
+          <div class="dashboard-stat green-haze">
+            <div class="visual">
+              <i class="fa fa-shopping-cart"></i>
+            </div>
+            <div class="details">
+              <div *ngIf="countingVariable" class="number">
+                {{corpInfo.mc_number ? corpInfo.mc_number : 'N/A'}}
+              </div>
+              <div *ngIf="!countingVariable" class="number">
+                -
+              </div>
+              <div class="desc">
+                FMCSA Authority:
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="padding:0px;">
+        <div class="w-100 flex-p">
+          <div class="dashboard-stat purple-plum">
+            <div class="visual">
+              <i class="fa fa-globe"></i>
+            </div>
+            <div class="details">
+              <div *ngIf="countingVariable" class="number">
+                {{corpInfo.national_safety_code ? corpInfo.national_safety_code : 'N/A'}}
+              </div>
+              <div *ngIf="!countingVariable" class="number">
+                -
+              </div>
+              <div class="desc">
+                National Safety Code Certificate
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex-p">
+      <div class="row wrap">
+        <div class="col-xs-12 pull-right" style="margin-right:0px !important">
+          <div class="w-100 flex-p">
+            <!-- <button
+              mat-raised-button
+              color="primary"
+              class="pull-right margin-right-10"
+              (click)="filterToggle = !filterToggle"
+              >
+              <mat-icon>filter_list</mat-icon> Filter
+            </button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div fxLayout="row wrap" *ngIf="filterToggle">
+      <div
+      fxFlex="100"
+      fxFlex.gt-sm
+      fxFlex.sm
+      class="flex-p w-100 margins"
+      style="padding-left:16px !important;padding-right:16px !important"
+      >
+      <mat-card class="filter">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-lg-2">
+              <mat-select
+              color="primary"
+              placeholder="-- Sort By --"
+              class="form-control"
+              >
+              <mat-option
+              *ngFor="let operation of operations"
+              [value]="operation.operation_id"
+              >{{ operation.operation_name }}</mat-option
+              >
+            </mat-select>
+          </div>
+          <div class="col-lg-2">
+            <mat-select color="primary" placeholder="--Search by Doc Type --" multiple [formControl]="toppingsLead" class="form-control">
+              <mat-option [value]="0" (click)="selectAll(eo, 'lead')" #eo>All</mat-option>
+              <mat-option *ngFor="let lead of docType" (click)="selectOne(eo, 'lead')" [value]="lead.doc_id">{{ lead.doc_name }}</mat-option>
+            </mat-select>
+          </div>
+          <div class="col-lg-2">
+            <input class="form-control" placeholder="Expiry Date" class="form-control" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" name="dt2"/>
+            <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+          </div>
+          <div class="col-lg-2">
+            <mat-select
+            color="primary"
+            placeholder="--Expiry In (Days)--"
+            multiple
+            [formControl]="toppingsTimeZone"
+            class="form-control"
+            >
+            <mat-option [value]="0" (click)="selectAll(ed, 'days')" #ed
+            >All</mat-option
+            >
+            <mat-option
+            *ngFor="let lead of expiryDays"
+            (click)="selectOne(ed, 'days')"
+            [value]="lead.doc_id"
+            >{{ lead.doc_name }}</mat-option
+            >
+          </mat-select>
+        </div>
+        
+        <div class="col-lg-1">
+          <button
+          type="button"
+          class="btn btn-success  pull-right"
+          >
+          Search
+        </button>
+      </div>
+      <div
+      class="col-lg-1 col-md-1 col-sm-1 col-xs-1"
+      style="margin-left: -18px;"
+      >
+      <button
+      class="btn filter-hover"
+      style="background-color:#37474f; color:#fff !important"
+      (click)="clearFilters()"
+      >
+      Clear
+    </button>
+  </div>
+</div>
+</mat-card-content>
+</mat-card>
+</div>
+</div>
+
+<div fxLayout="row wrap" style="margin-top: 10px;">
+  <div class="col-md-12">
+    <h3 style="margin-top: 0px;margin-left: 5px;">Alerts:</h3>
+    <table
+    class="table table-bordered alert-section-home table-hover"
+    style="width: 100%;background: #fff;"
+    >
+    <thead class="tbl-head">
+      <tr>
+        <!-- <th class="text-center">Red Alert</th> -->
+        <th (click)="DocumentNameClicked(documentnameAssending = !documentnameAssending)" style="cursor: pointer;">Document Name</th>
+        <th (click)="DocumentOriginClicked(documentoriginAssending = !documentoriginAssending)" style="cursor: pointer;">Document Origin</th>
+        <th (click)="DocumentReferenceClicked(documentreferenceAssending = !documentreferenceAssending)" style="cursor: pointer;">Reference</th>
+        <th (click)="ExpClicked(expAssending = !expAssending)" style="cursor: pointer;">Expiry Date</th>
+        <th (click)="DaysClicked(daysAssending = !daysAssending)" style="cursor: pointer;" class="text-center">Expiry in (Days)</th>
+        <th class="text-center">Download Document</th>
+        <th class="text-center">Dismiss</th>
+      </tr>
+    </thead>
+    <tr *ngIf="showEmpty"><td colspan="7">No records found</td></tr>
+    <tr *ngFor="let alert of alerts">
+      <!-- <td style="text-align: center !important">
+        <mat-checkbox> </mat-checkbox>
+      </td> -->
+      <td>
+        {{ alert.documentName }}
+      </td>
+      <td>
+        {{ alert.documentType }}
+      </td>
+      <td>
+        {{ alert.referene }}
+      </td>
+      <td>
+        {{ alert.expiringDate }}
+      </td>
+      
+      <td class="text-center">
+        {{ alert.difference }}
+      </td>
+      <td class="text-center">
+        <a target="_blank" [href]="alert.document"><i class="fa fa-download add" style="cursor: pointer;" title="Download Document" ></i></a>
+      </td>
+      <td class="text-center">
+        <a><i class="fa fa-times red" style="cursor: pointer;" title="Dismiss" (click)="openDeleteDialog(alert)"></i></a>
+      </td>
+    </tr>
+  </table>
+  
+  <mat-paginator
+  [length]="totalSize"
+  [pageIndex]="currentPage"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[5, 10, 25, 50, 100]"
+  (page)="handlePage($event)"
+  showFirstLastButtons
+  ></mat-paginator>
+</div>
+</div>
+</div>
+</div>

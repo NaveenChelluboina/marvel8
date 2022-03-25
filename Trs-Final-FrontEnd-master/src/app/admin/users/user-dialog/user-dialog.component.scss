@@ -1,0 +1,24 @@
+.user-form{
+    .form-field-outer{
+        width: 280px;
+    }
+    .mat-radio-button{
+        margin-right: 12px;
+    }
+}
+// input.form-control.ng-pristine.ng-invalid.ng-touched,input.form-control.ng-dirty.ng-touched.ng-invalid{
+//     border: 1px solid red !important;
+// }
+// select.form-control.ng-pristine.ng-invalid.ng-touched,input.form-control.ng-dirty.ng-touched.ng-invalid{
+//     border: 1px solid red !important;
+// }
+// input.ng-pristine.ng-invalid.ng-touched,input.ng-dirty.ng-touched.ng-invalid{
+//     border: 1px solid red !important;
+// }
+.error-text {
+    color: red;
+}
+// .padding{
+//     padding-left: 30px;
+//     padding-right: 30px;
+// }

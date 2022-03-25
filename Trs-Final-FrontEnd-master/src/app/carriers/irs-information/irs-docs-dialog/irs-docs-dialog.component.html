@@ -1,0 +1,131 @@
+<!--This page is used to add or edit leads-->
+
+<!-- <h1 mat-dialog-title><span>Add Document</span></h1>
+    <hr>
+    <div mat-dialog-content>
+        <form class="form-horizontal">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="control-label col-sm-2 add-member-label">Year : </label>
+                    <div class="col-sm-10">
+                        <input type="text" maxlength="100" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2 add-member-label">Document Name : </label>
+                    <div class="col-sm-10">
+                        <td><input type="file" class="form-control"></td>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2 add-member-label">Asset : </label>
+                    <div class="col-sm-10">
+                        <mat-select placeholder="--Select--" class="form-control">
+                            <mat-option [value]="0">TR187982323</mat-option>
+                            <mat-option [value]="1">TR987982323</mat-option>
+                            <mat-option [value]="2">TR987982254</mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </form>
+        <mat-dialog-actions align="end" style="float:right">
+            <button mat-raised-button class="btn-success" (click)="close()">Save</button>
+            <button mat-raised-button class="btn-success" (click)="close()">Add another</button>
+            <button mat-raised-button class="add-dark-hover btn-default" (click)="close()">Cancel</button>
+        </mat-dialog-actions>
+    </div> -->
+    <!-- <table class="table table-striped table-bordered">
+        <thead>
+            <th>Document Name</th>
+            <th>Reference #</th>
+            <th>File Date</th>
+            <th>Expiry Date</th>
+            <th>Document</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <select placeholder="-- BDM --" class='form-control' >
+                        <option>-Select-</option>
+                        <option>Renewal</option>
+                        <option>Supplement</option>
+                    </select>
+                </td>
+                
+                <td><input type="text" class="form-control"></td>
+                <td>
+                    <input type="text" class="form-control" bsDatepicker>
+                </td>
+                <td>
+                    <input type="text" class="form-control" bsDatepicker>
+                </td>
+                <td><input type="file" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>
+                    <select placeholder="-- BDM --" class='form-control' >
+                        <option>-Select-</option>
+                        <option>Renewal</option>
+                        <option>Supplement</option>
+                    </select>
+                </td>
+                
+                <td><input type="text" class="form-control"></td>
+                <td>
+                    <input type="text" class="form-control" bsDatepicker>
+                </td>
+                <td>
+                    <input type="text" class="form-control" bsDatepicker>
+                </td>
+                <td><input type="file" class="form-control"></td>
+            </tr>
+        </tbody>
+    </table> -->
+    
+    <!-- <button class="close" style ="background-color: white !important;" [mat-dialog-close]="true"><mat-icon>close</mat-icon></button> -->
+    <h3  class="custom-header"><span *ngIf="lead == 'add'">Add Document</span><span *ngIf="(lead == 'update') ">Update Document Info (1/1) 
+    </span></h3>
+    
+    <div mat-dialog-content>
+        <form class="form-horizontal" novalidate>
+            <div class="form-group">
+                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label">Year:&nbsp;
+                </label>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <select class='form-control' required name="communication">
+                        <option class='option' value="" selected>-Select-</option>
+                        <option class='option' value="1">2019-2020</option>
+                        <option class='option' value="2">2018-2019</option>
+                        <option class='option' value="3">2017-2018</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Document:&nbsp;</label>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 margins">
+                    <input type="file" placeholder="Upload file...">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label col-xs-4 add-member-label">Select Assets (single/multiple):&nbsp;
+                </label>
+                <div class="col-xs-8">
+                    
+                    <mat-select color="primary" multiple placeholder="-- Sory By --"  class="form-control" >
+                        <mat-option *ngFor="let operation of operations" [value]="operation.operation_id">{{operation.operation_name}}</mat-option>
+                    </mat-select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button class="btn-success" (click)="close()">Save</button>
+        <button mat-raised-button class="btn-success" (click)="close()">Add Another</button>
+        <button *ngIf="lead == 'update'" mat-raised-button class="btn-success"  (click)="close()">Next</button>
+        <button *ngIf="lead == 'update'" mat-raised-button class="btn-success" (click)="close()">Previous</button>
+        <button mat-raised-button class="add-dark-hover btn-default" (click)="close()">Close</button>
+    </mat-dialog-actions>

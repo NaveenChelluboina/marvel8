@@ -1,0 +1,71 @@
+<!--This page is used to manage the default settings for the whole of the applciation-->
+<div fxLayout="row wrap" #resizedDiv>
+    <div class="flex-p w-100">
+        <div class="table-responsive">
+            <table id="example2" style="margin-top: 10px" class="table table-bordered table-hover">
+                <thead class="tbl-head">
+                    <tr class="tr-grid-header">
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Previous Value</th>
+                        <th>New Value</th>
+                        <th class="text-center">Save</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="showEmpty"><td colspan="5">No records found</td></tr>
+                    <tr *ngFor="let item of tableList">
+                        <td>{{item.trs_tbl_setting.name}}</td>
+                        <td>{{item.trs_tbl_setting.description}}</td>
+                        <td>{{item.setting_value}}</td>
+                        <td *ngIf="canUpdate">
+                            <div *ngIf="item.trs_tbl_setting.name == 'Grid Length'">
+                                <mat-select class="form-control" id="size" name="size" [(ngModel)] = "item.new_value" placeholder="--Select Grid Length--">
+                                    <mat-option value="5">5</mat-option>
+                                    <mat-option value="10">10</mat-option>
+                                    <mat-option value="25">25</mat-option>
+                                    <mat-option value="50">50</mat-option>
+                                    <mat-option value="100">100</mat-option>
+                                </mat-select>
+                            </div>
+                            <div *ngIf="item.trs_tbl_setting.name == 'Notification Email'">
+                                <input type="email" [(ngModel)] = "item.new_value" class="form-control" id="email" name= "email"  placeholder="Enter Notification Email" required>
+                            </div>
+                            <div *ngIf="item.trs_tbl_setting.name == 'Primary Notification Email'">
+                                <input type="email" [(ngModel)] = "item.new_value" class="form-control" id="email" name= "email"  placeholder="Enter Primary Notification Email" required>
+                            </div>
+                            <div *ngIf="item.trs_tbl_setting.name == 'Secondary Notification Email'">
+                                <input type="email" [(ngModel)] = "item.new_value" class="form-control" id="email" name= "email"  placeholder="Enter Secondary Notification Email" required>
+                            </div>
+                            <div *ngIf="item.trs_tbl_setting.name == 'Corporate Information Document Expiry Follow-up Days'">
+                                <input type="text" [(ngModel)] = "item.new_value" maxlength="2" class="form-control" onCopy="return false" onPaste="return false" (keypress)="allow_only_numbers($event)" placeholder="Enter Follow-up Value" required>
+                            </div>
+                            <div *ngIf="item.trs_tbl_setting.name == 'Driver Document Expiry Follow-up Days'">
+                                <input type="text" [(ngModel)] = "item.new_value" maxlength="2" class="form-control" onCopy="return false" onPaste="return false" (keypress)="allow_only_numbers($event)" placeholder="Enter Follow-up Value" required>
+                            </div>
+                            <div *ngIf="item.trs_tbl_setting.name == 'Asset Document Expiry Follow-up Days'">
+                                <input type="text" [(ngModel)] = "item.new_value" maxlength="2" class="form-control" onCopy="return false" onPaste="return false" (keypress)="allow_only_numbers($event)" placeholder="Enter Follow-up Value" required>
+                            </div>
+                            <div *ngIf="item.trs_tbl_setting.name == 'IRP Document Expiry Follow-up Days'">
+                                <input type="text" [(ngModel)] = "item.new_value" maxlength="3" class="form-control" onCopy="return false" onPaste="return false" (keypress)="allow_only_numbers($event)" placeholder="Enter Follow-up Value" required>
+                            </div>
+                            <div *ngIf="item.trs_tbl_setting.name == 'IRS Document Expiry Follow-up Days'">
+                                <input type="text" [(ngModel)] = "item.new_value" maxlength="3" class="form-control" onCopy="return false" onPaste="return false" (keypress)="allow_only_numbers($event)" placeholder="Enter Follow-up Value" required>
+                            </div>
+                            <div *ngIf="item.trs_tbl_setting.name == 'IFTA Document Expiry Follow-up Days'">
+                                <input type="text" [(ngModel)] = "item.new_value" maxlength="3" class="form-control" onCopy="return false" onPaste="return false" (keypress)="allow_only_numbers($event)" placeholder="Enter Follow-up Value" required>
+                            </div>
+                        </td>
+                        <td *ngIf="!canUpdate" class="text-center">-</td>
+                        <td class="text-center">
+                            <button type="button" style="margin-right: 10px; text-decoration: none" (click)="openSaveDialog(item)" [disabled]="(item.new_value &&  item.new_value != 'undefined') && (item.trs_tbl_setting.name == 'Notification Email' ? checkEmail(item.new_value) : true) ? false : true" class="btn btn-primary">
+                            Save
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)" showFirstLastButtons></mat-paginator>
+    </div>
+</div>
+</div>

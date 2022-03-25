@@ -1,0 +1,47 @@
+<div fxLayout="row wrap">
+  <div class="table-responsive flex-p">
+      <button *ngIf="canUpdate" type="button" class="btn btn-primary" style="margin-bottom: 5px;margin-left: 5px;float: right" (click)="saveRolePermissions()"><i class="fa fa-floppy-o"></i>Save</button>
+      <button type="button" class="btn btn-default" style="margin-bottom: 5px;margin-left: 5px;float:right" (click)="goBack()"><i class="fa fa-arrow-left"></i>Back</button>
+      <div style="margin-top:7px;float:right;margin-right: 5px;">
+        <mat-checkbox [checked]="allSelector" (click)="clickFunction(!perm)">Select all</mat-checkbox>
+          <!-- <input type="checkbox" [checked]="allSelector" (click)="clickFunction(!perm)"><span>Select all</span> -->
+      </div>
+      <table id="example2" class="table table-bordered table-hover">
+          <thead class="tbl-head">
+              <tr class="tr-grid-header">
+                  <th>Screen Name</th>
+                  <th class="style">Create</th>
+                  <th class="style">Read</th>
+                  <th class="style">Update</th>
+                  <th class="style">Delete</th>
+              </tr>
+          </thead>
+          <tbody *ngIf="canUpdate">
+              <tr *ngFor="let permission of permissions">
+                  <td>{{permission.screenName}}</td>
+                  <!-- <td class="style"><input type="checkbox" [(ngModel)] = "permission.create" (change)="onPermissionChange(permission,'create')"></td>
+                  <td class="style"><input type="checkbox" [(ngModel)] = 'permission.read' (change)="onPermissionChange(permission,'read')"></td>
+                  <td class="style"><input type="checkbox" [(ngModel)] = 'permission.update' (change)="onPermissionChange(permission,'update')"></td>
+                  <td class="style"><input type="checkbox" [(ngModel)] = 'permission.delete' (change)="onPermissionChange(permission,'delete')"></td> -->
+                  <td class="style"><mat-checkbox [(ngModel)] = "permission.create" (change)="onPermissionChange(permission,'create')"></mat-checkbox></td>
+                  <td class="style"><mat-checkbox [(ngModel)] = 'permission.read' (change)="onPermissionChange(permission,'read')"></mat-checkbox></td>
+                  <td class="style"><mat-checkbox [(ngModel)] = 'permission.update' (change)="onPermissionChange(permission,'update')"></mat-checkbox></td>
+                  <td class="style"><mat-checkbox [(ngModel)] = 'permission.delete' (change)="onPermissionChange(permission,'delete')"></mat-checkbox></td>
+              </tr>
+          </tbody>
+          <tbody *ngIf="!canUpdate">
+            <tr *ngFor="let permission of permissions">
+                <td>{{permission.screenName}}</td>
+                <!-- <td class="style"><input type="checkbox" [(ngModel)] = "permission.create" (change)="onPermissionChange(permission,'create')"></td>
+                <td class="style"><input type="checkbox" [(ngModel)] = 'permission.read' (change)="onPermissionChange(permission,'read')"></td>
+                <td class="style"><input type="checkbox" [(ngModel)] = 'permission.update' (change)="onPermissionChange(permission,'update')"></td>
+                <td class="style"><input type="checkbox" [(ngModel)] = 'permission.delete' (change)="onPermissionChange(permission,'delete')"></td> -->
+                <td class="style"><mat-checkbox class="news" [(ngModel)] = "permission.create" (change)="onPermissionChange(permission,'create')" disabled></mat-checkbox></td>
+                <td class="style"><mat-checkbox class="news" [(ngModel)] = 'permission.read' (change)="onPermissionChange(permission,'read')" disabled></mat-checkbox></td>
+                <td class="style"><mat-checkbox class="news" [(ngModel)] = 'permission.update' (change)="onPermissionChange(permission,'update')" disabled></mat-checkbox></td>
+                <td class="style"><mat-checkbox class="news" [(ngModel)] = 'permission.delete' (change)="onPermissionChange(permission,'delete')" disabled></mat-checkbox></td>
+            </tr>
+        </tbody>
+      </table>
+  </div>
+</div>

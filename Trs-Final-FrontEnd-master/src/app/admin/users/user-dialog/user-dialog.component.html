@@ -1,0 +1,90 @@
+<!--This page is used to add or edit users-->
+<h1 mat-dialog-title><span *ngIf="!user">Add</span><span *ngIf="user">Update</span> User</h1>
+<hr>   
+<div mat-dialog-content>
+    <div style="padding-left: 30px;padding-right:31px;">
+        <form class="form-horizontal padding" novalidate [formGroup]="addUserForm">
+            <div class="form-group">
+                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">User Name : </label>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <input type="text" formControlName="addUserName" [maxlength]="50" minlength="1" class="form-control" id="username" name="username" placeholder="Enter User Name" required>
+                    <!-- <div *ngIf="addUserForm.hasError('required', 'addUserName')" class="error-text">
+                            User name is required!
+                        </div> -->
+                    <div *ngIf="!addUserName.valid && (addUserName.dirty || addUserName.touched)" class="error-text">
+                        <div *ngIf="addUserName.errors.required">
+                            User name is required
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">User Type : </label>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <select formControlName="userType" onDrag="return false" onDrop="return false" id="user" class="form-control" class="form-control" required>
+    
+                            <option value="" selected>--Select User Type--</option>
+                            <option *ngFor="let type of usertypes" [value]="type.lookup_id" >{{type.lookup_name}}</option>
+                        </select>
+                    <div *ngIf="!userType.valid && (userType.dirty || userType.touched)" class="error-text">
+                        User type is required.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label">Email ID : </label>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <input type="text" email formControlName="addUserEmail" onDrag="return false" onDrop="return false" class="form-control" id="email" placeholder="Enter Email ID" required>
+                    <div *ngIf="!addUserEmail.valid && (addUserEmail.dirty || addUserEmail.touched)" class="error-text">
+                        <div *ngIf="addUserEmail.errors.required">
+                            User email is required.
+                        </div>
+                        <div *ngIf="addUserEmail.errors.email">
+                            Enter a valid email
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Contact Number : </label>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <input type="text" formControlName="addUserNumber" [maxlength]="30" minlength="10" onDrag="return false" onDrop="return false" class="form-control" placeholder="Enter Contact Number" required>
+                    <div *ngIf="!addUserNumber.valid && (addUserNumber.dirty || addUserNumber.touched)" class="error-text">
+                        <div *ngIf="addUserNumber.errors.required">
+                            Contact number is required
+                        </div>
+                        <div *ngIf="addUserNumber.errors.pattern">
+                            Only Digits and few special charcters(!@#$&()`.+,/) are allowed.
+                        </div>
+                        <div *ngIf="addUserNumber.errors.minlength && !addUserNumber.errors.pattern">
+                            Contact number should contain at least 10 numbers.
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- <div class="form-group">
+                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="status">Status : </label>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"> 
+                    <select formControlName="status" onDrag="return false" onDrop="return false" id="status"  class="form-control" required>
+                        <option [value]="undefined" disabled>Select Status</option>
+                        <option *ngFor="let state of status" [value]="state.id">{{ state.title }}</option>
+                    </select>
+                </div>
+            </div> -->
+            <!-- <div class="form-group">
+                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Upload Image : </label>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <input type="file" formControlName="addUserImage" onDrag="return false" onDrop="return false" id="email">
+                </div>
+            </div> -->
+        </form>
+    </div>
+    
+</div>
+<mat-dialog-actions align="end" style="padding-bottom: 20px;">
+    <button mat-raised-button [disabled]="!addUserForm.valid" [ngClass]="!addUserForm.valid ? '' : 'btn-success'" (click)="saveUser()"><span *ngIf="!user">Save</span><span
+            *ngIf="user">Update</span></button>
+    <button mat-raised-button class="add-dark-hover btn-default" (click)="close()">Close</button>
+</mat-dialog-actions>

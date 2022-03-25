@@ -1,0 +1,99 @@
+<!--This page is used to add or edit leads-->
+
+<!-- <h1 mat-dialog-title><span>Document</span></h1>
+<hr>
+<div mat-dialog-content>
+    <form class="form-horizontal">
+        <ng-template matStepLabel>Basic Details</ng-template>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Document Name:&nbsp; </label>
+            <div class="col-sm-8">
+                <input type="text" maxlength="100" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Document:&nbsp;</label>
+            <div class="col-sm-8">
+                <input type="file" maxlength="100" class="form-control" required>
+            </div>
+        </div>
+    </form>
+    <mat-dialog-actions align="end" style="float:right">
+        <button mat-raised-button class="btn-success" (click)="close()">Save</button>
+        <button mat-raised-button class="add-dark-hover btn-default" (click)="close()">Close</button>
+    </mat-dialog-actions>
+</div> -->
+
+<div class="NewHeader">
+        <h1 mat-dialog-title>
+            <span *ngIf="!doc" class="title-left">Add</span>
+            <span *ngIf="doc" class="title-left">Update</span> Document
+        </h1>
+    </div> 
+    <div mat-dialog-content>
+        <form class="form-horizontal" novalidate [formGroup]="addDocumentForm">
+            <div class="form-group">
+                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Document Name: </label>
+                <div class="col-sm-8">
+                        <input type="text" maxlength="30" class="form-control" placeholder="Enter Document Name"  formControlName="documentName" required>
+                        <div *ngIf="!documentName.valid && (documentName.dirty || documentName.touched)" class="error-text">
+                            <div *ngIf="documentName.errors.required">
+                             Document Name is required
+                            </div>
+                    </div>
+                 </div>
+             </div>
+             <div class="form-group">
+                    <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Fleet Name: </label>
+                    <div class="col-sm-8">
+                            <mat-select color="primary" placeholder="-- Select Fleet --"  formControlName="fleetName"  (selectionChange)='fleetChanged($event.value)' class="form-control" required>
+                                <mat-option *ngFor="let fleet of fleets" [value]="fleet.fleet_id">{{fleet.fleet_name}}</mat-option>
+                            </mat-select>
+                            <div *ngIf="!fleetName.valid && (fleetName.dirty || fleetName.touched)" class="error-text">
+                                <div *ngIf="fleetName.errors.required">
+                                    Fleet Name is required
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                 <!-- <div class="form-group">
+                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Assets Name: </label>
+                        <div class="col-sm-8">
+                                    <mat-select placeholder="-- Select Assets --" formControlName="assetName" multiple class="form-control" required>
+                                            <mat-option [value]="0" (click)="selectAll(ev)"   
+                                            #ev
+                                             >Select All</mat-option>
+                                            <mat-option *ngFor="let asset of assetsArray" (click)="selectOne(ev)" [value]="asset.asset_id">{{asset.asset_number_id}}</mat-option>
+                                          </mat-select>
+                                <div *ngIf="!assetName.valid && (assetName.dirty || assetName.touched)" class="error-text">
+                                    <div *ngIf="assetName.errors.required">
+                                            Asset Name is required
+                                    </div>
+                                </div>
+                            </div>
+                         </div> -->
+            <div class="form-group">
+                    <label class="control-label col-sm-4 add-member-label">Effective Year:&nbsp;</label>
+                    <div class="col-sm-8">
+                            <mat-select color="primary" placeholder="-- Select Effective Year --"  formControlName="effectiveDate" class="form-control" required>
+                                    <mat-option *ngFor="let year of years" [value]="year.year_id">{{year.year_duration}}</mat-option>
+                                </mat-select>
+                        <div *ngIf="!effectiveDate.valid && (effectiveDate.dirty || effectiveDate.touched)" class="error-text">
+                            <div *ngIf="effectiveDate.errors.required">
+                                    Effective Year is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                        <label class="control-label col-sm-4 add-member-label">Document:&nbsp;</label>
+                        <div class="col-sm-8">
+                          <input type="file" (change)="handleFileSelect($event)" formControlName="filesSelect" class="form-control" required>
+                        </div>
+                  </div>
+        </form>
+    </div>
+    <mat-dialog-actions align="end" style="margin-right:-8px!important">
+        <button mat-raised-button [disabled]="!addDocumentForm.valid" style="cursor:pointer;" [ngClass]="!addDocumentForm.valid ? '' : 'btn-primary'" (click)="saveDocument()"><mat-icon *ngIf="doc">update</mat-icon><mat-icon *ngIf="!doc">save</mat-icon><span *ngIf="!doc"> Save</span><span *ngIf="doc"> Update</span></button>
+        <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+    </mat-dialog-actions> 

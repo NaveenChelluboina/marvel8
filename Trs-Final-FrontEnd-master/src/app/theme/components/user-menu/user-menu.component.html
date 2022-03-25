@@ -1,0 +1,44 @@
+<button mat-icon-button [matMenuTriggerFor]="userMenu" #userMenuTrigger="matMenuTrigger">
+    <mat-icon title="View Profile">account_circle</mat-icon>
+</button>
+
+<mat-menu #userMenu="matMenu" [overlapTrigger]="false" class="toolbar-dropdown-menu user-menu">
+    <!--<span (mouseleave)="userMenuTrigger.closeMenu()">-->
+        <mat-toolbar color="primary">
+            <div fxLayout="row" fxLayoutAlign="space-around center" class="user-info">
+                <img [src]="userImage" alt="profile_pic" width="80" class="rounded mat-elevation-z6">
+                <p *ngIf="userData.name.length <= 12">{{userData.name}}  <br> </p>
+                <p matTooltip="{{userData.name}}" style="cursor: pointer!important;" *ngIf="userData.name.length > 12">{{userData.name | slice:0:12}}...  <br> </p>
+                </div>
+            </mat-toolbar>
+            <!-- <a *ngIf="userType == 'carrier'" mat-menu-item (click)="openProfileDialog()">
+                <mat-icon>person</mat-icon>
+                <span>Profile</span>
+            </a>
+            <a *ngIf="userType == 'admin'" mat-menu-item (click)="openProfileDialog()"> 
+                <mat-icon>person</mat-icon>
+                <span>Profile</span>
+            </a> -->
+            <a *ngIf="userType == 'carrier' &&  hasPermissions" mat-menu-item [routerLink]="['/transreport/carriers/subscriptions']">
+                <mat-icon>person</mat-icon>
+                <span>Subscriptions</span>
+            </a>
+            <a mat-menu-item (click)="openPasswordDialog()">
+                <mat-icon>vpn_key</mat-icon>
+                <span>Change Password</span>
+            </a>
+            <!-- <a mat-menu-item routerLink="/"> 
+                <mat-icon>lock</mat-icon>
+                <span>Lock screen</span> 
+            </a>
+            <a mat-menu-item routerLink="help"> 
+                <mat-icon>help</mat-icon>
+                <span>Help</span> 
+            </a> -->
+            <div class="divider"></div>
+            <a mat-menu-item (click)="logoutUser();">
+                <mat-icon>power_settings_new</mat-icon>
+                <span>Log out</span>
+            </a>
+            <!--</span>-->
+        </mat-menu>

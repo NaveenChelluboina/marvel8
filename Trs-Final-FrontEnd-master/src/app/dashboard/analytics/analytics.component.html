@@ -1,0 +1,35 @@
+<mat-card>
+    <!-- <div >
+        <div class="col-lg-2">
+            <mat-select placeholder="--Search by Year--" [formControl]="toppingsYear" single class="form-control pull-right">
+                <mat-option *ngFor="let option of yearOptions" [value]="option">{{option}}</mat-option>
+            </mat-select>
+        </div>
+        <div class="col-lg-1" style="margin-top: -3px;">
+            <button mat-raised-button (click)="filterDashboard()" class="pull-right btn-primary"><mat-icon>youtube_searched_for</mat-icon> Search</button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-left: -18px;margin-top: -3px;">
+            <button mat-raised-button style="background-color:#37474f; color:#fff !important" (click)="clearFilters()"><mat-icon>settings_backup_restore</mat-icon> Clear</button>
+        </div>
+    </div> -->
+    <h2 class="text-center">Monthly Subscription Trend</h2>
+    <mat-card-content>
+        <div class="w-100 h-300p" #resizedDiv>
+            <ngx-charts-line-chart
+            [scheme]="colorScheme"
+            [results]="analytics"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [autoScale]="autoScale"
+            [roundDomains]="roundDomains"
+            (select)="onSelect($event)">
+        </ngx-charts-line-chart>             
+    </div>
+</mat-card-content>
+</mat-card>

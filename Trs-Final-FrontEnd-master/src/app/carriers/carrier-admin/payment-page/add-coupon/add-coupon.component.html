@@ -1,0 +1,18 @@
+<div class="NewHeader">
+  <h1 mat-dialog-title><span *ngIf="issue">Congratulations</span><span *ngIf="!issue">Sorry</span></h1>
+</div>
+
+<div *ngIf="issue" style="text-align: center;" mat-dialog-content>
+  <h3>Congratulations!!A discount of 50% is applied</h3>
+  
+</div>
+<div *ngIf="!issue" style="text-align: center;" mat-dialog-content>
+  <h3>Sorry!!Coupon is either invalid or expired</h3>
+  
+</div>
+
+<mat-dialog-actions align="center" style="margin-right:-8px!important">
+  <button mat-raised-button class="btn-primary" style="cursor:pointer;" (click)="close()"><mat-icon *ngIf="!issue">cancel</mat-icon><mat-icon *ngIf="issue">sports_handball</mat-icon><span *ngIf="!issue">&nbsp;Close</span><span
+    *ngIf="issue">&nbsp;Ok</span></button>
+  </mat-dialog-actions> 
+  

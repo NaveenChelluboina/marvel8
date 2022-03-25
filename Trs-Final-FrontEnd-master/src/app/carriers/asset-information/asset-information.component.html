@@ -1,0 +1,241 @@
+<div fxLayout="row wrap">
+    <div class="w-100">
+        <div class="flex-p">
+            <div class="row wrap">
+                <div class="col-xs-12 pull-right" style="margin-right:0px !important;padding-right: 7px;">
+                    <div class="w-100 flex-p">
+                        <button *ngIf="canCreate" mat-raised-button class="pull-right  btn-primary" (click)="openAssetDialog(null)">
+                            <mat-icon>add</mat-icon> Add Asset
+                        </button>
+                        <button mat-raised-button color="primary" class="pull-right  margin-right-10" (click)="filterToggle = !filterToggle">
+                            <mat-icon>filter_list </mat-icon> Filter
+                        </button>
+                        <button mat-raised-button class="pull-right margin-right-10 btn-primary" (click)="openGridColumnsDialog(gridColumns)"> <mat-icon>view_column</mat-icon> Grid Columns </button>
+                        <div *ngIf="canCreate" class="file btn btn-lg btn-successs pull-right upload">
+                            <mat-icon class="upload-icon">cloud_download</mat-icon> Import
+                            <input style="cursor: pointer !important" class="file" type="file" name="file" (change)="handleFileSelect($event)" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                        </div>
+                        <button  mat-raised-button class="pull-right btn-success margin-right-10" (click)="dowloadBulkUploadAssetTemplate('data')">
+                            <mat-icon style="margin-right:6px !important;"> cloud_upload </mat-icon> Export
+                        </button>
+                        <!-- <button mat-raised-button class="pull-right btn-secondary margin-right-10" (click)="getAllAssetsSorted('z-a')"> <mat-icon>arrow_upward</mat-icon> Z-A </button>
+                            <button mat-raised-button class="pull-right btn-secondary margin-right-10" (click)="getAllAssetsSorted('a-z')"> <mat-icon>arrow_downward</mat-icon> A-Z </button> -->
+                            <div *ngIf="canCreate" class="file btn btn-lg btn-primary pull-right upload" (click)="dowloadBulkUploadAssetTemplateHeaders()">
+                                <mat-icon class="upload-icon">cloud_download</mat-icon>
+                                <span>Template</span>
+                            </div>
+                            <!-- <div class="file btn btn-lg btn-success pull-right upload"   style="margin-left: 10px;">
+                                <mat-icon class="upload-icon">cloud_download</mat-icon> Import  
+                                <input title="select file" style="cursor: pointer !important" class="file" type="file" name="file"  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                            </div> -->
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div fxLayout="row wrap" *ngIf="filterToggle">
+                <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p w-100 margins">
+                    <mat-card class="filter">
+                        <mat-card-content>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="col-sm-4 newMarginClass">
+                                        Asset ID: 
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text" placeholder="Search by Asset ID" class="form-control" [formControl]="assetid">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="col-sm-4 newMarginClass">
+                                        Fleet Name: 
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <!-- <mat-select placeholder="--Search by Fleets--" class="form-control" [(ngModel)]="fleet_filter">
+                                            <mat-option *ngFor="let option of fleets" [value]="option.fleet_id">{{option.fleet_name}}</mat-option>
+                                        </mat-select> -->
+                                        <mat-select color="primary" placeholder="-- Search by Fleet --" multiple [formControl]="fleetForm" class="form-control">
+                                            <mat-option [value]="0" (click)="selectAll(ef, 'fleet')" #ef >All</mat-option>
+                                            <mat-option *ngFor="let lead of fleets" (click)="selectOne(ef, 'fleet')" [value]="lead.fleet_id">{{lead.fleet_name}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="col-sm-4 newMarginClass">
+                                        Vehicle Type: 
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <mat-select color="primary" placeholder="-- Search by Asset Type --" multiple [formControl]="vehicleForm" class="form-control">
+                                            <mat-option [value]="0" (click)="selectAll(ev, 'vehicle')" #ev >All</mat-option>
+                                            <mat-option *ngFor="let lead of assetsType" (click)="selectOne(ev, 'vehicle')" [value]="lead.asset_type_id">{{lead.asset_name}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row" style="padding-top:10px !important">
+                                <div class="col-sm-4">
+                                    <div class="col-sm-4 newMarginClass">
+                                        Year: 
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <mat-select color="primary" placeholder="-- Search by Year --" multiple [formControl]="yearForm" class="form-control">
+                                            <mat-option [value]="0" (click)="selectAll(ey, 'year')" #ey >All</mat-option>
+                                            <mat-option *ngFor="let lead of years" (click)="selectOne(ey, 'year')" [value]="lead.year_id">{{lead.year_name}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="col-sm-4 newMarginClass">
+                                        VIN #: 
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder=" Search by VIN #" [formControl]="vin">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="col-sm-4 newMarginClass">
+                                        Vehicle Weight: 
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder=" Search by Registered Gross Vehicle Weight " [formControl]="weight">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row" style="padding-top:10px !important">
+                                <div class="col-sm-4">
+                                    <div class="col-sm-4 newMarginClass">
+                                        Axles #: 
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" placeholder=" Search by # of Axles " [formControl]="axles" >
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="col-sm-4 newMarginClass">
+                                        Status: 
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <mat-select placeholder="--Search by Status--" class="form-control" [formControl]="statu" [(ngModel)]="status_filter">
+                                            <mat-option *ngFor="let option of status" [value]="option.status_id">{{option.status_name}}</mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-1" style="margin-left:195px!important;">
+                                    <button mat-raised-button (click)="fliterSearch()" class="pull-right btn-primary"><mat-icon>youtube_searched_for</mat-icon> Search</button>
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-left: -18px;">
+                                    <button mat-raised-button style="background-color:#37474f; color:#fff !important" (click)="clearFilters()"><mat-icon>settings_backup_restore</mat-icon> Clear</button>
+                                </div>
+                                <a (click)="filterToggle = !filterToggle" class="pull-right" style="font-size: 25px; cursor: pointer; margin-left: 5px;">
+                                    <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+                                </a>
+                                
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+            <div fxLayout="row wrap" style="margin-top: 6px; padding: 0 7px 0 8px !important;">
+                <table class="table table-bordered table-hover" style="width: 100%;background: #fff;">
+                    <thead class="tbl-head">
+                        <tr>
+                            <th (click)="AssetIdClicked(assetAssending = !assetAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[0] == '1'">Asset ID</th>
+                            <th (click)="FleetClicked(fleetAssending = !fleetAssending)" style="cursor: pointer;width:70px !important;" *ngIf="gridColumns[0].grid_columns.split('')[1] == '1'">Fleet Name</th>
+                            <th (click)="AssetTypeClicked(assetTypeAssending = !assetTypeAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[2] == '1'">Asset Type</th>
+                            <th (click)="YearClicked(yearAssending = !yearAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[3] == '1'">Year</th>
+                            <th (click)="MakeClicked(makeAssending = !makeAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[4] == '1'">Make</th>
+                            <th (click)="ModelClicked(modelAssending = !modelAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[5] == '1'">Model</th>
+                            <th (click)="PlateClicked(plateAssending = !plateAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[6] == '1'">Plate #</th>
+                            <th (click)="JurisdictionClicked(jurisdictionAssending = !jurisdictionAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[7] == '1'">Plate Jurisdiction</th>
+                            <th (click)="VinClicked(vinAssending = !vinAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[8] == '1'" class="text-center">VIN #</th>
+                            <th (click)="CountryClicked(countryAssending = !countryAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[9] == '1'" class="text-center">Country</th>
+                            <th (click)="grossWeightClicket(grossAssending = !grossAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[10] == '1'" class="text-center">Registered Gross Vehicle Weight </th>
+                            <th (click)="UnitsClicked(unitsAssending = !unitsAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[11] == '1'" class="text-center">Units</th>
+                            <th (click)="NumberClicked(assetNumberAssending = !assetNumberAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[12] == '1'" class="text-center"># of Axles</th>
+                            <th (click)="ActiveClicked(activeAssending = !activeAssending)" style="cursor: pointer;" class="text-center">Status</th>
+                            <th *ngIf="gridColumns[0].grid_columns.split('')[13] == '1'" class="text-center">Documents</th>
+                            <th class="text-center"  style="width: 112px!important;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tr *ngIf="showEmpty"><td colspan="16">No records found</td></tr>
+                    <tr *ngFor="let asset of assets">
+                        <td *ngIf="gridColumns[0].grid_columns.split('')[0] == '1'">
+                            {{asset.asset_number_id}}
+                        </td>
+                        <td *ngIf="gridColumns[0].grid_columns.split('')[1] == '1'">
+                            {{asset.sortedFleet}}
+                        </td>
+                        <td *ngIf="gridColumns[0].grid_columns.split('')[2] == '1'">
+                            {{asset.sortedType}}
+                        </td>
+                        <td *ngIf="gridColumns[0].grid_columns.split('')[3] == '1'">
+                            {{asset.year_name}}
+                        </td>
+                        <td *ngIf="gridColumns[0].grid_columns.split('')[4] == '1'">
+                            {{asset.sortedMake}}
+                        </td>
+                        <td *ngIf="gridColumns[0].grid_columns.split('')[5] == '1'">
+                            {{asset.model}}
+                        </td>
+                        <td class="text-center" *ngIf="gridColumns[0].grid_columns.split('')[6] == '1'">
+                            {{asset.plate}}
+                        </td>
+                        <td class="text-center" *ngIf="gridColumns[0].grid_columns.split('')[7] == '1'">
+                            {{asset.sortedplate}}
+                        </td>
+                        <td *ngIf="gridColumns[0].grid_columns.split('')[8] == '1'" class="text-center">
+                            {{asset.vin_number}}
+                        </td>
+                        <td *ngIf="gridColumns[0].grid_columns.split('')[9] == '1'" class="text-center">
+                            {{asset.country}}
+                        </td>
+                        <td *ngIf="gridColumns[0].grid_columns.split('')[10] == '1'" class="text-center">
+                            {{asset.registered_weight}}
+                        </td>
+                        <td *ngIf="gridColumns[0].grid_columns.split('')[11] == '1'" class="text-center">
+                            {{asset.units}}
+                        </td>
+                        <td *ngIf="gridColumns[0].grid_columns.split('')[12] == '1'" class="text-center">
+                            {{asset.number_of_axels}}
+                        </td>
+                        <td class="text-center" style="text-align:center!important">
+                            <span *ngIf="!asset.is_active" style="color:red">Inactive</span>
+                            <span *ngIf="asset.is_active" style="color:#1c4f86;">Active</span>
+                        </td>
+                        <td *ngIf="gridColumns[0].grid_columns.split('')[13] == '1'" class="text-center">
+                            <a style="cursor: pointer;color: blue;" matTooltip="View Document" (click)="openDocumentsDialog(asset)">{{asset.trs_tbl_asset_documents.length}}</a>
+                        </td>
+                        <td *ngIf="canUpdate" class="text-center">
+                            <a
+                            style="margin-right:10px;cursor: pointer;"
+                            matTooltip="View Comment"
+                            (click)="openNote(asset)"
+                            >
+                            <i class="fa fa-comment" style="color: cornflowerblue"></i>
+                        </a>
+                        <a style="cursor: pointer;margin-right:10px; " matTooltip="Update Asset" (click)="openAssetDialog(asset)">
+                            <i class="fa fa-edit" style="color: cornflowerblue"></i>
+                        </a>
+                        <a *ngIf="canDelete" ><i class="fa fa-trash red" matTooltip="Delete Asset"  style="cursor: pointer;"(click)="openDeleteDialog(asset)"></i></a>
+                    </td>
+                    <td *ngIf="!canUpdate" class="text-center">
+                        <a
+                        style="margin-right:10px;cursor: pointer;"
+                        matTooltip="View Comment"
+                        (click)="openNote(asset)"
+                        >
+                        <i class="fa fa-comment" style="color: cornflowerblue"></i>
+                    </a>
+                </td>
+            </tr>
+        </table>
+        <div class="col-md-12 pull-right">
+            <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>
+</div>

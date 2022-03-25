@@ -1,0 +1,499 @@
+<!-- <div fxLayout="row wrap">
+  <div class="w-100">
+    <div class="flex-p">
+      <div class="row wrap">
+        <div class="col-xs-12 pull-right" style="margin-right:0px !important;padding: 0 7px 0 0 !important;">
+          <div class="w-100 flex-p">
+            <button mat-raised-button class="pull-right btn-primary" (click)="openDriverDialog(null)"><mat-icon>add</mat-icon> Add Driver</button>
+            <button mat-raised-button color="primary" class="pull-right margin-right-10" (click)="filterToggle = !filterToggle"> <mat-icon>filter_list</mat-icon> Filter </button>
+            <button mat-raised-button class="pull-right btn-success margin-right-10" > <mat-icon>cloud_upload</mat-icon> Export </button>
+            <button mat-raised-button class="pull-right btn-secondary margin-right-10" (click)="getAllDriversSorted('z-a')"> <mat-icon>arrow_upward</mat-icon> Z-A </button>
+            <button mat-raised-button class="pull-right btn-secondary margin-right-10" (click)="getAllDriversSorted('a-z')"> <mat-icon>arrow_downward</mat-icon> A-Z </button>
+            <button mat-raised-button class="pull-right btn-success margin-right-10" (click)="dowloadBulkUploadAssetTemplate('data')"> <mat-icon>cloud_upload</mat-icon> Export </button>
+            <div class="file btn btn-lg btn-success pull-right upload">
+              <mat-icon class="upload-icon">vertical_align_top</mat-icon> Import
+              <input style="cursor: pointer !important" class="file" type="file" name="file" (change)="handleFileSelect($event)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+            </div>
+            <button mat-raised-button class="pull-right btn-secondary margin-right-10" (click)="getAllDriversSorted('z-a')"> <mat-icon>arrow_upward</mat-icon> Z-A </button>
+            <button mat-raised-button class="pull-right btn-secondary margin-right-10" (click)="getAllDriversSorted('a-z')"> <mat-icon>arrow_downward</mat-icon> A-Z </button>
+            <div class="file btn btn-lg btn-primary pull-right upload" (click)="dowloadBulkUploadAssetTemplate()">
+              <mat-icon class="upload-icon">cloud_download</mat-icon>
+              <span>Download Template</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div fxLayout="row wrap" *ngIf="filterToggle">
+      <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p w-100 margins">
+        <mat-card class="filter">
+          <mat-card-content>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="col-sm-4 newMarginClass">
+                  Driver First Name: 
+                </div>
+                
+                <div class="col-sm-8">
+                  <input type="text" placeholder="Enter Driver First Name" class="form-control" [formControl]="firstControl">
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="col-sm-4 newMarginClass">
+                  Driver Last Name: 
+                </div>
+                <div class="col-sm-8">
+                  <input type="text" placeholder="Enter Driver Last Name" class="form-control" [formControl]="lastControl">
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="col-sm-4 newMarginClass">
+                  DL Number: 
+                </div>
+                <div class="col-sm-8">
+                  <input type="text" placeholder="Enter DL Number" class="form-control" [formControl]="dlControl">
+                </div>
+              </div>
+            </div>
+            
+            <div class="row" style="padding-top:10px !important">
+              
+              <div class="col-sm-4">
+                <div class="col-sm-4 newMarginClass">
+                  Status: 
+                </div>
+                <div class="col-sm-8">
+                  <mat-select placeholder="--Search by Status--" class="form-control" [(ngModel)]="status_filter">
+                    <mat-option *ngFor="let option of status" [value]="option.id">{{option.value}}</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="col-sm-4 newMarginClass">
+                  Country: 
+                </div>
+                <div class="col-sm-8">
+                  <mat-select placeholder="--Search by Country--" class="form-control" [(ngModel)]="country_filter">
+                    <mat-option *ngFor="let option of countries" [value]="option.id">{{option.value}}</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="col-sm-4 newMarginClass">
+                  State: 
+                </div>
+                <div class="col-sm-8">
+                  <mat-select placeholder="--Search by States--" class="form-control" [(ngModel)]="state_filter">
+                    <mat-option *ngFor="let option of states" [value]="option.id">{{option.value}}</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row" style="padding-top:10px !important">
+              <div class="col-sm-4">
+                <div class="col-sm-4 newMarginClass">
+                  DL Class: 
+                </div>
+                <div class="col-sm-8">
+                  <input type="text" placeholder="Enter DL Class" class="form-control" [formControl]="dlclassControl">
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="col-sm-4 newMarginClass">
+                  City: 
+                </div>
+                <div class="col-sm-8">
+                  <input type="text" placeholder="Enter City" class="form-control" [formControl]="citycontrol">
+                </div>
+              </div>
+              <div class="col-lg-1" style="margin-left:195px!important;">
+                <button mat-raised-button (click)="filterSearch()" class="pull-right btn-primary"><mat-icon>youtube_searched_for</mat-icon> Search</button>
+              </div>
+              <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-left: -18px;">
+                <button mat-raised-button style="background-color:#37474f; color:#fff !important" (click)="clearFilters()"><mat-icon>settings_backup_restore</mat-icon> Clear</button>
+              </div>
+              <a (click)="filterToggle = !filterToggle" class="pull-right add-hover" style="font-size: 25px; cursor: pointer; margin-left: 5px;">
+                <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+              </a>
+              
+            </div>
+            
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div fxLayout="row wrap" style="margin-top: 6px;padding: 0 7px 0 10px;">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover" style="width: 100%;background: #fff;">
+      <thead class="tbl-head">
+        <tr>
+          <th>Driver Last Name</th>
+          <th>Driver First Name</th>
+          <th>Cell Phone</th>
+          <th>Email ID</th>
+          <th>D.L. Number</th>
+          <th>D.L. Class</th>
+          <th>Address</th>
+          <th>City</th>
+          <th>State</th>
+          <th class="text-center">Country</th>
+          <th class="text-center">Documents</th>
+          <th class="text-center">Status</th>
+          <th class="text-center" style="width: 112px!important;">Actions</th>
+          <div fxLayout="row wrap" style="margin-top: 6px;padding: 0 7px 0 10px;">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover" style="width: 100%;background: #fff;">
+                <thead class="tbl-head">
+                  <tr>
+                    <th>Driver Last Name</th>
+                    <th>Driver First Name</th>
+                    <th>Cell Phone</th>
+                    <th>Email Address</th>
+                    <th>D.L. Number</th>
+                    <th>D.L. Class</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th class="text-center">Country</th>
+                    <th class="text-center">Documents</th>
+                    
+                    <th class="text-center">Status</th>
+                    <th class="text-center" style="min-width: 100px!important">Actions</th>
+                  </tr>
+                </thead>
+                <tr *ngIf="showEmpty"><td colspan="13" class="showEmptyClass">No records found</td></tr>
+                <tr *ngFor="let driver of drivers">
+                  <td>
+                    {{ driver.driver_last_name }}
+                  </td>
+                  <td>
+                    {{ driver.driver_first_name }}
+                  </td>
+                  
+                  <td>
+                    {{ driver.cell_phone }}
+                  </td>
+                  <td title="{{driver.email_address}}">
+                    {{ driver.email_address | slice:0:18 }}...
+                  </td>
+                  <td>
+                    {{ driver.dl_number }}
+                  </td>
+                  <td>
+                    {{ driver.dl_class }}
+                  </td>
+                  <td title="{{driver.address1 +  '' + driver.address2}}">
+                    {{ driver.address1 + " " + driver.address2 | slice:0:10 }}...
+                  </td>
+                  <td>
+                    {{ driver.city }}
+                  </td>
+                  <td>
+                    {{ driver.trs_tbl_state.state_name }}
+                  </td>
+                  <td>
+                    {{ driver.trs_tbl_country.country_name }}
+                  </td>
+                  <td class="text-center">
+                    <a style="cursor: pointer;color: blue;" matTooltip="View Comment" (click)="openDocumentsDialog(driver)">{{driver.trs_tbl_driver_documents.length}}</a>
+                  </td>
+                  
+                  <td class="text-center" style="cursor:pointer;text-align:center!important">
+                    <a mwlConfirmationPopover
+                    [popoverTitle]="popoverStatusTitle" 
+                    [popoverMessage]="popoverStatusMessage"
+                    placement="left"
+                    (confirm)="updateDriver(driver.driver_id,!driver.is_active,'active')"
+                    (cancel)="cancelClicked = true" [appendToBody]="true">
+                    <span *ngIf="!driver.is_active" style="color:red">Inactive</span>
+                    <span *ngIf="driver.is_active" style="color:#1c4f86;">Active</span>
+                  </a>
+                </td>
+                <td class="text-center">
+                  <a style="margin-right: 10px; cursor: pointer;font-size:16px!important;color:#0987e8d1" matTooltip="View Comments" (click)="openNote(driver)">
+                    <i class="fa fa-comment" style="color: cornflowerblue"></i></a>
+                    <a matTooltip="Update Driver" style="margin-right: 10px; cursor: pointer;font-size:16px!important;color:#0987e8d1" (click)="openDriverDialog(driver)">
+                      <i class="fa fa-edit"></i>
+                    </a>
+                    <a mwlConfirmationPopover
+                    [popoverTitle]="popoverTitle" 
+                    [popoverMessage]="popoverMessage"
+                    placement="left"
+                    (confirm)="updateDriver(driver.driver_id,!driver.is_deleted,'delete')"
+                    (cancel)="cancelClicked = true"   [appendToBody]="true">
+                    <i style="cursor: pointer;font-size:16px!important;" matTooltip="Delete Driver" class="fa fa-trash red"></i>
+                  </a>
+                </td>
+              </tr>
+            </table>
+            <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)" showFirstLastButtons></mat-paginator>
+          </div>
+        </div>
+        
+      </div>
+    </div> -->
+    
+    
+    <div fxLayout="row wrap">
+      <div class="w-100">
+        <div class="flex-p">
+          <div class="row wrap">
+            <div class="col-xs-12 pull-right" style="margin-right:0px !important;padding: 0 7px 0 0 !important;">
+              <div class="w-100 flex-p">
+                <button *ngIf="canCreate" mat-raised-button class="pull-right btn-primary" (click)="openDriverDialog(null)"><mat-icon>add</mat-icon> Add Driver</button>
+                <button mat-raised-button color="primary" class="pull-right margin-right-10" (click)="filterToggle = !filterToggle"> <mat-icon>filter_list</mat-icon> Filter </button>
+                <button mat-raised-button class="pull-right margin-right-10 btn-primary" (click)="openGridColumnsDialog(gridColumns)"> <mat-icon>view_column</mat-icon> Grid Columns </button>
+                <div *ngIf="canCreate"  class="file btn btn-lg btn-successs pull-right upload">
+                  <mat-icon class="upload-icon">cloud_download</mat-icon> Import
+                  <input style="cursor: pointer !important;" class="file" type="file" name="file" (change)="handleFileSelect($event)" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                </div>
+                <button mat-raised-button class="pull-right btn-success margin-right-10 "  (click)="dowloadBulkUploadAssetTemplate('data')"> <mat-icon style="margin-right:6px !important;">cloud_upload</mat-icon> Export </button>
+                <!-- <div class="file btn btn-lg btn-success pull-right upload" style="margin-left: 10px;">
+                  <mat-icon class="upload-icon">cloud_download</mat-icon> Import
+                  <input
+                  title="select file"
+                  style="cursor: pointer !important"
+                  class="file"
+                  type="file"
+                  name="file"
+                  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                  />
+                </div> -->
+                <!-- <label class="btn btn-default btn-file"><mat-icon>cloud_download</mat-icon>
+                  <span>dsd</span> <input type="file" style="display: none;">
+                </label> -->
+                <!-- <label class="btn-success pull-right" style="padding-top: 8px !important;padding-bottom: 10px !important;;margin-right: 10px;">
+                  Upload CSV<input type="file" style="display: none;"  name="image">
+                </label> -->
+                <!-- <button mat-raised-button class="pull-right btn-secondary margin-right-10" (click)="getAllDriversSorted('z-a')"> <mat-icon>arrow_upward</mat-icon> Z-A </button>
+                  <button mat-raised-button class="pull-right btn-secondary margin-right-10" (click)="getAllDriversSorted('a-z')"> <mat-icon>arrow_downward</mat-icon> A-Z </button> -->
+                  <div *ngIf="canCreate" class="file btn btn-lg btn-primary pull-right upload" (click)="dowloadBulkUploadAssetTemplateHeaders()">
+                    <mat-icon class="upload-icon">cloud_download</mat-icon>
+                    <span>Template</span>
+                  </div>
+                  <!-- <button mat-raised-button class="pull-right add-hover btn-success margin-right-10">
+                    <mat-icon>cloud_download</mat-icon>  Import
+                  </button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div fxLayout="row wrap" *ngIf="filterToggle">
+            <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p w-100 margins">
+              <mat-card class="filter">
+                <mat-card-content>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="col-sm-4 newMarginClass">
+                        Driver Last Name: 
+                      </div>
+                      <div class="col-sm-8">
+                        <input type="text" placeholder="Enter Driver Last Name" class="form-control" [formControl]="lastControl">
+                      </div>
+                    </div>
+                    
+                    <div class="col-sm-4">
+                      <div class="col-sm-4 newMarginClass">
+                        Driver First Name: 
+                      </div>
+                      <div class="col-sm-8">
+                        <input type="text" placeholder="Enter Driver First Name" class="form-control" [formControl]="firstControl">
+                      </div>
+                    </div>
+                    
+                    <div class="col-sm-4">
+                      <div class="col-sm-4 newMarginClass">
+                        DL Number: 
+                      </div>
+                      <div class="col-sm-8">
+                        <input type="text" placeholder="Enter DL Number" class="form-control" [formControl]="dlControl">
+                      </div>
+                    </div>
+                    
+                    
+                  </div>
+                  <div class="row" style="padding-top:10px !important">
+                    
+                    <div class="col-sm-4">
+                      <div class="col-sm-4 newMarginClass">
+                        Status: 
+                      </div>
+                      <div class="col-sm-8">
+                        <mat-select placeholder="--Search by Status--" class="form-control" [(ngModel)]="status_filter">
+                          <mat-option *ngFor="let option of status" [value]="option.id">{{option.value}}</mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="col-sm-4 newMarginClass">
+                        Country: 
+                      </div>
+                      <div class="col-sm-8">
+                        <mat-select placeholder="--Search by Country--" class="form-control" [(ngModel)]="country_filter">
+                          <mat-option *ngFor="let option of countries" [value]="option.id">{{option.value}}</mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="col-sm-4 newMarginClass">
+                        State: 
+                      </div>
+                      <div class="col-sm-8">
+                        <mat-select placeholder="--Search by States--" class="form-control" [(ngModel)]="state_filter">
+                          <mat-option *ngFor="let option of statesForCanadaAndUSa" [value]="option.state_id">{{option.state_name}}</mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" style="padding-top:10px !important">
+                    <div class="col-sm-4">
+                      <div class="col-sm-4 newMarginClass">
+                        DL Class: 
+                      </div>
+                      <div class="col-sm-8">
+                        <input type="text" placeholder="Enter DL Class" class="form-control" [formControl]="dlclassControl">
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="col-sm-4 newMarginClass">
+                        City: 
+                      </div>
+                      <div class="col-sm-8">
+                        <input type="text" placeholder="Enter City" class="form-control" [formControl]="citycontrol">
+                      </div>
+                    </div>
+                    <div class="col-lg-1" style="margin-left:195px!important;">
+                      <button mat-raised-button (click)="filterSearch()" class="pull-right btn-primary"><mat-icon>youtube_searched_for</mat-icon> Search</button>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-left: -18px;">
+                      <button mat-raised-button style="background-color:#37474f; color:#fff !important" (click)="clearFilters()"><mat-icon>settings_backup_restore</mat-icon> Clear</button>
+                    </div>
+                    <a (click)="filterToggle = !filterToggle" class="pull-right" style="font-size: 25px; cursor: pointer; margin-left: 5px;">
+                      <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+                    </a>
+                    
+                  </div>
+                  
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+          
+          <div fxLayout="row wrap" style="margin-top: 6px;padding: 0 7px 0 10px;">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover" style="width: 100%;background: #fff;">
+                <thead class="tbl-head">
+                  <tr>
+                    <th (click)="LastNameClicked(lastnameAssending = !lastnameAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[0] == '1'">Driver Last Name</th>
+                    <th (click)="FirstNameClicked(firstnameAssending = !firstnameAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[1] == '1'">Driver First Name</th>
+                    <th (click)="ContactClicked(contactAssending = !contactAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[2] == '1'">Cell Phone</th>
+                    <th (click)="EmailClicked(emailAssending = !emailAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[3] == '1'">Email ID</th>
+                    <th (click)="LisenceClicked(lisenceAssending = !lisenceAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[4] == '1'">D.L. Number</th>
+                    <th (click)="ClassClicked(classAssending = !classAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[5] == '1'">D.L. Class</th>
+                    <th (click)="AddressClicked(addressAssending = !addressAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[6] == '1'">Address</th>
+                    <th (click)="ZipClicked(zipAssending = !zipAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[11] == '1'">Zip</th>
+                    <th (click)="CountryClicked(countryAssending = !countryAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[9] == '1'">Country</th>
+                    <th (click)="StateClicked(stateAssending = !stateAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[8] == '1'">State</th>
+                    <th (click)="CityClicked(cityAssending = !cityAssending)" style="cursor: pointer;" *ngIf="gridColumns[0].grid_columns.split('')[7] == '1'">City</th>
+                    <th *ngIf="gridColumns[0].grid_columns.split('')[10] == '1'" class="text-center">Documents</th>
+                    <!-- <th class="text-center">Comments</th> -->
+                    <th (click)="ActiveClicked(statusAssending = !statusAssending)" style="cursor: pointer;" class="text-center">Status</th>
+                    <th class="text-center" style="width: 135px!important;">Actions</th>
+                  </tr>
+                </thead>
+                <tr *ngIf="showEmpty"><td colspan="14" class="showEmptyClass">No records found</td></tr>
+                <tr *ngFor="let driver of drivers">
+                  <td *ngIf="gridColumns[0].grid_columns.split('')[0] == '1'">
+                    {{ driver.driver_last_name }}
+                  </td>
+                  <td *ngIf="gridColumns[0].grid_columns.split('')[1] == '1'">
+                    {{ driver.driver_first_name }}
+                  </td>
+                  
+                  <td *ngIf="gridColumns[0].grid_columns.split('')[2] == '1'">
+                    {{ driver.cell_phone }}
+                  </td>
+                  <td *ngIf="gridColumns[0].grid_columns.split('')[3] == '1'  && driver.email_address.length > 18" title="{{driver.email_address}}">
+                    {{ driver.email_address | slice:0:18 }}...
+                  </td>
+                  <td *ngIf="gridColumns[0].grid_columns.split('')[3] == '1' && driver.email_address.length <= 18" title="{{driver.email_address}}">
+                    {{ driver.email_address}}
+                  </td>
+                  <td *ngIf="gridColumns[0].grid_columns.split('')[4] == '1'">
+                    {{ driver.dl_number }}
+                  </td>
+                  <td *ngIf="gridColumns[0].grid_columns.split('')[5] == '1'">
+                    {{ driver.dl_class }}
+                  </td>
+                  <td *ngIf="gridColumns[0].grid_columns.split('')[6] == '1' && driver.address1.length > 10" title="{{driver.address1}}">
+                    {{ driver.address1 | slice:0:10 }}...
+                  </td>
+                  <td *ngIf="gridColumns[0].grid_columns.split('')[6] == '1' && driver.address1.length <= 10" title="{{driver.address1}}">
+                    {{ driver.address1 }}
+                  </td>
+                  <td *ngIf="gridColumns[0].grid_columns.split('')[11] == '1'">
+                    {{ driver.zip }}
+                  </td>
+                  <td *ngIf="gridColumns[0].grid_columns.split('')[9] == '1'">
+                    {{ driver.sortCountry }}
+                  </td>
+                  <td *ngIf="gridColumns[0].grid_columns.split('')[8] == '1'">
+                    {{ driver.sortState }}
+                  </td>
+                  
+                  <td *ngIf="gridColumns[0].grid_columns.split('')[7] == '1'">
+                    {{ driver.city }}
+                  </td>
+                  
+                  <td *ngIf="gridColumns[0].grid_columns.split('')[10] == '1'" class="text-center">
+                    <a style="cursor: pointer;color: blue;" matTooltip="View Document" (click)="openDocumentsDialog(driver)">{{driver.trs_tbl_driver_documents.length}}</a>
+                  </td>
+                  <!-- <td class="text-center inner-screen" (click)="openNote()">View</td> -->
+                  <!-- <td class="text-center" style="cursor:pointer;text-align:center!important">
+                    <a mwlConfirmationPopover
+                    [popoverTitle]="popoverStatusTitle" 
+                    [popoverMessage]="popoverStatusMessage"
+                    placement="left"
+                    (confirm)="updateDriver(driver.driver_id,!driver.is_active,'active')"
+                    (cancel)="cancelClicked = true" [appendToBody]="true">
+                    <span *ngIf="!driver.is_active" style="color:red">Inactive</span>
+                    <span *ngIf="driver.is_active" style="color:#1c4f86;">Active</span>
+                  </a>
+                </td> -->
+                <td class="text-center" style="text-align:center!important">
+                  <span *ngIf="!driver.is_active" style="color:red">Inactive</span>
+                  <span *ngIf="driver.is_active" style="color:#1c4f86;">Active</span>
+                </td>
+                
+                <td *ngIf="canUpdate" class="text-center">
+                  <a *ngIf="!driver.password" style="margin-right: 5px; cursor: pointer;font-size:16px!important;color:#0987e8d1" matTooltip="Send app link" (click)="openPasswordSetLink(driver)">
+                    <i class="fa fa-arrow-right" style="color: cornflowerblue"></i>
+                  </a>
+                  <a style="margin-right: 5px; cursor: pointer;font-size:16px!important;color:#0987e8d1" matTooltip="View Comment" (click)="openNote(driver)">
+                    <i class="fa fa-comment" style="color: cornflowerblue"></i>
+                  </a>
+                  <a matTooltip="Update Driver" style="margin-right: 5px; cursor: pointer;font-size:16px!important;color:#0987e8d1" (click)="openDriverDialog(driver)">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  <a *ngIf="canDelete">
+                    <i style="cursor: pointer;font-size:16px!important;"  matTooltip="Delete Driver" (click)="openDeleteDialog(driver)" class="fa fa-trash red"></i>
+                  </a>
+                </td>
+                <td *ngIf="!canUpdate" class="text-center">
+                  <a style="margin-right: 5px; cursor: pointer;font-size:16px!important;color:#0987e8d1" matTooltip="View Comment" (click)="openNote(driver)">
+                    <i class="fa fa-comment" style="color: cornflowerblue"></i>
+                  </a>
+                </td>
+              </tr>
+            </table>
+            <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)" showFirstLastButtons></mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,124 @@
+<div fxLayout="row wrap" #resizedDiv>
+  <div class="flex-p w-100">
+    
+    <div class="row" style="margin-bottom:14px;">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="w-100 flex-p">
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="w-100 flex-p">
+          <button *ngIf="canCreate" mat-raised-button class="pull-right btn-primary" (click)="openAssetDialog(null)">
+            <mat-icon>fingerprint</mat-icon> Add Asset-Make
+          </button>
+          <button mat-raised-button color="primary" class="pull-right filter-hover margin-right-10" (click)="filterToggle = !filterToggle">
+            <mat-icon>filter_list</mat-icon> Filter
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p w-100" *ngIf="filterToggle">
+        <mat-card class="filter">
+          <mat-card-content>
+            <div class="row col-sm-12">
+              <div class="col-sm-4">
+                <div class="col-sm-4 newMarginClass">
+                  Asset-Make: 
+                </div>
+                <div class="col-sm-8">
+                  <input type="text" placeholder="Enter Asset-Make" class="form-control" [formControl]="userControl">
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="col-sm-2 newMarginClass">
+                  Status: 
+                </div>
+                <div class="col-sm-8">
+                  <mat-select placeholder="--Search by Status--" class="form-control" [(ngModel)]="status_filter">
+                    <mat-option *ngFor="let option of status" [value]="option.id">{{option.value}}</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <div class="col-lg-1" style="margin-left:-50px!important">
+                <button type="button" class="btn btn-success  pull-right" (click)="filterSearch()">Search</button>
+              </div>
+              <div class="col-lg-1">
+                <button type="button" class="btn filter-hover" style="background-color:#37474f; color:#fff !important" (click)="clearFilters()">Clear</button>
+              </div>
+            </div>
+            
+            
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    
+    <div fxLayout="row wrap">
+      <div class="table-responsive">
+        <table id="example2" class="table table-bordered table-hover">
+          <thead class="tbl-head">
+            <tr class="tr-grid-header">
+              <th (click)="AssetTypeClicked(assettypeAssending = !assettypeAssending)" style="cursor: pointer;">Asset-Type</th>
+              <th (click)="AssetNameClicked(assetnameAssending = !assetnameAssending)" style="cursor: pointer;">Asset-Make</th>
+              <th (click)="ActiveClicked(activeAssending = !activeAssending)" style="cursor: pointer;" class="text-center">Status</th>
+              <th class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="showEmpty"><td colspan="4" class="showEmptyClass">No records found</td></tr>
+            <tr *ngFor="let item of assets">
+              <td>{{item.asset_type_new}}</td>
+              <td>{{item.asset_make_name}}</td>
+              <td *ngIf="canUpdate" class="pad-left inner-screen text-center" style="cursor:pointer">
+                <a  mwlConfirmationPopover
+                [popoverTitle]="popoverStatusTitle" 
+                [popoverMessage]="popoverStatusMessage"
+                placement="left"
+                (confirm)="updateAssetMake(item.asset_make_id,!item.is_active,'active')"
+                (cancel)="cancelClicked = true" [appendToBody]="true">
+                <span *ngIf="!item.is_active" style="color:red">Inactive</span>
+                <span *ngIf="item.is_active" style="color:#1c4f86;">Active</span>
+              </a>
+            </td>
+            <td *ngIf="!canUpdate" class="pad-left inner-screen text-center" style="cursor:pointer">
+              <a>
+                <span *ngIf="!item.is_active" style="color:red">Inactive</span>
+                <span *ngIf="item.is_active" style="color:#1c4f86;">Active</span>
+              </a>
+            </td>
+            <!-- <td *ngIf="!canUpdate" class="pad-left inner-screen" style="cursor:pointer">
+              <a>
+                <span *ngIf="!item.is_active" style="color:red">Inactive</span>
+                <span *ngIf="item.is_active" style="color:#1c4f86;">Active</span>
+              </a>
+            </td> -->
+            <td *ngIf="canUpdate" class="text-center">
+              <a matTooltip="Update Asset Make" style="margin-right: 10px; cursor: pointer;font-size:16px!important;color:#0987e8d1" (click)="openAssetDialog(item)">
+                <i class="fa fa-edit"></i>
+              </a>
+              <a *ngIf="canDelete">
+                <i style="cursor: pointer;"  matTooltip="Delete Asset-Make" (click)="openDeleteDialog(item)" class="fa fa-trash red"></i>
+            </a>
+          </td>
+          <td *ngIf="!canUpdate" class="text-center">-</td>
+          <!-- <td *ngIf="!canDelete">
+            <a matTooltip="Edit Permission" style="margin-right: 10px; cursor: pointer;font-size:16px!important;color:#0987e8d1" (click)="openPermissionDialog(item)">
+              <i class="fa fa-edit"></i>
+            </a>
+            -
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+    <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
+</div>
+</div>
+
+<div *ngIf="!tableList" fxLayout="column" fxLayoutAlign="center center" class="campaign-spinner">
+  <mat-spinner color="primary"></mat-spinner>
+</div>
+

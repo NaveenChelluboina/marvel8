@@ -1,0 +1,332 @@
+<!--This page is used to add or edit campaign-->
+<!-- <button class="close" style ="background-color: white !important;" [mat-dialog-close]="true"><mat-icon>close</mat-icon></button> -->
+<div class="NewHeader">
+  <h1 mat-dialog-title>
+    <span *ngIf="!driver" class="title-left">Add</span>
+    <span *ngIf="driver" class="title-left">Update</span> Driver
+  </h1>
+</div> 
+<mat-horizontal-stepper #stepper>
+  <mat-step>
+    <div mat-dialog-content>
+      <form class="form-horizontal" novalidate [formGroup]="driverBasicDetailsForm">
+        <ng-template matStepLabel>Driver Details</ng-template>
+        <div class="col-sm-12" style="padding-right:7px">
+          <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Driver Last Name:&nbsp;</label>
+            <div class="col-sm-8">
+              <input type="text" maxlength="15" (keypress)="omit_special_char($event)" formControlName="lastName" class="form-control" placeholder="Enter Driver Last Name" required/>
+              <div *ngIf="!lastName.valid && (lastName.dirty || lastName.touched)" class="error-text">
+                <div *ngIf="lastName.errors.required">
+                  Last Name is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Driver First Name:&nbsp;</label>
+            <div class="col-sm-8">
+              <input type="text" maxlength="15" formControlName="firstName" (keypress)="omit_special_char($event)" class="form-control" placeholder="Enter Driver First Name" required/>
+              <div *ngIf="!firstName.valid && (firstName.dirty || firstName.touched)" class="error-text">
+                <div *ngIf="firstName.errors.required">
+                  First Name is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Cell Phone:&nbsp;</label>
+            <div class="col-sm-8">
+              <input type="text" (keypress)="omit_letters($event)" maxlength="12" formControlName="cellPhone" class="form-control" placeholder="Enter Cell Phone Number" required/>
+              <div *ngIf="!cellPhone.valid && (cellPhone.dirty || cellPhone.touched)" class="error-text">
+                <div *ngIf="cellPhone.errors.required">
+                  Cell Phone Number is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Email ID:&nbsp;</label>
+            <div class="col-sm-8">
+              <input type="text" email maxlength="50" formControlName="email" class="form-control" placeholder="Enter Email ID" required/>
+              <div *ngIf="!email.valid && (email.dirty || email.touched)" class="error-text">
+                <div *ngIf="email.errors.required">
+                  Email ID is required
+                </div>
+                <div *ngIf="email.errors.email">
+                  Enter a valid email
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">DL Number:&nbsp;</label>
+            <div class="col-sm-8">
+              <input type="text" maxlength="25" formControlName="dlNumber" class="form-control" placeholder="Enter DL Number" required/>
+              <div *ngIf="!dlNumber.valid && (dlNumber.dirty || dlNumber.touched)" class="error-text">
+                <div *ngIf="dlNumber.errors.required">
+                  DL Number is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">DL Class:&nbsp;</label>
+            <div class="col-sm-8">
+              <input type="text" maxlength="5" formControlName="dlClass" class="form-control" placeholder="Enter DL Class" required/>
+              <div *ngIf="!dlClass.valid && (dlClass.dirty || dlClass.touched)" class="error-text">
+                <div *ngIf="dlClass.errors.required">
+                  DL Class is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Active Date:&nbsp;</label>
+            <div class="col-sm-8">
+                <div class="input-icon right"> 
+                    <i class="fa fa-calendar" [owlDateTimeTrigger]="dt6"></i>
+                    <input class="form-control"  formControlName="startDate" class="form-control" placeholder="MM/DD/YYYY" [owlDateTimeTrigger]="dt6" [owlDateTime]="dt6" name="dt6">
+                    <owl-date-time [pickerType]="'calendar'" #dt6></owl-date-time>
+                </div>
+                <div *ngIf="!startDate.valid && (startDate.dirty || startDate.touched)" class="error-text">
+                  <div *ngIf="startDate.errors.required">
+                    Active Date is required
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-4">Inactive Date:&nbsp;</label>
+            <div class="col-sm-8">
+                <div class="input-icon right"> 
+                    <i class="fa fa-calendar" [owlDateTimeTrigger]="dt5"></i>
+                    <input class="form-control"  formControlName="inactiveDate" class="form-control" placeholder="MM/DD/YYYY"  [owlDateTimeTrigger]="dt5" [owlDateTime]="dt5" name="dt5">
+                    <owl-date-time [pickerType]="'calendar'" #dt5></owl-date-time>
+                </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4" for="pwd">Comments:&nbsp;</label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+              <textarea rows="2" type="text" formControlName="comments" maxlength="100" class="form-control txtarea" placeholder="Write Comments" style="height:60px !important;"></textarea>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <mat-dialog-actions class="col-sm-12" align="end">
+      <button mat-raised-button [disabled]="!driverBasicDetailsForm.valid"  (click)="checkDates()"[ngClass]="!driverBasicDetailsForm.valid ? '' : 'btn-primary'" ><mat-icon>arrow_forward</mat-icon>&nbsp;Proceed</button>
+      <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+    </mat-dialog-actions>
+  </mat-step>
+  
+  <mat-step>
+    <div mat-dialog-content>
+      <form class="form-horizontal" novalidate [formGroup]="driverAddressDetailsForm">
+        <div class="col-sm-12" style="padding-right:7px !important">
+          <ng-template matStepLabel>Address Details</ng-template>
+          <div class="form-group">
+            <label class="control-label col-sm-4 ">Address:&nbsp;</label>
+            <div class="col-sm-8">
+              <input type="text" formControlName="address1" class="form-control" placeholder="Enter Address"/>
+            </div>
+          </div>
+          <!-- <div class="form-group">
+            <label class="control-label col-sm-4">Address 2:&nbsp;</label>
+            <div class="col-sm-8">
+              <input type="text"  formControlName="address2" class="form-control" placeholder="Enter Address 2"/>
+            </div>
+          </div> -->
+          <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">Country:&nbsp;</label>
+            <div class="col-sm-8">
+              <mat-select class='form-control' required name="communication" formControlName="country" placeholder="--Select Country--" (ngModelChange)="getStatesDropdown(driverAddressDetailsForm.value.country)">
+                <mat-option [value]="38">Canada</mat-option>
+                <mat-option [value]="231">USA</mat-option>
+              </mat-select>
+              <div *ngIf="!country.valid && (country.dirty || country.touched)" class="error-text">
+                <div *ngIf="country.errors.required">
+                  Country is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">State:&nbsp;</label>
+            <div class="col-sm-8">
+              <mat-select formControlName="state" placeholder="--Select State--" class="form-control" required>
+                <mat-option *ngFor="let option of states" [value]="option.state_id">{{option.state_name}}</mat-option>
+              </mat-select>
+              <div *ngIf="!state.valid && (state.dirty || state.touched)" class="error-text">
+                <div *ngIf="state.errors.required">
+                  State is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">City:&nbsp;</label>
+            <div class="col-sm-8">
+              <input type="text" maxlength="25" class="form-control" formControlName="city" placeholder="Select City" required/>
+              <div *ngIf="!city.valid && (city.dirty || city.touched)" class="error-text">
+                <div *ngIf="city.errors.required">
+                  City is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">ZIP Code:&nbsp;</label>
+            <div class="col-sm-8">
+              <input type="text" maxlength="15" class="form-control" formControlName="zip" placeholder="Enter ZIP Code" required/>
+              <div *ngIf="!zip.valid && (zip.dirty || zip.touched)" class="error-text">
+                <div *ngIf="zip.errors.required">
+                  ZIP Code is required
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <mat-dialog-actions class="col-sm-12" align="end">
+        <button mat-raised-button class="btn-primary" matStepperPrevious><mat-icon>arrow_back</mat-icon>&nbsp;Back</button>
+        <button mat-raised-button [disabled]="!driverAddressDetailsForm.valid" [ngClass]="!driverAddressDetailsForm.valid ? '' : 'btn-primary'" matStepperNext><mat-icon>arrow_forward</mat-icon>&nbsp;Proceed</button>
+        <!-- <button *ngIf="driver" mat-raised-button [disabled]="!driverAddressDetailsForm.valid" [ngClass]="!driverAddressDetailsForm.valid ? '' : 'btn-primary'" (click)="updateDriver()"><mat-icon>update</mat-icon>&nbsp;Update</button> -->
+        <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+    </mat-dialog-actions>
+  </mat-step>
+  <!-- <mat-step *ngIf="!driver">
+      <div mat-dialog-content>
+        <ng-template matStepLabel>Documents</ng-template>
+        <form novalidate [formGroup]="docxForm">
+          <table class="table table-striped table-bordered" style="width: 100%;">
+            <thead class="tbl-head">
+              <th>Type</th>
+              <th>Reference #</th>
+              <th>Issue Date</th>
+              <th>Expiry Date</th>
+              <th>Document</th>
+              <th>Action</th>
+            </thead>
+            <tbody>
+              <tr formArrayName="jobCodeDetails" *ngFor="let item of docxForm.get('jobCodeDetails')['controls']; let index = index;">
+                <ng-container [formGroupName]="index">
+                  <td><input type="text" formControlName="docType" class="form-control"></td>
+                  <td><input type="text" formControlName="docRef" class="form-control"></td>
+                  <td>
+                    <input class="form-control" [max] = 'minDate' formControlName="issueDate" class="form-control" [owlDateTimeTrigger]="nsc1" [owlDateTime]="nsc1" name="nsc1">
+                    <owl-date-time [pickerType]="'calendar'" #nsc1></owl-date-time>
+                  </td>
+                  <td>
+                    <input class="form-control" [min] = 'maxDate' formControlName="expiryDate" class="form-control" [owlDateTimeTrigger]="nsc2" [owlDateTime]="nsc2" name="nsc2">
+                    <owl-date-time [pickerType]="'calendar'" #nsc2></owl-date-time>
+                  </td>
+                  <td><input type="file" (change)="handleFileSelect($event, index)" formControlName="filesSelect" class="form-control"></td>
+                  <td style="text-align: center !important;cursor: pointer;" *ngIf="index == 0"><a (click)="addItem()"><mat-icon class="add">add</mat-icon></a></td>
+                  <td  style="text-align: center !important;cursor: pointer;" *ngIf="index > 0"><a (click)="removeItem(index)"><mat-icon class="delete">delete</mat-icon></a></td>
+                </ng-container>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+      <mat-dialog-actions align="end">
+        <button mat-raised-button class="btn-primary" matStepperPrevious><mat-icon>arrow_back</mat-icon>&nbsp;Back</button>
+        <button mat-raised-button [ngClass]="(!driverBasicDetailsForm.valid || !driverAddressDetailsForm.valid || !docxForm.valid) ? '':'btn-primary'" [disabled]="(!driverBasicDetailsForm.valid || !driverAddressDetailsForm.valid || !docxForm.valid)" (click)="saveDriver()"><mat-icon *ngIf="driver">update</mat-icon><mat-icon *ngIf="!driver">save</mat-icon><span *ngIf="!driver"> Save</span><span
+          *ngIf="driver"> Update</span></button>
+          <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+        </mat-dialog-actions>
+      </mat-step> -->
+  <mat-step>
+    <div mat-dialog-content>
+      <ng-template matStepLabel>Documents</ng-template>
+      <div *ngIf="driver" class="col-sm-12" style="padding:0px !important;">
+        <div fxLayout="row wrap" #resizedDiv>
+          <div class="flex-p w-100">
+            <div class="table-responsive">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead class="tbl-head">
+                  <tr class="tr-grid-header">
+                    <!-- <th>Document Type</th> -->
+                    <th>Document name</th>
+                    <th>Issue Date</th>
+                    <th>Expiry Date</th>
+                    <th>App Access</th>
+                    <th>Document</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="showEmpty"><td colspan="6" class="showEmptyClass">No records found</td></tr>
+                  <tr *ngFor="let items of tableList">
+                    <!-- <td>{{items.document_type}}</td> -->
+                    <td>{{items.document_name ? items.document_name : '-'}}</td>
+                    <td>{{items.new_issue_date}}</td>
+                    <td>{{items.new_expiry_date}}</td>
+                    <td style="text-align: center !important"><mat-checkbox (click)="changeappAccess(items)" [checked]="items.app_access"></mat-checkbox></td>
+                    <td style="text-align:center !important;"><a [href]="items.document_s3_url" target="_blank"><i class="fa fa-file-pdf-o" style="cursor: pointer;;font-size:16px!important;"></i></a></td>
+                    <td style="text-align:center !important;">
+                      <a mwlConfirmationPopover
+                      [popoverTitle]="popoverTitle"
+                      [popoverMessage]="popoverMessage"
+                      placement="left"
+                      (confirm)="deleteVisit(items)"
+                      (cancel)="cancelClicked = true" [appendToBody]="true">
+                      <i style="cursor: pointer;font-size:16px!important;" matTooltip="Delete Document" class="fa fa-trash red"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="col-sm-12"> 
+        <form novalidate [formGroup]="docxForm">
+          <table class="table table-bordered" style="width: 100%;">
+            <thead class="tbl-head">
+              <!-- <th>Document Type</th> -->
+              <th>Document Name</th>
+              <th>Issue Date</th>
+              <th>Expiry Date</th>
+              <th style="min-width: 92px;">App Access</th>
+              <th>Document</th>
+              <th>Action</th>
+            </thead>
+            <tbody>
+              <tr formArrayName="jobCodeDetails" *ngFor="let item of docxForm.get('jobCodeDetails')['controls']; let index = index;">
+                <ng-container [formGroupName]="index">
+                  <!-- <td><input type="text" formControlName="docType" class="form-control"></td> -->
+                  <td><input type="text" maxlength="50"  formControlName="docRef" class="form-control"></td>
+                  <td>
+                    <input class="form-control" formControlName="issueDate" class="form-control" [owlDateTimeTrigger]="nsc1" (keypress)="false" [owlDateTime]="nsc1" name="nsc1">
+                    <owl-date-time [pickerType]="'calendar'" #nsc1></owl-date-time>
+                  </td>
+                  <td>
+                    <input class="form-control" formControlName="expiryDate" class="form-control" [owlDateTimeTrigger]="nsc2" (keypress)="false" [owlDateTime]="nsc2" name="nsc2">
+                    <owl-date-time [pickerType]="'calendar'" #nsc2></owl-date-time>
+                  </td>
+                  <td style="text-align: center!important ;padding-top: 14px;"><mat-checkbox formControlName="appAccess"></mat-checkbox></td>
+                  <td><input type="file" (change)="handleFileSelect($event, index)" formControlName="filesSelect" class="form-control" style="overflow:hidden"></td>
+                  <td style="text-align: center !important;cursor: pointer;" *ngIf="index == 0"><a (click)="addItem()"><mat-icon class="add">add</mat-icon></a></td>
+                  <td  style="text-align: center !important;cursor: pointer;" *ngIf="index > 0"><a (click)="removeItem(index)"><mat-icon class="delete">delete</mat-icon></a></td>
+                </ng-container>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+    </div>
+    <mat-dialog-actions align="end">
+      <button mat-raised-button class="btn-primary" matStepperPrevious><mat-icon>arrow_back</mat-icon>&nbsp;Back</button>
+      <button *ngIf="!driver" mat-raised-button [disabled]="(!driverBasicDetailsForm.valid || !driverAddressDetailsForm.valid)" (click)="saveDriver()" [ngClass]="(!driverBasicDetailsForm.valid || !driverAddressDetailsForm.valid ) ? '':'btn-primary'" ><mat-icon>save</mat-icon>&nbsp;Save</button>
+      <button *ngIf="driver" mat-raised-button (click)="saveDriver()" [disabled]="(!driverBasicDetailsForm.valid || !driverAddressDetailsForm.valid)" [ngClass]="(!driverBasicDetailsForm.valid || !driverAddressDetailsForm.valid ) ? '':'btn-primary'"><mat-icon>update</mat-icon>&nbsp;Update</button>
+      <!-- <button mat-raised-button [ngClass]="(!driverBasicDetailsForm.valid || !driverAddressDetailsForm.valid || !docxForm.valid) ? '':'btn-primary'" [disabled]="(!driverBasicDetailsForm.valid || !driverAddressDetailsForm.valid || !docxForm.valid)" (click)="saveDriver()"><mat-icon *ngIf="driver">update</mat-icon><mat-icon *ngIf="!driver">save</mat-icon><span *ngIf="!driver"> Save</span><span
+        *ngIf="driver"> Update</span></button> -->
+        <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+      </mat-dialog-actions>
+    </mat-step>
+  </mat-horizontal-stepper>

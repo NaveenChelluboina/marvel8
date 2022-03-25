@@ -1,0 +1,28 @@
+
+<div class="NewHeader">
+  <h1 mat-dialog-title> <span *ngIf="!driver">Add</span><span *ngIf="driver">Update</span> Comments</h1>
+</div>
+<div mat-dialog-content>
+  <form class="form-horizontal" novalidate [formGroup]="commentsForm">
+    <div class="row">
+      <div class="col-sm-12">
+        <span><b>Comments:</b></span>
+        <textarea rows="4" formControlName="comment" maxlength="300" style="height:100px !important;"required class="form-control txtarea" id="content"
+        placeholder="Write here"></textarea>
+        <div *ngIf="!comment.valid && (comment.dirty || comment.touched)" class="error-text">
+          <div *ngIf="comment.errors.required">
+            Comments are required
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<mat-dialog-actions align="end" *ngIf="canCreate || canUpdate">
+  <button mat-raised-button [disabled]="!commentsForm.valid" [ngClass]="commentsForm.valid ? 'btn-primary':''" (click)="saveComments()"><mat-icon *ngIf="driver">update</mat-icon><mat-icon *ngIf="!driver">save</mat-icon><span *ngIf="!driver"> Save</span><span
+    *ngIf="driver"> Update</span></button>
+    <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+    <!-- <button type='button' class="CancelClass" mat-raised-button class="add-dark-hover btn-default" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button> -->
+  </mat-dialog-actions>
+  
+  

@@ -1,0 +1,19 @@
+<div class="cust-red">
+  <h3 style="font-weight: 300; margin-bottom: 5px !important;margin-top: 5px;" mat-dialog-title>Send App Link?</h3>
+</div>
+
+<div mat-dialog-content>
+  <div class="form-group">
+    <p>Click the send button to invite this driver to set a password and download the PermiShare mobile app</p>
+  </div>
+</div>
+
+<mat-dialog-actions align="center" style="padding-top: 17px !important;">
+  <button mat-raised-button class="btn-primary" (click)="saveInfo()">
+    <mat-icon>rotate_right</mat-icon><span >&nbsp;Send</span>
+  </button>
+  <button mat-raised-button class="CancelClass" (click)="close()" style="cursor: pointer;"><mat-icon>cancel</mat-icon>&nbsp;
+    <span>Cancel</span>
+  </button>
+  
+</mat-dialog-actions>

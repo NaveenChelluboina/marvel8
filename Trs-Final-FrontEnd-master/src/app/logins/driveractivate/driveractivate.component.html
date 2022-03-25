@@ -1,0 +1,66 @@
+<!--Login page-->
+<style>
+  .login {
+    background: #229494!important;
+    color: white !important;
+  }
+  
+  .login:hover {
+    background: #4dadad!important
+  }
+</style>
+<mat-sidenav-container>
+  <div fxLayout="row" fxLayoutAlign="center center" class="h-100">
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" fxFlex="80" fxFlex.gt-sm="30" fxFlex.sm="60">
+      <mat-card class="p-0 mat-elevation-z24 box">
+        <div fxLayout="column" fxLayoutAlign="center center" class="bg-primary box-header">
+          <!-- <img style="height:40px;width:200px;margin-top:7px;margin-left:5px;" src="../../../"> -->
+          <img alt="logo" class="logo-default logo-img" style="height: 60px;margin-bottom: 20px;" src="../../../assets/img/landing/holizontalLogo.png">
+        </div>
+        <mat-card-content fxLayout="column" fxLayoutAlign="end center" class="box-content">
+          <mat-card fxLayout="column" fxLayoutAlign="center center" class="mat-elevation-z12 box-content-inner">
+            <span class="box-content-header" style="margin-bottom: 15px; color: #283593 !important;">Reset Password</span>
+            <mat-form-field class="w-100">
+              <tooltip-content [animation]="true" #myTooltip placement="right" class="position">
+                <h4 style="color: black">Suggested Password Combinations</h4>
+                <div style="text-align:left;padding:10px">
+                  <ul style="list-style: none;">
+                    <li id="letter" [ngClass]="isOneLetter?'valid':'invalid'">At least
+                      <strong>one letter</strong>
+                    </li>
+                    <li id="capital" [ngClass]="isOneCapitalLetter?'valid':'invalid'">At least
+                      <strong>one capital letter</strong>
+                    </li>
+                    <li id="number" [ngClass]="isOneNumber?'valid':'invalid'">At least
+                      <strong>one number</strong>
+                    </li>
+                    <li id="specialchar" [ngClass]="isOneSpecialCaharacter?'valid':'invalid'">At least
+                      <strong>one special character</strong>
+                    </li>
+                    <li id="length" [ngClass]="isMinLength?'valid':'invalid'">Be at least
+                      <strong>8 characters</strong>
+                    </li>
+                  </ul>
+                </div>
+              </tooltip-content>
+              
+              <input matInput [tooltip]="myTooltip" tooltipPlacement='right' (keydown.space)="$event.preventDefault()" onDrag="return false" onDrop="return false" (keyup)="onKeyPress(password)" placeholder="Password" type="password" formControlName="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[!@#\$%\^&\_\+\<\>\.\,\=\:\;\'\?\(\)\[\]\\\/\|\*{}-])(?=.*[A-Z]).{8,20}"
+              required>
+              <!-- <mat-error *ngIf="form.controls.password.errors?.required">Password is required</mat-error>
+                <mat-error *ngIf="form.controls.password.hasError('minlength')">Password isn't long enough,
+                  minimum of 8 characters</mat-error> -->
+                </mat-form-field>
+                <mat-form-field class="w-100">
+                  <input matInput (keydown.space)="$event.preventDefault()" onDrag="return false" onDrop="return false" placeholder="Confirm Password" type="password" formControlName="confirmPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[!@#\$%\^&\_\+\<\>\.\,\=\:\;\'\?\(\)\[\]\\\/\|\*{}-])(?=.*[A-Z]).{8,20}"
+                  required>
+                  <!-- <mat-error *ngIf="form.controls.confirmPassword.errors?.required">Confirm password is required</mat-error>
+                    <mat-error *ngIf="form.controls.confirmPassword.hasError('minlength')">Confirm password isn't long enough,
+                      minimum of 8 characters</mat-error> -->
+                    </mat-form-field>
+                  </mat-card>
+                  <button mat-raised-button color="primary" class="mat-elevation-z12 box-button login" type="submit">Submit</button>
+                </mat-card-content>
+              </mat-card>
+            </form>
+          </div>
+        </mat-sidenav-container>

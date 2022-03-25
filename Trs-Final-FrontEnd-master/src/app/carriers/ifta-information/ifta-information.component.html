@@ -1,0 +1,277 @@
+<div fxLayout="row wrap">
+  <div class="w-100">
+    <div fxLayout="row wrap" style="margin-top: 20px;padding: 8px;">
+      <div class="col-md-12 ifta-block">
+        <div class="col-md-2">
+          <div class="col-md-12" style="padding: 0;margin-top: 14px;">
+            <button *ngIf="canCreate"
+              style="width: 100%;"
+              mat-raised-button
+              class="pull-right  btn-primary"
+              (click)="addYear()"
+            >
+              <mat-icon>add</mat-icon> Add Year
+            </button>
+            <div
+              class="col-md-12"
+              style="padding: 0;margin-top: 10px;"
+              *ngIf="isyearadd"
+            >
+              <form
+                class="form-horizontal"
+                novalidate
+                [formGroup]="addYearForm"
+              >
+                <div>
+                  <mat-select
+                    color="primary"
+                    placeholder="-- Select Year --"
+                    formControlName="year"
+                    class="form-control"
+                    required
+                  >
+                    <mat-option
+                      *ngFor="let year of startyears"
+                      [value]="year.year_name"
+                      >{{ year.year_name }}</mat-option
+                    >
+                  </mat-select>
+                </div>
+              </form>
+              <div class="col-md-12" style="padding: 0;margin-top: 10px;">
+                <button
+                  mat-raised-button
+                  [disabled]="!addYearForm.valid"
+                  [ngClass]="!addYearForm.valid ? '' : 'btn-primary'"
+                  (click)="saveYear()"
+                  style="margin-right: 4px;cursor: pointer;width:84px !important"
+                >
+                  <mat-icon>save</mat-icon>Save
+                </button>
+                <button
+                  mat-raised-button
+                  class="CancelClass"
+                  style="width:87px !important"
+                  (click)="closeAddForm()"
+                >
+                  <mat-icon>cancel</mat-icon>Close
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="newClasssss col-md-12" style="padding: 0px !important;">
+            <ul class="ul">
+              <li> 
+              <div class="ui-inputgroup" *ngFor="let item of display">
+               <input type="text" style="cursor: pointer;padding: 10px;width: 230px;text-align: center!important" [ngClass]="{'active': selectedListItem == item}" (click)="listNewClick($event, item)" value={{item}} readonly>
+                 </div>
+                </li><br>
+             </ul>
+          </div>
+        </div>
+        <div class="col-md-10">
+            <div class="col-xs-12 pull-right" style="margin-right:0px !important; padding: 0px">
+              <!-- <div fxLayout="row wrap" style="margin-right:-10px !important;margin-bottom: 20px !important;margin-top: 15px !important;">
+                 <button *ngIf="!isUploaded" mat-raised-button class="pull-right btn-primary" (click)="openDocumentYear()"><mat-icon> cloud_upload </mat-icon> Upload IFTA Licence</button>
+              <mat-card style="background-color: rgb(224, 224, 224);height: 41px;width: 170px;margin-right: 5px;"title="{{fileName}}"
+                *ngIf="isUploaded" >{{fileName | slice:0:8}}
+                <a *ngIf="canDelete" class="pull-right" title="Delete Document" style="cursor: pointer;color:#ea0000;margin-left:5px" (click)="deleteLead()">Delete</a>
+                <a title="View Document" class="pull-right" target="_blank" [href]="filePath"style="cursor: pointer;color:#337ab7;margin-left:0px">View</a>
+              </mat-card>
+              <button  mat-raised-button class="pull-right btn-success" (click)="deleteYear()" style="margin-left:6px !important;background: #d44141 !important;">
+                  <mat-icon> delete </mat-icon> Delete Year
+              </button>
+              <button mat-raised-button class="pull-right btn-primary" style="margin-left:6px !important;" (click)="openNote()"> <mat-icon>comment</mat-icon> Comments</button>
+              <div *ngIf="canCreate" class="file btn btn-lg btn-primary pull-right upload" style="margin-left:5px !important;" (click)="dowloadBulkUploadIftaAssetTemplate(null)">
+                  <mat-icon class="upload-icon">cloud_download</mat-icon>
+                  <span>Template</span>
+                </div>
+                <button mat-raised-button class="pull-right btn-success"  (click)="dowloadBulkUploadIftaAssetTemplate('data')"> <mat-icon style="margin-left:6px !important;">cloud_upload</mat-icon> Export </button>
+              <div *ngIf="canCreate" class="file btn btn-lg btn-success pull-right upload" style="margin-left: 6px !important;" > <mat-icon class="upload-icon">cloud_download</mat-icon> Import
+              <input style="cursor: pointer !important;" class="file" type="file" name="file" (change)="handleFileSelect($event)" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+              </div>
+              <button mat-raised-button color="primary" class="pull-right" style="margin-left: -4px;" (click)="filterToggle = !filterToggle" ><mat-icon>filter_list</mat-icon> Filter</button>
+              <button *ngIf="canCreate" mat-raised-button class="pull-right btn-primary" style="margin-left:6px !important;" (click)="openIftaDialog(null)"><mat-icon>add</mat-icon> Add Asset </button> 
+            </div> -->
+<div class="row wrap" style="margin-right:0px !important;margin-bottom: 20px !important;">
+    <div
+      class="col-xs-12 pull-right"
+      style="margin-right:0px !important; padding: 0px;margin-top: 10px !important;"
+    >
+      <div
+        class="w-100 flex-p"
+        style="padding:6px 0px 0px 8px !important;"
+      >
+         <!-- <button *ngIf="!isUploaded" mat-raised-button class="pull-right btn-primary" (click)="openDocumentYear()"><mat-icon> cloud_upload </mat-icon> Upload IFTA Licence</button>
+              <mat-card style="background-color: rgb(224, 224, 224);height: 41px;width: 170px;margin-right: 5px;"title="{{fileName}}"
+                *ngIf="isUploaded" >{{fileName | slice:0:8}}
+                <a *ngIf="canDelete" class="pull-right" title="Delete Document" style="cursor: pointer;color:#ea0000;margin-left:5px" (click)="deleteLead()">Delete</a>
+                <a title="View Document" class="pull-right" target="_blank" [href]="filePath"style="cursor: pointer;color:#337ab7;margin-left:0px">View</a>
+              </mat-card> -->
+        <button 
+        *ngIf="canCreate"
+          mat-raised-button
+          class="pull-right btn-primary margin-right-5"
+          (click)="openIftaDialog(null)"
+        >
+          <mat-icon>add</mat-icon> Add Asset
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          class="pull-right"
+          style="margin-right: 8px;"
+          (click)="filterToggle = !filterToggle"
+        >
+          <mat-icon>filter_list</mat-icon> Filter
+        </button>
+        <div *ngIf="canCreate" class="file btn btn-lg btn-success pull-right upload" >
+                <mat-icon class="upload-icon">cloud_download</mat-icon> Import
+                <input style="cursor: pointer !important" class="file" type="file" name="file" (change)="handleFileSelect($event)" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+            </div>
+          <button mat-raised-button class="pull-right btn-success margin-right-10 "  (click)="dowloadBulkUploadIftaAssetTemplate('data')"> <mat-icon style="margin-right:6px !important;">cloud_upload</mat-icon> Export </button>
+        <div *ngIf="canCreate" class="file btn btn-lg btn-primary pull-right upload" style="margin-right:8px;" (click)="dowloadBulkUploadIftaAssetTemplate(null)">
+                <mat-icon class="upload-icon">cloud_download</mat-icon>
+                <span>Template</span>
+              </div>
+        <button
+          mat-raised-button
+          class="pull-right btn-primary"
+          style="margin-right:5px !important;"
+          (click)="openNote()"
+        >
+          <mat-icon>comment</mat-icon> Comments
+        </button>
+        <button *ngIf="canDelete" mat-raised-button class="pull-right btn-success" (click)="deleteYear()" style="margin-right:8px !important;background: #d44141 !important;">
+          <mat-icon> delete </mat-icon> Delete Year
+      </button>
+      <button *ngIf="!isUploaded" mat-raised-button class="pull-right btn-primary" style="margin-right:8px !important;"(click)="openDocumentYear()">
+        <mat-icon> cloud_upload </mat-icon> Upload IFTA Licence
+    </button>
+     <mat-card *ngIf="isUploaded" class="pull-right"  style="margin-right:8px !important;background-color: rgb(224, 224, 224);font-weight: 300;height: 41px;width: 190px;"title="{{fileName}}">{{fileName | slice:0:8}} 
+      <a title="View Document" target="_blank"[href]="filePath" style="cursor: pointer;color:#337ab7;margin-right: 10px;margin-left: 10px !important;">View</a>
+      <a *ngIf="canDelete" title="Delete Document" style="cursor: pointer;color:#ea0000;" (click)="deleteLead()">Delete</a>
+      
+         </mat-card>
+      </div>
+    </div>
+  </div>
+            <div fxLayout="row wrap" *ngIf="filterToggle">
+              <div
+                fxFlex="100"
+                fxFlex.gt-sm
+                fxFlex.sm
+                class="flex-p w-100 margins"
+                style="margin-left:-6px !important;margin-right:-6px !important"
+              >
+                <mat-card class="filter">
+                  <mat-card-content>
+                    <div class="row" style="padding-top:10px !important">
+                            <div class="col-sm-4" >
+                                    <div class="col-sm-4 newMarginClass" style="margin-top: 4px !important;">
+                                    Fleet Name:
+                                    </div>
+                                    <div class="col-sm-8">
+                                      <mat-select
+                                        placeholder="--Search by Fleet Name--"
+                                        class="form-control"
+                                        [(ngModel)]="fleet_filter"
+                                      >
+                                        <mat-option
+                                          *ngFor="let option of fleets"
+                                          [value]="option.fleet_id"
+                                          >{{ option.fleet_name }}</mat-option
+                                        >
+                                      </mat-select>
+                                    </div>
+                                  </div>
+                      <div class="col-sm-4" >
+                        <div class="col-sm-4 newMarginClass" style="margin-top: 4px !important;">
+                          Asset ID:
+                        </div>
+                        <div class="col-sm-8">
+                                <mat-select
+                                placeholder="--Search by Assets ID--"
+                                class="form-control"
+                                [(ngModel)]="asset_filter"
+                              >
+                                <mat-option
+                                  *ngFor="let option of assetsdrop"
+                                  [value]="option.asset_id"
+                                  >{{ option.asset_number_id }}</mat-option
+                                >
+                              </mat-select>
+                        </div>
+                      </div>
+                     
+                      <div class="col-sm-4">
+                         <div class="col-lg-1" style="margin-left:120px!important;">
+                            <button mat-raised-button (click)="fliterSearch()" class="pull-right btn-primary"><mat-icon>youtube_searched_for</mat-icon> Search</button>
+                        </div>
+                       <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-left: -13px;">
+                            <button mat-raised-button style="background-color:#37474f; color:#fff !important" (click)="clearFilters()"><mat-icon>settings_backup_restore</mat-icon> Clear</button>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-left:102px !important;">
+                        <a (click)="filterToggle = !filterToggle" class="pull-right" style="font-size: 25px; cursor: pointer; margin-left: 5px;">
+                            <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+                        </a>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+
+            <div fxLayout="row wrap">
+              <table
+                class="table table-bordered table-hover"
+                style="width: 100%;background: #fff;"
+              >
+                <thead class="tbl-head">
+                  <tr>
+                    <th (click)="FleetClicked(fleetAssending = !fleetAssending)" style="cursor: pointer;" class="v-align-middle">Fleet Name</th>
+                    <th (click)="AssetClicked(assetAssending = !assetAssending)" style="cursor: pointer;" class="v-align-middle">Asset ID</th>
+                    <th (click)="Decal1Clicked(decal1Assending = !decal1Assending)" style="cursor: pointer;" class="v-align-middle text-center">Decal #1</th>
+                    <th (click)="Decal2Clicked(decal2Assending = !decal2Assending)" style="cursor: pointer;" class="v-align-middle text-center">Decal #2</th>
+                    <th class="v-align-middle text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tr *ngIf="showEmpty"><td colspan="5">No records found</td></tr>
+                <tr *ngFor="let ifta of iftaAssets">
+                  <td>{{ ifta.sortedFleet}}</td>
+                  <td>{{ ifta.sortedAsset}}</td>
+                  <td class="text-center">{{ ifta.decal_first }}</td>
+                  <td class="text-center">{{ ifta.decal_second }}</td>
+                  <td *ngIf="canUpdate" class="text-center">
+                    <a
+                      style="cursor: pointer;"
+                      title="Update"
+                      (click)="openIftaDialog(ifta)"
+                    >
+                      <i class="fa fa-edit" style="color: cornflowerblue"></i>
+                    </a>
+                    <a *ngIf="canDelete"
+                      ><i
+                        class="fa fa-trash red"
+                        style="cursor: pointer;"
+                        (click)="deleteAsset(ifta)"
+                        title="Delete"
+                      ></i
+                    ></a>
+                  </td>
+                  <td *ngIf="!canUpdate" class="text-center">-</td>
+                </tr>
+              </table>
+
+              <div class="col-md-12 pull-right">
+                    <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)" showFirstLastButtons></mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

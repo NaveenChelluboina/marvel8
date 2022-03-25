@@ -1,0 +1,170 @@
+<div fxLayout="row wrap" #resizedDiv>
+    <div class="flex-p w-100">
+        <div class="row" style="margin-bottom:14px;">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="w-100 flex-p">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="w-100 flex-p">
+                    <button *ngIf="canCreate" mat-raised-button class="pull-right btn-primary" (click)="openFleetDialog(null)">
+                        <mat-icon>add</mat-icon> Add
+                        Fleet
+                    </button>
+                    <button mat-raised-button color="primary" class="pull-right  margin-right-10" (click)="filterToggle = !filterToggle">
+                        <mat-icon>filter_list</mat-icon> Filter
+                    </button>
+                    <!-- <button mat-raised-button class="pull-right btn-secondary margin-right-10" (click)="getAllFleetsSorted('z-a')"> <mat-icon>arrow_upward</mat-icon> Z-A </button>
+                    <button mat-raised-button class="pull-right btn-secondary margin-right-10" (click)="getAllFleetsSorted('a-z')"> <mat-icon>arrow_downward</mat-icon> A-Z </button> -->
+                </div>
+            </div>
+        </div>
+        <!-- <div fxLayout="row wrap" *ngIf="filterToggle">
+            <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p margins"  style="padding: 0px !important;">
+                <mat-card class="filter">
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <input type="text" [(ngModel)] = "name_filter" onCopy="return false" onPaste="return false" class="form-control" [formControl]="fleetForm" (keypress)="omit_special_number_char($event)" placeholder="Search by Fleet Name" >
+                            </div>
+                            <div class="col-lg-2">
+                                <mat-select color="primary" placeholder="-- Search by IRP Fleet --" multiple [formControl]="irpForm" class="form-control">
+                                    <mat-option [value]="0" (click)="selectAll(er, 'irp')" #er >All</mat-option>
+                                    <mat-option *ngFor="let lead of irp" (click)="selectOne(er, 'irp')" [value]="lead.irp_id">{{lead.irp_name}}</mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="col-lg-2">
+                                <mat-select color="primary" placeholder="-- Search by Status --" multiple [formControl]="statu" class="form-control">
+                                    <mat-option [value]="0" (click)="selectAll(es, 'status')" #es >All</mat-option>
+                                    <mat-option *ngFor="let lead of status" (click)="selectOne(es, 'status')" [value]="lead.status_id">{{lead.status_name}}</mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                <button class="add-hover btn btn-success" (click)="fliterSearch()">Search</button>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-left: -30px;">
+                                <button class="btn filter-hover" style="background-color:#37474f; color:#fff !important" (click)="clearFilters()">Clear</button>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"></div>                            
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    -->
+    <div fxLayout="row wrap" *ngIf="filterToggle">
+        <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p w-100 margins">
+            <mat-card class="filter">
+                <mat-card-content>
+                    <div class="row" style="padding-top:10px !important">
+                        <div class="col-sm-4">
+                            <div class="col-sm-4 newMarginClass">
+                                Fleet Name: 
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="text"  class="form-control" [formControl]="fleetForm"  placeholder="Search by Fleet Name" >
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="col-sm-4 newMarginClass">
+                                IRP Fleet: 
+                            </div>
+                            <div class="col-sm-8">
+                                    <mat-select placeholder="--Search by IRP Fleet--" class="form-control"  [(ngModel)]="irp_filter">
+                                            <mat-option *ngFor="let option of irp" [value]="option.irp_id">{{option.irp_name}}</mat-option>
+                                          </mat-select>
+                                <!-- <mat-select color="primary" placeholder="-- Search by IRP Fleet --" multiple [formControl]="irpForm" class="form-control">
+                                    <mat-option [value]="" (click)="selectAll(er, 'irp')" #er >All</mat-option>
+                                    <mat-option *ngFor="let lead of irp" (click)="selectOne(er, 'irp')" [value]="lead.irp_id">{{lead.irp_name}}</mat-option>
+                                </mat-select> -->
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="col-sm-4 newMarginClass">
+                                Status: 
+                            </div>
+                            <div class="col-sm-8">
+                                    <mat-select placeholder="--Search by Status--" class="form-control" [(ngModel)]="status_filter">
+                                            <mat-option *ngFor="let option of status" [value]="option.status_id">{{option.status_name}}</mat-option>
+                                          </mat-select>
+                                <!-- <mat-select color="primary" placeholder="-- Search by Status --" multiple [formControl]="statu" class="form-control">
+                                    <mat-option [value]="" (click)="selectAll(es, 'status')" #es >All</mat-option>
+                                    <mat-option *ngFor="let lead of status" (click)="selectOne(es, 'status')" [value]="lead.status_id">{{lead.status_name}}</mat-option>
+                                </mat-select> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top:10px !important">
+                        <div class="col-sm-4">
+                            <div class="col-sm-4 newMarginClass">
+                                
+                            </div>
+                            <div class="col-sm-8">
+                                
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="col-sm-4 newMarginClass">
+                                
+                            </div>
+                            <div class="col-sm-8">
+                                
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                                <div class="col-lg-2" style="margin-left:200px!important;">
+                                        <button mat-raised-button (click)="fliterSearch()" class="pull-right btn-primary"><mat-icon>youtube_searched_for</mat-icon> Search</button>
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-left: -18px;">
+                                    <button mat-raised-button style="background-color:#37474f; color:#fff !important" (click)="clearFilters()"><mat-icon>settings_backup_restore</mat-icon> Clear</button>
+                                </div>
+                                <a (click)="filterToggle = !filterToggle" class="pull-right" style="margin-left: -18px;" style="font-size: 25px; cursor: pointer;">
+                                    <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div fxLayout="row wrap" >
+        <div class="table-responsive topmargin">
+            <table id="example2" class="table table-bordered table-hover">
+                <thead class="tbl-head">
+                    <tr class="tr-grid-header">
+                        <th (click)="fleetNameClicked(fleetnameAssending = !fleetnameAssending)" style="cursor: pointer;width: 100px;" class="text-center">Fleet Name</th>
+                        <th (click)="IRPClicked(irpAssending = !irpAssending)" style="cursor: pointer;width: 100px;" class="text-center">IRP Fleet</th>
+                        <th (click)="ActiveClicked(statusAssending = !statusAssending)" style="cursor: pointer;width: 100px;" class="text-center">Status</th>
+                        <th style="width: 100px;" class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="showEmpty"><td colspan="4">No records found</td></tr>
+                    <tr *ngFor="let fleet of fleetList">
+                        <td class="text-center">{{fleet.fleet_name}}</td>
+                        <td class="text-center">{{fleet.is_irp ? 'Yes' : 'No'}}</td>
+                        <td class="text-center" style="text-align:center!important">
+                            <span *ngIf="!fleet.is_active" style="color:red">Inactive</span>
+                            <span *ngIf="fleet.is_active" style="color:#1c4f86;">Active</span>
+                        </td>
+                        <td *ngIf="canUpdate" class="text-center">
+                            <a style="cursor: pointer;color: blue;" matTooltip="View Comment" (click)="openNote(fleet)">
+                                    <i class="fa fa-comment" style="color: cornflowerblue"></i></a>
+                            <a  style="cursor: pointer;" matTooltip="Update Fleet" (click)="openFleetDialog(fleet)">
+                                <i class="fa fa-edit" style="color: cornflowerblue"></i>
+                            </a>
+                            
+                            <a *ngIf= "canDelete">
+                                <i *ngIf="fleet.is_delete" style="cursor: not-allowed !important;" matTooltip="Please remove associated IRP to this fleet and then try again." class="fa fa-trash"></i>
+                                <i *ngIf="!fleet.is_delete" style="cursor: pointer;"  matTooltip="Delete Fleet" (click)="openDeleteDialog(fleet)" class="fa fa-trash red"></i>
+                            </a>
+                        </td>
+                        <td *ngIf="!canUpdate" class="text-center">-</td>
+                    </tr>
+                </tbody>
+            </table>
+            <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>
+</div>

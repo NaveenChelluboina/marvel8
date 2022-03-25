@@ -1,0 +1,67 @@
+<!-- <button class="close" style ="background-color: white !important;" [mat-dialog-close]="true"><mat-icon>close</mat-icon></button> -->
+<h1 class="custom-header" mat-dialog-title>Update Profile</h1>
+<hr>
+<div mat-dialog-content>
+    <form class="form-horizontal" novalidate>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label">Company Name&nbsp;:
+            </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="input-icon right">
+                    <input type="text" email class="form-control" id="email" required>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label">Country&nbsp;:
+            </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <select (change)="selectOption($event.target.value)" class='select-option form-control' required name="communication">
+                    <option class='option' value="" selected>-Select-</option>
+                    <option class='option' value="1">Canada based - Canada travel only</option>
+                    <option class='option' value="2">Canada based - International travel</option>
+                    <option class='option' value="3">U.S. based - U.S. travel only</option>
+                    <option class='option' value="4">U.S. based - International travel</option>
+                   
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4 add-member-label">US Dot Registration&nbsp;:</label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="input-icon right">
+                    <input type="text" class="form-control" id="name" required>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label">FMCSA Authority&nbsp;:
+            </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="input-icon right">
+                    <input type="text" class="form-control" id="number" required>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label">National Safety Code
+                Certificate&nbsp;:
+            </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="input-icon right">
+                    <input type="text" class="form-control" id="number" required>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4">Document:</label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 margins">
+                <input type="file" placeholder="Upload file...">
+            </div>
+        </div>
+    </form>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-raised-button class="btn-success" (click)="close()">Update</button>
+    <button mat-raised-button class="btn-default" (click)="close()">Close</button>
+</mat-dialog-actions>

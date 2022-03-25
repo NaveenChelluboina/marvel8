@@ -1,0 +1,94 @@
+<div fxLayout="row wrap" #resizedDiv>
+  <div class="flex-p w-100">
+    
+    <div class="row" style="margin-bottom:14px;">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="w-100 flex-p">
+          <div class="pills">
+            <ul class="nav nav-pills">
+              <li routerLinkActive="active">
+                <a mat-raised-button class="navtabWidth" [routerLink]="['/transreport/carriers/admin/document-history']">
+                  <mat-icon>history_toggle_off</mat-icon> Document History
+                </a>
+              </li>
+              <li routerLinkActive="active">
+                <a mat-raised-button class="navtabWidth" [routerLink]="['/transreport/carriers/admin/asset-history']">
+                  <mat-icon>work_outline</mat-icon> Asset History
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="w-100 flex-p">
+          <!-- <button *ngIf="canCreate" mat-raised-button class="pull-right btn-primary" (click)="openAssetDialog(null)">
+            <mat-icon>fingerprint</mat-icon> Add Asset-Type
+          </button> -->
+          <button mat-raised-button color="primary" style="color: white !important;" class="pull-right filter-hover margin-right-10" (click)="filterToggle = !filterToggle">
+            <mat-icon>filter_list</mat-icon> Filter
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p w-100" *ngIf="filterToggle">
+        <mat-card class="filter">
+          <mat-card-content>
+            <div class="row col-sm-12">
+              <div class="col-sm-4">
+                <div class="col-sm-4 newMarginClass">
+                  Asset ID: 
+                </div>
+                <div class="col-sm-8">
+                  <input type="text" placeholder="Enter Asset ID" class="form-control" [formControl]="userControl">
+                </div>
+              </div>
+              <div class="col-sm-6"></div>
+              <div class="col-lg-1" style="margin-top: -5px;">
+                <button mat-raised-button class="pull-right btn-primary" (click)="filterSearch()"><mat-icon>youtube_searched_for</mat-icon> Search</button>
+              </div>
+              <div class="col-lg-1" style="margin-top: -5px;">
+                <button mat-raised-button style="background-color:#37474f; color:#fff !important" (click)="clearFilters()"><mat-icon>settings_backup_restore</mat-icon> Clear</button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    
+    <div fxLayout="row wrap">
+      <div class="table-responsive">
+        <table id="example2" class="table table-bordered table-hover">
+          <thead class="tbl-head">
+            <!-- <tr class="tr-grid-header">
+              <th (click)="AssetTypeClicked(assettypeAssending = !assettypeAssending)" style="cursor: pointer;">Asset-Type</th>
+              <th (click)="AssetNameClicked(assetnameAssending = !assetnameAssending)" style="cursor: pointer;">Asset-Name</th>
+              <th (click)="ActiveClicked(activeAssending = !activeAssending)" style="cursor: pointer;text-align:center!important">Status</th>
+              <th style="text-align:center!important">Actions</th>
+            </tr> -->
+            <tr class="tr-grid-header">
+              <th (click)="assetClicked(assetAssending = !assetAssending)" style="cursor: pointer;">Asset ID</th>
+              <th>Current Driver(s) Associated</th>
+              <th>History</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="showEmpty"><td colspan="3" class="showEmptyClass">No records found</td></tr>
+            <tr *ngFor="let item of documentData">
+              <td>{{item.asset_number_id}}</td>
+              <td>{{item.currentDrivers.length ? item.currentDrivers : '-'}}</td>
+              <td><a style="cursor: pointer;color: blue;" matTooltip="View History" (click)="openHistoryDialog(item)">History</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div *ngIf="!documentData" fxLayout="column" fxLayoutAlign="center center" class="campaign-spinner">
+  <mat-spinner color="primary"></mat-spinner>
+</div> -->

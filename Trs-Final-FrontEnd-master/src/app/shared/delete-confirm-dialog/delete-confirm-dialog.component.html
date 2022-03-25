@@ -1,0 +1,88 @@
+<div class="cust-red" *ngIf="!data.corporate_information_id && !data.difference">
+    <h3 style="font-weight: 300; margin-bottom: 5px !important;margin-top: 5px;" mat-dialog-title>Delete Record</h3>
+    <!-- <span>Add</span> Stage</h3> -->
+</div>
+
+
+<div mat-dialog-content *ngIf="!data.corporate_information_id && !data.difference">
+    <div class="form-group">
+        <p>Are you sure you want to delete this record?</p>
+    </div>
+</div>
+
+<mat-dialog-actions align="center" style="padding-top: 17px !important;"  *ngIf="!data.corporate_information_id && !data.difference">
+    <button mat-raised-button style="background: #d44141 !important" class="btn-success" (click)="delete()">
+        <span>&nbsp;Delete</span>
+    </button>
+    <button type="button" mat-raised-button class="add-dark-hover btn-default" (click)="close()" style="cursor: pointer;">
+        <!-- <mat-icon>cancel</mat-icon> -->
+        <span>&nbsp;Close</span>
+    </button>
+    
+</mat-dialog-actions>
+<!-- <div class="cust-red" *ngIf="data.corporate_information_id">
+    <h3 style="font-weight: 300; margin-bottom: 5px !important;margin-top: 5px;" mat-dialog-title>Change Carrier Type</h3>
+</div>
+<div mat-dialog-content *ngIf="data.corporate_information_id">
+    <div class="form-group">
+        <p>Are you sure you want to Change the carrier type? This action cannot be undone and all the previous carrier type information will be deleted</p>
+    </div>
+</div>
+
+<mat-dialog-actions align="center" style="padding-top: 17px !important;"  *ngIf="data.corporate_information_id">
+    <button mat-raised-button style="background: #d44141 !important" class="btn-success" (click)="delete()">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        <span>&nbsp;Proceed</span>
+    </button>
+    <button type="button" mat-raised-button class="add-dark-hover btn-default" (click)="close()" style="cursor: pointer;">
+        <mat-icon>cancel</mat-icon>
+        <span>&nbsp;Close</span>
+    </button>
+    
+</mat-dialog-actions> -->
+
+
+
+
+
+<div class="cust-red" *ngIf="data.corporate_information_id && !data.difference">
+    <h3 style="font-weight: 300; margin-bottom: 5px !important;margin-top: 5px;" mat-dialog-title>Cancel Renewal</h3>
+</div>
+<div mat-dialog-content *ngIf="data.corporate_information_id && !data.difference">
+    <div class="form-group">
+        <p>Are you sure you want to cancel renewal for the next month? This action cannot be undone and you will no longer be able to access portal after this month</p>
+    </div>
+</div>
+
+<mat-dialog-actions align="center" style="padding-top: 17px !important;"  *ngIf="data.corporate_information_id && !data.difference">
+    <button mat-raised-button style="background: #d44141 !important" class="btn-success" (click)="delete()">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        <span>&nbsp;Proceed</span>
+    </button>
+    <button type="button" mat-raised-button class="add-dark-hover btn-default" (click)="close()" style="cursor: pointer;">
+        <mat-icon>cancel</mat-icon>
+        <span>&nbsp;Close</span>
+    </button>
+    
+</mat-dialog-actions>
+
+<div class="cust-red" *ngIf="data.difference">
+    <h3 style="font-weight: 300; margin-bottom: 5px !important;margin-top: 5px;" mat-dialog-title>Dismiss Alert</h3>
+</div>
+<div mat-dialog-content *ngIf="data.difference">
+    <div class="form-group">
+        <p>Are you sure you want to dismiss this alert? This record will no longer be included on your daily alerts email</p>
+    </div>
+</div>
+
+<mat-dialog-actions align="center" style="padding-top: 17px !important;"  *ngIf="data.difference">
+    <button mat-raised-button style="background: #d44141 !important" class="btn-success" (click)="delete()">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        <span>&nbsp;Proceed</span>
+    </button>
+    <button type="button" mat-raised-button class="add-dark-hover btn-default" (click)="close()" style="cursor: pointer;">
+        <mat-icon>cancel</mat-icon>
+        <span>&nbsp;Close</span>
+    </button>
+    
+</mat-dialog-actions>

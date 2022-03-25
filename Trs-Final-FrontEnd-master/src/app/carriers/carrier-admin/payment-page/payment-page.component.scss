@@ -1,0 +1,47 @@
+.box .box-header {
+    height: 100px;
+}
+.box.register .box-content {
+    height: 480px;
+}
+.box.register .box-content .box-content-inner {
+    height: 450px;
+}
+.hide {
+    display: none;
+  }
+  .input-icon.right>i {
+    right:25px;
+    float: right;
+    
+
+}
+.input-icon>i {
+    color: #ccc;
+    display: block;
+    position: absolute;
+    //margin: 11px 2px 4px 10px;
+    margin-top: 5px;
+    // margin-right: 2px;
+    margin-bottom: 4px;
+    margin-left: 10px;
+    z-index: 3;
+    width: 16px;
+    font-size: 16px;
+    text-align: center;
+}
+.fa {
+    display: inline-block;
+    font: 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.modal .input-icon>i {
+    z-index: 10055;
+}
+
+.dialog-hidden {
+    overflow: hidden!important;
+}

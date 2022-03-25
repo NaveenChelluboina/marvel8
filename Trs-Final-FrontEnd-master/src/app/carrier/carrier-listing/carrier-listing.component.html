@@ -1,0 +1,260 @@
+<div fxLayout="row wrap">
+    <div class="w-100">
+        <div fxLayout="row wrap" style="margin-bottom: 10px;margin-top: 5px;">
+            <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="w-100">
+                <div class="row col-sm-12" class="flex-p">
+                    <div fxLayout="row" style="float: right !important;margin-right: 5px">
+                        <div>
+                            <button mat-raised-button class="pull-right btn-primary " (click)="addCarrierListing(null)">
+                                <mat-icon>add</mat-icon> Add Client
+                            </button>
+                            <button mat-raised-button class="pull-right  btn-success margin-right-10"
+                                (click)="dowloadBulkUploadAssetTemplate()">
+                                <mat-icon> cloud_upload </mat-icon> Export
+                            </button>
+                            <button mat-raised-button style="background-color: #37474f !important;color: white;"
+                                class="margin-right-10" (click)="filterToggle = !filterToggle">
+                                <mat-icon>filter_list</mat-icon> Filter
+                            </button>
+                            <button mat-raised-button class="pull-right margin-right-10 btn-primary"
+                                (click)="openGridColumnsDialog(gridColumns)">
+                                <mat-icon>view_column</mat-icon> Grid Columns
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="filterToggle" fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p w-100 margins">
+                <mat-card class="filter">
+                    <mat-card-content>
+                        <div class="row">
+                            <!-- <div class="col-lg-2">
+                                <mat-select color="primary" placeholder="-- Sort By --"  class="form-control" >
+                                    <mat-option *ngFor="let operation of operations" [value]="operation.operation_id">{{operation.operation_name}}</mat-option>
+                                </mat-select>
+                            </div> -->
+                            <div class="col-sm-4">
+                                <div class="col-sm-4 newMarginClass">
+                                    Client Name:
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" placeholder="Enter Client Name" class="form-control"
+                                        [formControl]="nameControl">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="col-sm-4 newMarginClass">
+                                    Country:
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-select placeholder="--Search by Country--" class="form-control"
+                                        [(ngModel)]="country_filter">
+                                        <mat-option *ngFor="let option of countries" [value]="option.id">
+                                            {{option.value}}</mat-option>
+                                    </mat-select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="col-sm-4 newMarginClass">
+                                    State:
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-select placeholder="--Search by States--" class="form-control"
+                                        [(ngModel)]="state_filter">
+                                        <mat-option *ngFor="let option of statesForCanadaAndUSa"
+                                            [value]="option.state_id">{{option.state_name}}</mat-option>
+                                    </mat-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top:10px !important">
+                            <div class="col-sm-4">
+                                <div class="col-sm-4 newMarginClass">
+                                    City:
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" placeholder="Enter City" class="form-control"
+                                        [formControl]="cityControl">
+                                </div>
+                            </div>
+                            <div class="col-lg-1" style="margin-left:195px!important;">
+                                <button mat-raised-button (click)="filterSearch()" class="pull-right btn-primary">
+                                    <mat-icon>youtube_searched_for</mat-icon> Search
+                                </button>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-left: -18px;">
+                                <button mat-raised-button style="background-color:#37474f; color:#fff !important"
+                                    (click)="clearFilters()">
+                                    <mat-icon>settings_backup_restore</mat-icon> Clear
+                                </button>
+                            </div>
+                            <a (click)="filterToggle = !filterToggle" class="pull-right"
+                                style="font-size: 25px; cursor: pointer; margin-left: 5px;">
+                                <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <!-- <div class="col-sm-2">
+                            <input type="text" class="form-control" formControlName="keyWord" placeholder="-- Search by Client Name --">
+                        </div> -->
+
+                        <!-- <div class="col-lg-2">
+                            <mat-select color="primary" placeholder="-- Search by City --" multiple [formControl]="cityForm" class="form-control">
+                                <mat-option [value]="0" (click)="selectAll(et, 'city')" #et >All</mat-option>
+                                <mat-option *ngFor="let lead of city" (click)="selectOne(et, 'city')" [value]="lead.city_id">{{lead.city_name}}</mat-option>
+                            </mat-select>
+                        </div>
+                        <div class="col-lg-2">
+                            <mat-select color="primary" placeholder="-- Search by State --" multiple [formControl]="stateForm" class="form-control">
+                                <mat-option [value]="0" (click)="selectAll(ep, 'state')" #ep >All</mat-option>
+                                <mat-option *ngFor="let lead of state" (click)="selectOne(ep, 'state')" [value]="lead.state_id">{{lead.state_name}}</mat-option>
+                            </mat-select>
+                        </div>
+                        <div class="col-lg-2">
+                            <mat-select color="primary" placeholder="-- Search by Country --" multiple [formControl]="countryForm" class="form-control">
+                                <mat-option [value]="0" (click)="selectAll(eh, 'country')" #eh >All</mat-option>
+                                <mat-option *ngFor="let lead of country" (click)="selectOne(eh, 'country')" [value]="lead.country_id">{{lead.country_name}}</mat-option>
+                            </mat-select>
+                        </div>
+                        <div class="col-lg-2">
+                            <mat-select color="primary" placeholder="-- Search by Status --" multiple [formControl]="statu" class="form-control">
+                                <mat-option [value]="0" (click)="selectAll(es, 'status')" #es >All</mat-option>
+                                <mat-option *ngFor="let lead of status" (click)="selectOne(es, 'status')" [value]="lead.status_id">{{lead.status_name}}</mat-option>
+                            </mat-select>
+                        </div> -->
+                        <!-- <div class="row col-sm-12" style="padding-top:10px !important">
+                            <div class="col-lg-1">
+                                <button type="button" class=" btn btn-success  pull-right">Search</button>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-left: -18px;">
+                                <button class="btn filter-hover" style="background-color:#37474f; color:#fff !important" (click)="clearFilters()">Clear</button>
+                            </div>
+                        </div> -->
+
+
+                    </mat-card-content>
+                </mat-card>
+
+            </div>
+        </div>
+        <div fxLayout="row wrap">
+            <div class="w-100" style="margin-left: 10px;margin-right: 10px;">
+                <table class="table table-bordered table-responsive-md btn-table table-hover">
+                    <thead class="tbl-head">
+                        <tr>
+                            <th *ngIf="gridColumns[0].grid_columns.split('')[0] == '1'"
+                                (click)="CompanyClicked(companyAssending = !companyAssending)" style="cursor: pointer;">
+                                Company Legal Name</th>
+                            <th *ngIf="gridColumns[0].grid_columns.split('')[1] == '1'"
+                                (click)="ClientClicked(clientAssending = !clientAssending)" style="cursor: pointer;">
+                                Client Name</th>
+                            <th>Shadow Login</th>
+                            <th *ngIf="gridColumns[0].grid_columns.split('')[2] == '1'"
+                                (click)="EmailClicked(emailAssending = !emailAssending)" style="cursor: pointer;">Email
+                                ID</th>
+                            <th *ngIf="gridColumns[0].grid_columns.split('')[3] == '1'"
+                                (click)="PhoneClicked(phoneAssending = !phoneAssending)" style="cursor: pointer;">Phone
+                            </th>
+                            <th *ngIf="gridColumns[0].grid_columns.split('')[4] == '1'"
+                                (click)="AddressClicked(addressAssending = !addressAssending)" style="cursor: pointer;">
+                                Address</th>
+                            <th *ngIf="gridColumns[0].grid_columns.split('')[5] == '1'"
+                                (click)="CityClicked(cityAssending = !cityAssending)" style="cursor: pointer;">City</th>
+                            <th *ngIf="gridColumns[0].grid_columns.split('')[6] == '1'"
+                                (click)="StateClicked(stateAssending = !stateAssending)" style="cursor: pointer;">State
+                            </th>
+                            <th *ngIf="gridColumns[0].grid_columns.split('')[7] == '1'"
+                                (click)="CountryClicked(countryAssending = !countryAssending)" style="cursor: pointer;">
+                                Country</th>
+                            <th *ngIf="gridColumns[0].grid_columns.split('')[8] == '1'"
+                                (click)="PackageClicked(packageAssending = !packageAssending)" style="cursor: pointer;">
+                                Package</th>
+                            <th *ngIf="gridColumns[0].grid_columns.split('')[9] == '1'"
+                                (click)="TermsClicked(termsAssending = !termsAssending)" style="cursor: pointer;">Terms
+                                Acceptance Date</th>
+                            <th (click)="ActiveClicked(activeAssending = !activeAssending)" style="cursor: pointer;"
+                                class="text-center">Status</th>
+                            <th>Payment Status</th>
+                            <th class="text-center" style="min-width: 65px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="showEmpty">
+                            <td colspan="13">No records found</td>
+                        </tr>
+                        <tr *ngFor="let item of allClients">
+                            <td *ngIf="gridColumns[0].grid_columns.split('')[0] == '1'">{{item.company_name ?
+                                item.company_name : '-'}}</td>
+                            <td *ngIf="gridColumns[0].grid_columns.split('')[1] == '1'">{{item.carrier_name}}</td>
+                            <td>
+                                <button mat-raised-button color="primary"
+                                    class="shadow-button mat-elevation-z12 box-button" (click)=" shadowLogin(item.carrier_email)">
+                                    SIGN IN</button>
+                            </td>
+                            <td *ngIf="gridColumns[0].grid_columns.split('')[2] == '1'">{{item.carrier_email}}</td>
+                            <td *ngIf="gridColumns[0].grid_columns.split('')[3] == '1'">{{item.carrier_phone}}</td>
+                            <td *ngIf="gridColumns[0].grid_columns.split('')[4] == '1'">{{item.carrier_address}}</td>
+                            <td *ngIf="gridColumns[0].grid_columns.split('')[5] == '1'">{{item.city}}</td>
+                            <td *ngIf="gridColumns[0].grid_columns.split('')[6] == '1'">{{item.sortState}}</td>
+                            <td *ngIf="gridColumns[0].grid_columns.split('')[7] == '1'">{{item.sortCountry}}</td>
+                            <td *ngIf="gridColumns[0].grid_columns.split('')[8] == '1'">
+                                {{item.trs_tbl_package.package_level}}</td>
+                            <td *ngIf="gridColumns[0].grid_columns.split('')[9] == '1'">
+                                {{item.terms_and_conditions_acceptance_date ? item.terms_and_conditions_acceptance_date
+                                : 'N/A'}}</td>
+                            <td *ngIf="item.request_from" class="text-center">
+                                <a style="cursor: pointer;" mwlConfirmationPopover [popoverTitle]="popoverStatusTitle"
+                                    [popoverMessage]="popoverStatusMessage" placement="left"
+                                    (confirm)="updateCarrier(item.carrier_id,!item.is_active,'active')"
+                                    (cancel)="cancelClicked = true" [appendToBody]="true">
+                                    <span *ngIf="!item.is_active" style="color:red">Inactive</span>
+                                    <span *ngIf="item.is_active" style="color:#00cc00;">Active</span>
+                                </a>
+                            </td>
+                            <td *ngIf="!item.request_from" class="text-center">
+                                <a style="cursor: not-allowed;">
+                                    <span *ngIf="!item.is_active" style="color:red">Inactive</span>
+                                    <span *ngIf="item.is_active" style="color:#4d4dff;">Active</span>
+                                </a>
+                            </td>
+                            <td *ngIf="!item.subscription_end_date && !item.request_from && !item.conversion_token">Paid
+                            </td>
+                            <td *ngIf="!item.subscription_end_date && item.request_from">Free-Tier</td>
+                            <td *ngIf="!item.subscription_end_date && !item.request_from && item.conversion_token">
+                                Processing</td>
+                            <td *ngIf="item.subscription_end_date && !item.is_active">Cancelled</td>
+                            <td *ngIf="!item.request_from" class="text-center">N/A</td>
+                            <td *ngIf="item.request_from" class="text-center">
+                                <a style="cursor: pointer;margin-right:10px; " matTooltip="Update Package"
+                                    (click)="openPackageDialog(item)">
+                                    <i class="fa fa-edit" style="color: cornflowerblue"></i>
+                                </a>
+                                <a style="cursor: pointer;margin-right:10px; " matTooltip="Convert Package"
+                                    (click)="sendEmail(item)">
+                                    <i class="fa fa-arrow-right" style="color: #ff3333"></i>
+                                </a>
+                            </td>
+                            <!-- <td class="text-center">
+                            <a title="Edit" style="cursor: pointer;" (click)="addCarrierListing('update')" style="color: cornflowerblue">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a>
+                                <i style="cursor: pointer;" title="Delete" class="fa fa-trash red" (click)="openDeleteDialog()"></i>
+                            </a>
+                        </td>
+                        
+                    </tr>
+                    <tr *ngIf="paginationCarrierList?.length <=0">
+                        <td colspan="6" style="text-align: center !important">No Record Found</td>
+                    </tr> -->
+                    </tbody>
+                </table>
+                <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize"
+                    [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)" showFirstLastButtons>
+                </mat-paginator>
+
+            </div>
+        </div>
+    </div>

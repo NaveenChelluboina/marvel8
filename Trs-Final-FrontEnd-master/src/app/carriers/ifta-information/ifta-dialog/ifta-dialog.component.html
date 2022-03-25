@@ -1,0 +1,78 @@
+<!--This page is used to add or edit leads-->
+
+<div class="NewHeader">
+        <h1 mat-dialog-title>
+            <span *ngIf="!asset" class="title-left">Add</span>
+            <span *ngIf="asset" class="title-left">Update</span> Asset
+        </h1>
+    </div> 
+    
+        <div mat-dialog-content>
+                <form class="form-horizontal" novalidate [formGroup]="addAssetForm">
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Fleet Name: </label>
+                        <div class="col-sm-8">
+                                <mat-select color="primary" placeholder="-- Select Fleet --"  formControlName="fleetName" (selectionChange)='fleetChanged($event.value)' class="form-control" required>
+                                    <mat-option *ngFor="let fleet of fleets" [value]="fleet.fleet_id">{{fleet.fleet_name}}</mat-option>
+                                </mat-select>
+                                <div *ngIf="!fleetName.valid && (fleetName.dirty || fleetName.touched)" class="error-text">
+                                    <div *ngIf="fleetName.errors.required">
+                                        Fleet Name is required
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                                <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Asset ID: </label>
+                                <div class="col-sm-8">
+                                        <mat-select color="primary" placeholder="-- Select Asset --"  formControlName="assetName" class="form-control" required>
+                                            <mat-option *ngFor="let asset of assetsdrop" [value]="asset.asset_id">{{asset.asset_number_id}}</mat-option>
+                                        </mat-select>
+                                        <div *ngIf="!fleetName.valid && (fleetName.dirty || fleetName.touched)" class="error-text">
+                                            <div *ngIf="fleetName.errors.required">
+                                                Asset ID is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                 </div>
+                                 <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Year: </label>
+                                        <div class="col-sm-8">
+                                                <mat-select color="primary" placeholder="-- Select Year --"  formControlName="year" class="form-control" required>
+                                                    <mat-option *ngFor="let year of iftayears" [value]="year.ifta_year_id">{{year.year_name}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="!year.valid && (year.dirty || year.touched)" class="error-text">
+                                                    <div *ngIf="year.errors.required">
+                                                    Year is required
+                                                    </div>
+                                                </div>
+                                            </div>
+                                         </div>        
+                             <div class="form-group">
+                            <label class="control-label col-sm-4 add-member-label">Decal#1:&nbsp;</label>
+                            <div class="col-sm-8">
+                                    <input type="text" maxlength="15" class="form-control" formControlName="decalName1" placeholder="Enter Decal#1" required>
+                                <div *ngIf="!decalName1.valid && (decalName1.dirty || decalName1.touched)" class="error-text">
+                                    <div *ngIf="decalName1.errors.required">
+                                      Decal#1 is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4 add-member-label">Decal#2:&nbsp;</label>
+                            <div class="col-sm-8">
+                                    <input type="text" maxlength="15" formControlName="decalName2" class="form-control" placeholder="Enter Decal#2" required>
+                                <div *ngIf="!decalName2.valid && (decalName2.dirty || decalName2.touched)" class="error-text">
+                                        <div *ngIf="decalName2.errors.required">
+                                          Decal#2 is required
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                </form>
+            </div>
+            <mat-dialog-actions align="end" style="margin-right:-8px!important">
+                <button mat-raised-button [disabled]="!addAssetForm.valid" style="cursor:pointer;" [ngClass]="!addAssetForm.valid ? '' : 'btn-primary'" (click)="addAsset()"><mat-icon *ngIf="asset">update</mat-icon><mat-icon *ngIf="!asset">save</mat-icon><span *ngIf="!asset"> Save</span><span *ngIf="asset"> Update</span></button>
+                <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+            </mat-dialog-actions> 

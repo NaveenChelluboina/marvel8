@@ -1,0 +1,66 @@
+<!-- <button class="close" style ="background-color: white !important;" [mat-dialog-close]="true"><mat-icon>close</mat-icon></button> -->
+<div class="NewHeader">
+    <h1 mat-dialog-title><span *ngIf="!user">Add</span><span *ngIf="user">Update</span> User</h1> 
+</div>
+
+<div mat-dialog-content>
+    
+    <form class="form-horizontal" novalidate [formGroup]="addUserForm">
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">User Name: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text"class="form-control" maxlength="30" formControlName="addUserName" id="username" name="username" (keypress)="allow_only_chars($event)" placeholder="Enter User Name" required>
+                
+                <div *ngIf="!addUserName.valid && (addUserName.dirty || addUserName.touched)" class="error-text">
+                    <div *ngIf="addUserName.errors.required">
+                        User name is required
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">User Type: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <mat-select formControlName="userType" placeholder="-- Select User Type --" class="form-control" required>
+                    <mat-option *ngFor="let option of usertypes" [value]="option.role_id">{{option.role_name}}</mat-option>
+                </mat-select>
+                <div *ngIf="!userType.valid && (userType.dirty || userType.touched)" class="error-text">
+                    User type is required.
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label">Email ID: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text" email  onDrag="return false" formControlName="addUserEmail" onDrop="return false" class="form-control" id="email" placeholder="Enter User Email ID" required>
+                <div *ngIf="!addUserEmail.valid && (addUserEmail.dirty || addUserEmail.touched)" class="error-text">
+                    <div *ngIf="addUserEmail.errors.required">
+                        User Email ID is required.
+                    </div>
+                    <div *ngIf="addUserEmail.errors.email">
+                        Enter a valid email
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Cell Phone: </label>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <input type="text" minlength="10" maxlength="12" onDrag="return false" formControlName="addUserNumber" (keypress)="allow_only_numbers($event)" onDrop="return false" class="form-control" placeholder="Enter Cell Phone Number" required>
+                <div *ngIf="!addUserNumber.valid && (addUserNumber.dirty || addUserNumber.touched)" class="error-text">
+                    <div *ngIf="addUserNumber.errors.required">
+                        Cell Phone Number is required
+                    </div>
+                    <div *ngIf="addUserNumber.errors.minlength">
+                        Cell Phone Number must be atleast 10 characters long
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<mat-dialog-actions align="end" style="margin-right:-8px!important">
+    <button mat-raised-button [disabled]="!addUserForm.valid" style="cursor:pointer;" [ngClass]="!addUserForm.valid ? '' : 'btn-primary'" (click)="saveUser()"><mat-icon *ngIf="user">update</mat-icon><mat-icon *ngIf="!user">save</mat-icon><span *ngIf="!user"> Save</span><span *ngIf="user"> Update</span></button>
+    <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+</mat-dialog-actions> 

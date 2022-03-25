@@ -1,0 +1,29 @@
+<div [fxLayout]="(menuParentId == 0) ? 'row' : 'column'" fxLayoutAlign="start center">
+    <div *ngFor="let menu of menuItems" class="horizontal-menu-item w-100">
+        <a *ngIf="menu.routerLink && !menu.hasSubMenu && menu.hasPermission" mat-button fxLayout="row" [fxLayoutAlign]="(settings.menuType=='default') ? 'start center' : 'center center'" [routerLink]="[menu.routerLink]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}"
+            [matTooltip]="menu.title" matTooltipPosition="above" [matTooltipDisabled]="(settings.menuType=='mini') ? 'false' : 'true'" [id]="'horizontal-menu-item-'+menu.id" class="test">
+            <mat-icon class="horizontal-menu-icon">{{menu.icon}}</mat-icon>
+            <span class="horizontal-menu-title" [ngStyle]="{color:menu.color}">{{menu.title}}</span>
+        </a>
+        <!-- <a *ngIf="menu.href && !menu.subMenu" mat-button fxLayout="row" [routerLink]="[menu.routerLink]"
+            routerLinkActive="active-link" [fxLayoutAlign]="(settings.menuType=='default') ? 'start center' : 'center center'"
+            [attr.href]="menu.href || ''" [attr.target]="menu.target || ''" [matTooltip]="menu.title"
+            matTooltipPosition="above" [matTooltipDisabled]="(settings.menuType=='mini') ? 'false' : 'true'" [id]="'horizontal-menu-item-'+menu.id">
+            <mat-icon class="horizontal-menu-icon">{{menu.icon}}</mat-icon>
+            <span class="horizontal-menu-title" [ngStyle]="{color:menu.color}">{{menu.title}}</span>
+        </a> -->
+        <a *ngIf="menu.hasSubMenu && menu.hasPermission" mat-button fxLayout="row" [routerLink]="[menu.routerLink]" routerLinkActive="active-link" [fxLayoutAlign]="(settings.menuType=='default') ? 'start center' : 'center center'" [matTooltip]="menu.title" matTooltipPosition="above"
+            [matTooltipDisabled]="(settings.menuType=='mini') ? 'false' : 'true'" [id]="'horizontal-menu-item-'+menu.id">
+            <mat-icon class="horizontal-menu-icon">{{menu.icon}}</mat-icon>
+            <span class="horizontal-menu-title" [ngStyle]="{color:menu.color}">{{menu.title}}</span>
+        </a>
+
+        <div *ngIf="menu.hasSubMenu && menu.hasPermission" class="horizontal-sub-menu" [id]="'horizontal-sub-menu-'+menu.id">
+            <app-horizontal-menu [menuParentId]="menu.id"></app-horizontal-menu>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="w-100 footer" fxLayoutAlign="start center">
+        <span class="footer-content">  © 2002-{{currentYear}} Option Matrix InfoTech. </span>
+    </div> -->

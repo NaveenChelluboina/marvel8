@@ -1,0 +1,195 @@
+<div>
+    <div fxLayout="row" fxLayoutAlign="space-around" style="margin-top: 27px;">
+        <div class="flex-p row w-100">
+            <mat-card class="col-sm-12">
+                <mat-card-header fxLayoutAlign="center">
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="w-100 h-500p" #resizedDiv>
+                        <div class="col-sm-12 no-padding">
+                            <div class="col-sm-5">
+                                <mat-card class="example-card currentPlan-shadow">
+                                    <mat-card-header>
+                                        <div mat-card-avatar class="example-header-image"></div>
+                                        <mat-card-title>Subscription Details</mat-card-title>
+                                        <mat-card-subtitle><b>Current Plan</b></mat-card-subtitle>
+                                    </mat-card-header>
+                                    <table class="table grey-background">
+                                        
+                                        <tbody>
+                                            <tr>
+                                                <th class="">Package Name</th>
+                                                <td class="url">{{information.trs_tbl_package.package_name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="">Package Level</th>
+                                                <td class="url">{{information.trs_tbl_package.package_level}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="url">Price (USD)</th>
+                                                <td class="url">{{information.trs_tbl_package.monthly_price}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="url">Fleet Size</th>
+                                                <td class="url">{{information.trs_tbl_package.number_of_fleets}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="url">Validity</th>
+                                                <td class="url">1 Day(s)</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="url">Status</th>
+                                                <td class="url">Active</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="url">Valid From</th>
+                                                <td class="url">{{information.start_date}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="url">Valid Upto</th>
+                                                <td class="url">{{information.end_date}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="url">Next Renewal Date</th>
+                                                <td *ngIf="!information.subscription_end_date" class="url">{{information.end_date}}</td>
+                                                <td *ngIf="information.subscription_end_date" class="url">N/A</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <mat-card-content>
+                                        
+                                    </mat-card-content>
+                                    <mat-card-actions style="text-align: center">
+                                        <!-- <button class="btn btn-success" style="margin-right: 10px;">
+                                            <i class="fa fa-plus-circle"></i> Renew Plan
+                                        </button> -->
+                                        
+                                        <button *ngIf="canUpdate" class="btn btn-danger" style="margin-right: 10px;" (click)="unsubscribePackage(null)"><i class="fa fa-times-circle"></i>
+                                            Unsubscribe</button>
+                                            
+                                        </mat-card-actions>
+                                    </mat-card>
+                                    
+                                </div>
+                                <div class="col-sm-7">
+                                    <mat-card class="example-card currentPlan-shadow">
+                                        <mat-card-header>
+                                            <div mat-card-avatar class="example-header-image"></div>
+                                            <mat-card-title>Update Plan</mat-card-title>
+                                        </mat-card-header>
+                                        
+                                        <div mat-dialog-content>
+                                            
+                                            <form class="form-horizontal" novalidate style="margin-top:38px;" [formGroup]="updateSubscriptionForm">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2 add-member-label">Package Level:&nbsp;</label>
+                                                    <div class="col-sm-10" style="margin-top: 7px;">
+                                                        <mat-select placeholder="--Package Level--" required formControlName="packageLevel" class="form-control" (ngModelChange)="getDetailsAsRequest(updateSubscriptionForm.value.packageLevel)">
+                                                            <mat-option *ngFor="let option of packages" [value]="option.package_id">{{option.package_level}}</mat-option>
+                                                        </mat-select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2">Asset Size:&nbsp;</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control col-sm-10" formControlName="assetSize" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2">Subscription Type:&nbsp;</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control col-sm-10" value="Monthly" readonly >
+                                                        <!-- <mat-radio-group name="primary">
+                                                            <mat-radio-button class="margin margins" value="1">Monthly
+                                                            </mat-radio-button>
+                                                            <mat-radio-button class="margin margins" value="2">Annual
+                                                            </mat-radio-button>
+                                                        </mat-radio-group> -->
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2">Price:&nbsp;</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control col-sm-10" formControlName="price" readonly>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <mat-dialog-actions *ngIf="canUpdate" align="end" style="float: right;">
+                                            <button mat-raised-button [disabled]="!updateSubscriptionForm.valid" [ngClass]="!updateSubscriptionForm.valid ? '':'btn-primary'" (click)="upgradePlan()"><mat-icon>call_merge</mat-icon>&nbsp;Upgrade</button>
+                                            <!-- <button class="btn btn-default">Close</button>  -->
+                                        </mat-dialog-actions> 
+                                        <!-- <mat-card-actions style="text-align: right">
+                                            <button class="btn btn-success" style="margin-right: 9px;">Update</button>
+                                            <button class="btn btn-default">Close</button> 
+                                        </mat-card-actions> -->
+                                    </mat-card>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100 h-500p" #resizedDiv>
+                            <div class="col-sm-12 no-padding">
+                                <div class="col-sm-5">
+                                    
+                                </div>
+                                <div class="col-sm-7" style="margin-top:-115px;">
+                                    <mat-card class="example-card currentPlan-shadow">
+                                        <mat-card-header>
+                                            <div mat-card-avatar class="example-header-image"></div>
+                                            <mat-card-title>Downgrade Plan</mat-card-title>
+                                        </mat-card-header>
+                                        
+                                        <div mat-dialog-content>
+                                            
+                                            <form class="form-horizontal" novalidate style="margin-top:38px;" [formGroup]="downGradeSubscriptionForm">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2 add-member-label">Package Level:&nbsp;</label>
+                                                    <div class="col-sm-10" style="margin-top: 7px;">
+                                                        <mat-select placeholder="--Package Level--" required formControlName="packageLeveldown" class="form-control" (ngModelChange)="getDetailsAsRequestForDownGrade(downGradeSubscriptionForm.value.packageLeveldown)">
+                                                            <mat-option *ngFor="let option of downGradingPackages" [value]="option.package_id">{{option.package_level}}</mat-option>
+                                                        </mat-select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2">Asset Size:&nbsp;</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control col-sm-10" formControlName="assetSizedown" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2">Subscription Type:&nbsp;</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control col-sm-10" value="Monthly" readonly >
+                                                        <!-- <mat-radio-group name="primary">
+                                                            <mat-radio-button class="margin margins" value="1">Monthly
+                                                            </mat-radio-button>
+                                                            <mat-radio-button class="margin margins" value="2">Annual
+                                                            </mat-radio-button>
+                                                        </mat-radio-group> -->
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-2">Price:&nbsp;</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control col-sm-10" formControlName="pricedown" readonly>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <mat-dialog-actions *ngIf="canUpdate" align="end" style="float: right;">
+                                            <button mat-raised-button [disabled]="!downGradeSubscriptionForm.valid" [ngClass]="!downGradeSubscriptionForm.valid ? '':'btn-primary'" (click)="downGradePlan()"><mat-icon>call_received</mat-icon>&nbsp;Downgrade</button>
+                                            <!-- <button class="btn btn-default">Close</button>  -->
+                                        </mat-dialog-actions> 
+                                        <!-- <mat-card-actions style="text-align: right">
+                                            <button class="btn btn-success" style="margin-right: 9px;">Update</button>
+                                            <button class="btn btn-default">Close</button> 
+                                        </mat-card-actions> -->
+                                    </mat-card>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>

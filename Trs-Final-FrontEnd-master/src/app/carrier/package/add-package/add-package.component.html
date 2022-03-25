@@ -1,0 +1,66 @@
+<!-- <button class="close" style ="background-color: white !important;" [mat-dialog-close]="true"><mat-icon>close</mat-icon></button> -->
+
+<h2 class="custom-header" mat-dialog-title><span *ngIf="(lead =='add')" class="padding-left-23">Add</span><span *ngIf="(lead == 'update')" class="padding-left-23">Update</span> Package</h2>
+
+<form class="form-horizontal" [formGroup]="addPackageForm" novalidate>
+  <div mat-dialog-content style="overflow: hidden;margin-top: 30px">
+    <div class="col-sm-12 ">
+
+      <div class="form-group">
+        <label class="control-label col-sm-4 add-member-label">Package Level: </label>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+          <input type="text" class="form-control" formControlName="PackageLevel" placeholder="Enter Package Level"
+            required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-sm-4 add-member-label"># of Fleets: </label>
+        <div class="row col-lg-8 col-md-8 col-sm-8 col-xs-8" style="right: -15px;">
+          <div style="width: 120px !important;">
+            <input type="text" class="form-control" formControlName="NoOfFleetsFrom" placeholder="" required>
+          </div>
+          <div class="text-center" style="width: 45.33px !important;">
+            <label style="margin-top: 5px;">
+                To
+            </label>
+          </div>
+          <div style="width: 120px !important;" >
+            <input type="text" class="form-control" formControlName="NoOfFleetsTo" placeholder="" required>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-sm-4 add-member-label">Monthly Price: </label>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+          <input type="text" class="form-control" formControlName="MonthlyPrice" placeholder="Enter Monthly Price"
+            required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-sm-4 add-member-label">Annual Price: </label>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+          <input type="text" class="form-control" formControlName="AnnualPrice" placeholder="Enter Annual Price"
+            required>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <mat-dialog-actions align="end" style="padding-top: 17px !important;">
+      <button mat-raised-button class="btn-success">
+          <!-- <mat-icon>send</mat-icon> -->
+          <span>&nbsp;Save</span>
+        </button>
+    <button mat-raised-button class="add-dark-hover btn-default" style="margin-right: 10px " type="button"
+      (click)="close()">
+      <!-- <mat-icon>cancel</mat-icon> -->
+      <span>&nbsp;Close</span>
+    </button>
+   
+  </mat-dialog-actions>
+</form>

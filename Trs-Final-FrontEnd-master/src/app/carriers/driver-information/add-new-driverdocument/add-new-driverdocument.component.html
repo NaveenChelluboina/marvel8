@@ -1,0 +1,161 @@
+<div class="NewHeader">
+  <h1 mat-dialog-title> Documents</h1>
+</div>
+<!-- <div mat-dialog-content>
+  
+  <form class="form-horizontal" novalidate [formGroup]="docxForm">
+    <div class="form-group">
+      <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Document Type: </label>
+      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <input type="text" formControlName="docType" class="form-control" placeholder="Enter Document Type" required>
+        <div *ngIf="!docType.valid && (docType.dirty || docType.touched)" class="error-text">
+          <div *ngIf="docType.errors.required">
+            Document Type is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Reference #: </label>
+      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <input type="text" formControlName="refNumber" class="form-control" placeholder="Enter Document Reference" required>
+        <div *ngIf="!refNumber.valid && (refNumber.dirty || refNumber.touched)" class="error-text">
+          <div *ngIf="refNumber.errors.required">
+            Document Reference is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Issue Date: </label>
+      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <div class="input-icon right">
+          <i class="fa fa-calendar" [owlDateTimeTrigger]="dt1"></i>
+          <input class="form-control" formControlName="addReceivedDate" placeholder="MM/DD/YYYY" class="form-control" id="db" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" name="dt1" required>
+          <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+        </div>
+        <div *ngIf="!addReceivedDate.valid && (addReceivedDate.dirty || addReceivedDate.touched)" class="error-text">
+          <div *ngIf="addReceivedDate.errors.required">
+            Issue Date is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Expiry Date: </label>
+      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <div class="input-icon right">
+          <i class="fa fa-calendar" [owlDateTimeTrigger]="dt2"></i>
+          <input class="form-control" formControlName="addExpDate" placeholder="MM/DD/YYYY" class="form-control" id="db" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" name="dt2" required>
+          <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+        </div>
+        <div *ngIf="!addExpDate.valid && (addExpDate.dirty || addExpDate.touched)" class="error-text">
+          <div *ngIf="addExpDate.errors.required">
+            Expiry Date is required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-4 add-member-label" for="pwd">Document : </label>
+      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <input type="file" formControlName="filesSelect" (change)="handleFileSelect($event)" style="margin-top:3px!important;" required>
+      </div>
+    </div>
+  </form>
+</div> -->
+
+<div mat-dialog-content>
+  <ng-template matStepLabel>Documents</ng-template>
+  <form *ngIf="canCreate" novalidate [formGroup]="docxForm">
+    <table class="table table-striped table-bordered" style="width: 100%;">
+      <thead class="tbl-head">
+        <!-- <th>Document Type</th> -->
+        <th>Document Name</th>
+        <th>Issue Date</th>
+        <th>Expiry Date</th>
+        <th style="min-width: 92px;">App Access</th>
+        <th>Document</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        <tr formArrayName="jobCodeDetails" *ngFor="let item of docxForm.get('jobCodeDetails')['controls']; let index = index;">
+          <ng-container [formGroupName]="index">
+            <!-- <td><input type="text" formControlName="docType" class="form-control"></td> -->
+            <td><input type="text" maxlength="50" formControlName="docRef" class="form-control"></td>
+            <td>
+              <input class="form-control" formControlName="issueDate" class="form-control" [owlDateTimeTrigger]="nsc1" (keypress)="false" [owlDateTime]="nsc1" name="nsc1">
+              <owl-date-time [pickerType]="'calendar'" #nsc1></owl-date-time>
+            </td>
+            <td>
+              <input class="form-control" formControlName="expiryDate" class="form-control" [owlDateTimeTrigger]="nsc2" (keypress)="false"[owlDateTime]="nsc2" name="nsc2">
+              <owl-date-time [pickerType]="'calendar'" #nsc2></owl-date-time>
+            </td>
+            <td style="text-align: center!important ;padding-top: 14px;"><mat-checkbox formControlName="appAccess"></mat-checkbox></td>
+            <td><input type="file" (change)="handleFileSelect($event, index)" formControlName="filesSelect" class="form-control" style="overflow:hidden"></td>
+            <td style="text-align: center !important;cursor: pointer;" *ngIf="index == 0"><a (click)="addItem()"><mat-icon class="add">add</mat-icon></a></td>
+            <td  style="text-align: center !important;cursor: pointer;" *ngIf="index > 0"><a (click)="removeItem(index)"><mat-icon class="delete">delete</mat-icon></a></td>
+          </ng-container>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+<!-- </div> -->
+
+<mat-dialog-actions align="end" *ngIf="canCreate">
+  <button mat-raised-button [ngClass]="!docxForm.valid ? '':'btn-primary'" [disabled]="!docxForm.valid" (click)="uploadDocx()">Upload</button>
+  <!-- <button mat-raised-button class="add-dark-hover btn-default">Clear</button> -->
+</mat-dialog-actions> 
+
+<!-- <div mat-dialog-content> -->
+  <div fxLayout="row wrap" #resizedDiv style="margin-top:20px!important;">
+    <div class="flex-p w-100" style="padding: 1px !important;">
+      <div class="table-responsive">
+        <table id="example2" class="table table-bordered table-hover">
+          <thead class="tbl-head">
+            <tr class="tr-grid-header">
+              
+              <th (click)="Refclicked(referenceAssending = !referenceAssending)" style="cursor: pointer;">Document Name</th>
+              <th (click)="issueDateClicked(issueAssending = !issueAssending)" style="cursor: pointer;">Issue Date</th>
+              <th (click)="expDateClicked(expAssending = !expAssending)" style="cursor: pointer;">Expiry Date</th>
+              <th (click)="appAccessAssending(appAssending = !appAssending)" style="cursor: pointer;min-width: 92px;">App Access</th>
+              <th>Document</th>
+              <!-- <th>App Access</th> -->
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="showEmpty"><td colspan="6">No records found</td></tr>
+            <tr *ngFor="let item of tableList">
+              <td>{{item.document_name ? item.document_name:'-'}}</td>
+              <td>{{item.new_issue_date}}</td>
+              <td>{{item.new_expiry_date}}</td>
+              <td style="text-align: center !important"><mat-checkbox (click)="changeappAccess(item)" [checked]="item.app_access"></mat-checkbox></td>
+              <td style="text-align:center !important;"><a [href]="item.document_s3_url" target="_blank"><i class="fa fa-file-pdf-o" style="cursor: pointer;;font-size:16px!important;"></i></a></td>
+              <!-- <td style="text-align: center !important"><mat-checkbox [checked]="is_selected"></mat-checkbox></td> -->
+              <td *ngIf="canDelete" style="text-align:center !important;"> 
+                <a mwlConfirmationPopover
+                [popoverTitle]="popoverTitle"
+                [popoverMessage]="popoverMessage"
+                placement="left"
+                (confirm)="deleteVisit(item)"
+                (cancel)="cancelClicked = true" [appendToBody]="true">
+                <i style="cursor: pointer;font-size:16px!important;" matTooltip="Delete Document" class="fa fa-trash red"></i>
+              </a>
+            </td>
+            <td *ngIf="!canDelete">
+              -
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    
+  </div>
+</div>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-raised-button class="CancelClass" (click)="close()"><mat-icon>cancel</mat-icon>&nbsp;Close</button>
+</mat-dialog-actions> 
+

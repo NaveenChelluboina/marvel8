@@ -1,0 +1,105 @@
+<!--This page is used to manage users-->
+<div fxLayout="row wrap" #resizedDiv>
+    <div class="flex-p w-100">
+        <div class="row" style="margin-bottom:14px;">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="w-100 flex-p">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="w-100 flex-p">
+                    <button *ngIf="canCreate" mat-raised-button class="pull-right  btn-success" (click)="openUserDialog(null)">
+                        <mat-icon>person_add</mat-icon> Add
+                      User
+                    </button>
+                    <button mat-raised-button color="primary" class="pull-right filter-hover margin-right-10" (click)="filterToggle = !filterToggle">
+                        <mat-icon>filter_list</mat-icon> Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div fxLayout="row wrap" *ngIf="filterToggle">
+            <div fxFlex="100" fxFlex.gt-sm fxFlex.sm class="flex-p margins">
+                <mat-card class="filter">
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <input type="text" [(ngModel)] = "name_filter" onCopy="return false" onPaste="return false" class="form-control" (keypress)="omit_special_number_char($event)" placeholder="Search by User Name" >
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <mat-select color="primary" placeholder="-- Search by Status --"  class="form-control" >
+                                    <mat-option *ngFor="let operation of operations" [value]="operation.operation_id">{{operation.operation_name}}</mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                <button class=" btn btn-success" (click)="filterUsers()">Search</button>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="margin-left: -18px;">
+                                <button class="btn filter-hover" style="background-color:#37474f; color:#fff !important" (click)="clearFilters()">Clear</button>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"></div>                            
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+        <div fxLayout="row wrap">
+            <div class="table-responsive topmargin">
+                <table id="example2" class="table table-bordered table-hover">
+                    <thead class="tbl-head">
+                        <tr class="tr-grid-header">
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Contact Number</th>
+                            <th *ngIf="canCreate || canUpdate">Permissions</th>
+                            <th>User Type</th>
+                            <th>Status</th>
+                            <th *ngIf="canUpdate || canDelete">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="showEmpty"><td colspan="7">No records found</td></tr>
+                        <tr *ngFor="let user of Users">
+                            <td>{{user.name}}</td>
+                            <td>{{user.email}} 
+                                <i *ngIf="user.is_verified" title="User verified" class="fa fa-check Green" aria-hidden="true"></i> 
+                                <i *ngIf="!user.is_verified" title="User not verified" class="fa fa-times Red" aria-hidden="true"></i>
+                            </td>
+                            <td>{{user.phone}}</td>
+                            <td *ngIf="canCreate || canUpdate"><a routerLink="permissions/{{user.user_id}}">{{user.permissions}}</a></td>
+                            <td>{{user.role_owner}}</td>
+                            <td *ngIf="!user.is_verified" class="Red"> {{user.is_active?'Active':'Inactive'}} </td>
+                            <td *ngIf="!canUpdate && user.is_verified" [ngClass]="user.is_active ? '' : 'status Red'">{{user.is_active?'Active':'Inactive'}}</td>
+                            <td *ngIf="canUpdate && user.is_verified">
+                                <a 
+                                [ngClass]="user.is_active ? 'status' : 'status Red'"
+                                mwlConfirmationPopover
+                                [popoverTitle]="popoverStatusTitle"
+                                [popoverMessage]="popoverStatusMessage"
+                                placement="left"
+                                (confirm)="updateUser(user.user_id, !user.is_active, 'status');"
+                                (cancel)="cancelClicked = true">
+                                {{user.is_active?'Active':'Inactive'}}
+                                </a>
+                            </td>
+                            <td *ngIf="canUpdate || canDelete">
+                                <a *ngIf="canUpdate" title="Edit User" style="margin-right: 10px; cursor: pointer;" (click)="openUserDialog(user)">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a *ngIf="canDelete" mwlConfirmationPopover
+                                [popoverTitle]="popoverTitle"
+                                [popoverMessage]="popoverMessage"
+                                placement="left"
+                                (confirm)="updateUser(user.user_id, !user.is_deleted, 'delete')"
+                                (cancel)="cancelClicked = true">
+                                    <i style="cursor: pointer;" title="Delete User" class="fa fa-trash red"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <mat-paginator [length]="totalSize" [pageIndex]="currentPage" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)" showFirstLastButtons></mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

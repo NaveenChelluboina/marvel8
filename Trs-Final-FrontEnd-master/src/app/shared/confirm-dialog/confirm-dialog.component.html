@@ -1,0 +1,24 @@
+<div class="cust-red">
+  <h3 style="font-weight: 300; margin-bottom: 5px !important;margin-top: 5px;" mat-dialog-title>
+    Confirm Save Change</h3>
+      <!-- <span>Add</span> Stage</h3> -->
+  </div>
+
+  <div mat-dialog-content>
+      <div class="form-group">
+          <p>Are you sure you want to save changes?</p>
+      </div>
+  </div>
+  
+  <mat-dialog-actions align="center" style="padding-top: 17px !important;">
+      <button mat-raised-button  class="btn-primary" (click)="saveInfo()">
+         <span >&nbsp;Save</span>
+          </button>
+          <button type="button" mat-raised-button class="add-dark-hover btn-default" (click)="close()" style="cursor: pointer;">
+              <span>&nbsp;Close</span>
+          </button>
+          
+      </mat-dialog-actions>
+      
+      
+      

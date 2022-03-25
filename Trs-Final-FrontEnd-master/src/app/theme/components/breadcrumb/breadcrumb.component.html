@@ -1,0 +1,46 @@
+<!-- <div fxLayout="row wrap" *ngIf="router.url != '/'">
+    <div fxFlex="100" class="flex-p">
+        <h2 style="font-weight:300;padding-left: 2px;padding-bottom: 8px;padding-bottom: 8px">{{moduleTitle ||
+            'Dashboard'}}</h2>
+        <mat-card fxLayout="row" class="breadcrumb">
+            <i class="material-icons" fxLayout="row" fxLayoutAlign="start center"> notes </i>
+            <span class="breadcrumb-title" fxLayout="row" fxLayoutAlign="start center"> {{description[moduleTitle] ||
+                description['Dashboard']}} </span>
+            <a *ngIf="router.url != '/'" routerLink="/" class="breadcrumb-item" fxLayout="row" fxLayoutAlign="start center"
+                (click)="closeSubMenus()">
+                <span class="">Home</span>
+            </a>
+            <div *ngFor="let breadcrumb of breadcrumbs; let i = index;" class="breadcrumb-item" fxLayout="row"
+                fxLayoutAlign="start center">
+                <a [hidden]="i == (breadcrumbs.length - 1)" [routerLink]="[breadcrumb.url]">{{breadcrumb.name}}</a>
+                <span [hidden]="i != (breadcrumbs.length - 1)" class="breadcrumb-title active">{{breadcrumb.name}}</span>
+            </div>
+        </mat-card>
+    </div>
+</div> -->
+
+
+
+<div fxLayout="row wrap" class="breadcrumb" *ngIf="router.url != '/'" style="padding-top:0px">
+    <div fxFlex="100" class="">
+        <h2 *ngIf="!description[moduleTitle][subTitle]" style="margin-top:10px;margin-bottom:5px;font-weight:400;">{{moduleTitle||'Dashboard'}}</h2>
+        <h2 *ngIf="description[moduleTitle][subTitle]" style="margin-top:10px;margin-bottom:5px;font-weight:400;">{{subTitle||'Dashboard'}}</h2>
+        <mat-card fxLayout="row" class="breadcrumb helptext bc">
+            <div fxFlex="100" class="flex-p">
+                <span *ngIf="!description[moduleTitle][subTitle]" class="page-title nomargin"> {{description[moduleTitle] || description['Dashboard']}} </span>
+                <span *ngIf="description[moduleTitle][subTitle]" class="page-title nomargin">{{description[moduleTitle][subTitle]}}</span>
+                <!-- <div fxLayout="row" style="float: right !important;" class="pull-right">
+                    <a *ngIf="router.url != '/'" routerLink="/salesglobal/analytics/dashboard" class="breadcrumb-item" fxLayout="row" fxLayoutAlign="start center" (click)="closeSubMenus()">
+                        <!-- <mat-icon class="breadcrumbicon">home</mat-icon>&nbsp;&nbsp; 
+                        <span class="breadtitle breadcrumb-title">Home</span>
+                    </a>
+                   <div *ngFor="let breadcrumb of breadcrumbs; let i = index;" class="breadcrumb-item" fxLayout="row"
+                        fxLayoutAlign="start center">
+                        <a [hidden]="i == (breadcrumbs.length - 1)" [routerLink]="[breadcrumb.url]">{{breadcrumb.name}}</a>
+                        <span [hidden]="i != (breadcrumbs.length - 1)" class="breadcrumb-title active margin-right">{{breadcrumb.name | titlecase}}</span>
+                    </div>
+                </div>-->
+            </div>
+        </mat-card>
+    </div>
+</div>
