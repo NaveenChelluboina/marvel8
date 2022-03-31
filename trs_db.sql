@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.21, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
--- Host: trs-testing.cvmodrmfnmkg.us-east-2.rds.amazonaws.com    Database: trs_latest_prod
+-- Host: localhost    Database: trs_db
 -- ------------------------------------------------------
--- Server version	5.7.22
+-- Server version	8.0.28
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,14 +23,14 @@ DROP TABLE IF EXISTS `trs_tbl_admin_settings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_admin_settings` (
-  `settings_id` bigint(20) NOT NULL,
+  `settings_id` bigint NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `setting_value` varchar(255) DEFAULT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   PRIMARY KEY (`settings_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,10 +51,10 @@ DROP TABLE IF EXISTS `trs_tbl_app_notifications`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_app_notifications` (
-  `app_notification_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `app_notification_id` bigint NOT NULL AUTO_INCREMENT,
   `app_notification_message` text NOT NULL,
-  `carrier_id` bigint(20) NOT NULL,
-  `driver_id` bigint(20) DEFAULT NULL,
+  `carrier_id` bigint NOT NULL,
+  `driver_id` bigint DEFAULT NULL,
   `created_date` datetime NOT NULL,
   PRIMARY KEY (`app_notification_id`),
   KEY `app_not_driver_id_constraint` (`driver_id`),
@@ -82,8 +82,8 @@ DROP TABLE IF EXISTS `trs_tbl_asset_documents`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_asset_documents` (
-  `asset_document_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `asset_id` bigint(20) NOT NULL,
+  `asset_document_id` bigint NOT NULL AUTO_INCREMENT,
+  `asset_id` bigint NOT NULL,
   `document_type` varchar(255) NOT NULL,
   `document_name` varchar(50) DEFAULT NULL,
   `document_originalname` varchar(255) DEFAULT NULL,
@@ -93,9 +93,9 @@ CREATE TABLE `trs_tbl_asset_documents` (
   `app_access` tinyint(1) DEFAULT '0' COMMENT '1--> Yes 0--> No',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   `is_removed_from_home` tinyint(1) NOT NULL DEFAULT '0',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`asset_document_id`),
   KEY `asset_document_asset_id_constraint` (`asset_id`),
@@ -121,12 +121,12 @@ DROP TABLE IF EXISTS `trs_tbl_asset_grid_columns`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_asset_grid_columns` (
-  `asset_grid_column_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `carrier_id` bigint(20) NOT NULL,
+  `asset_grid_column_id` bigint NOT NULL AUTO_INCREMENT,
+  `carrier_id` bigint NOT NULL,
   `grid_columns` varchar(14) NOT NULL,
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`asset_grid_column_id`),
   KEY `asset_grid_columns_carrier_id` (`carrier_id`),
@@ -152,14 +152,14 @@ DROP TABLE IF EXISTS `trs_tbl_asset_make`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_asset_make` (
-  `asset_make_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `asset_make_id` bigint NOT NULL AUTO_INCREMENT,
   `asset_make_name` varchar(50) NOT NULL,
   `asset_type` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`asset_make_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
@@ -183,14 +183,14 @@ DROP TABLE IF EXISTS `trs_tbl_asset_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_asset_type` (
-  `asset_type_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `asset_type_id` bigint NOT NULL AUTO_INCREMENT,
   `asset_type` tinyint(1) NOT NULL COMMENT '1-->Normal 2-->Trailer',
   `asset_name` varchar(50) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`asset_type_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
@@ -202,7 +202,7 @@ CREATE TABLE `trs_tbl_asset_type` (
 
 LOCK TABLES `trs_tbl_asset_type` WRITE;
 /*!40000 ALTER TABLE `trs_tbl_asset_type` DISABLE KEYS */;
-INSERT INTO `trs_tbl_asset_type` VALUES (1,1,'Tractor',1,0,1,'2020-02-01 11:10:10',1,'2020-11-28 16:56:04'),(2,1,'Truck',1,0,1,'2020-02-01 11:10:10',1,'2020-02-01 11:40:30'),(3,1,'Pickup',1,0,1,'2020-02-01 11:11:08',1,'2020-02-01 11:40:32'),(4,1,'Vehicle-Others',1,0,1,'2020-02-01 11:11:08',1,'2020-03-31 22:23:22'),(5,2,'Dry Van',1,0,1,'2020-02-01 11:11:50',1,'2020-02-03 11:59:12'),(6,2,'Flat Bed',1,0,1,'2020-02-01 11:11:50',1,'2020-02-03 11:59:18'),(7,2,'Reefer',1,0,1,'2020-02-01 11:12:21',1,'2020-02-03 11:59:26'),(8,2,'Tank',1,0,1,'2020-02-01 11:12:21',1,'2020-02-03 11:59:30'),(9,2,'Drop Deck',1,0,1,'2020-02-01 11:12:40',1,'2020-02-03 11:59:36'),(10,2,'Trailer-Others',1,0,1,'2020-02-01 11:12:40',1,'2020-03-31 22:24:11'),(11,1,'Coach',1,0,1,'2020-11-13 12:02:49',1,'2020-11-13 12:02:49'),(12,1,'Aircraft',1,0,11,'2021-09-28 17:55:52',11,'2021-09-28 17:55:52');
+INSERT INTO `trs_tbl_asset_type` VALUES (1,1,'Tractor',1,1,1,'2020-02-01 11:10:10',1,'2022-03-26 04:55:08'),(2,1,'Truck',1,0,1,'2020-02-01 11:10:10',1,'2020-02-01 11:40:30'),(3,1,'Pickup',1,0,1,'2020-02-01 11:11:08',1,'2020-02-01 11:40:32'),(4,1,'Vehicle-Others',1,0,1,'2020-02-01 11:11:08',1,'2020-03-31 22:23:22'),(5,2,'Dry Van',1,0,1,'2020-02-01 11:11:50',1,'2020-02-03 11:59:12'),(6,2,'Flat Bed',1,0,1,'2020-02-01 11:11:50',1,'2020-02-03 11:59:18'),(7,2,'Reefer',1,0,1,'2020-02-01 11:12:21',1,'2020-02-03 11:59:26'),(8,2,'Tank',1,0,1,'2020-02-01 11:12:21',1,'2020-02-03 11:59:30'),(9,2,'Drop Deck',1,0,1,'2020-02-01 11:12:40',1,'2020-02-03 11:59:36'),(10,2,'Trailer-Others',1,0,1,'2020-02-01 11:12:40',1,'2020-03-31 22:24:11'),(11,1,'Coach',1,0,1,'2020-11-13 12:02:49',1,'2020-11-13 12:02:49'),(12,1,'Aircraft',1,0,11,'2021-09-28 17:55:52',11,'2021-09-28 17:55:52');
 /*!40000 ALTER TABLE `trs_tbl_asset_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,29 +214,29 @@ DROP TABLE IF EXISTS `trs_tbl_assets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_assets` (
-  `asset_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `fleet_id` bigint(20) NOT NULL,
-  `carrier_id` bigint(20) NOT NULL,
+  `asset_id` bigint NOT NULL AUTO_INCREMENT,
+  `fleet_id` bigint NOT NULL,
+  `carrier_id` bigint DEFAULT NULL,
   `asset_number_id` varchar(25) NOT NULL,
-  `asset_type_id` bigint(20) NOT NULL,
-  `year` int(3) NOT NULL,
-  `asset_make_id` bigint(20) NOT NULL,
+  `asset_type_id` bigint NOT NULL,
+  `year` int NOT NULL,
+  `asset_make_id` bigint NOT NULL,
   `model` varchar(255) NOT NULL,
   `plate` varchar(10) NOT NULL,
-  `state_id` bigint(20) NOT NULL,
+  `state_id` bigint NOT NULL,
   `vin_number` varchar(50) NOT NULL,
-  `country_id` bigint(20) NOT NULL,
-  `registered_weight` int(10) NOT NULL,
+  `country_id` bigint NOT NULL,
+  `registered_weight` int NOT NULL,
   `units` tinyint(1) NOT NULL COMMENT '1-->kgs 2-->lbs',
-  `number_of_axels` tinyint(2) NOT NULL,
+  `number_of_axels` tinyint NOT NULL,
   `start_date` date NOT NULL,
   `inactive_date` date DEFAULT NULL,
   `comments` varchar(255) DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`asset_id`),
   KEY `asset_type_id_assets_constraint` (`asset_type_id`),
@@ -272,7 +272,7 @@ DROP TABLE IF EXISTS `trs_tbl_carriers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_carriers` (
-  `carrier_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `carrier_id` bigint NOT NULL AUTO_INCREMENT,
   `carrier_name` varchar(255) NOT NULL,
   `company_name` text NOT NULL,
   `carrier_stripe_name` varchar(100) DEFAULT NULL,
@@ -280,7 +280,7 @@ CREATE TABLE `trs_tbl_carriers` (
   `carrier_address` text NOT NULL,
   `carrier_phone` varchar(15) NOT NULL,
   `zip` varchar(10) NOT NULL,
-  `package_id` bigint(20) NOT NULL,
+  `package_id` bigint NOT NULL,
   `request_from` tinyint(1) NOT NULL DEFAULT '0',
   `conversion_token` varchar(200) DEFAULT NULL,
   `invoice_number` varchar(50) NOT NULL,
@@ -290,8 +290,8 @@ CREATE TABLE `trs_tbl_carriers` (
   `subscription_end_date` date DEFAULT NULL,
   `terms_and_conditions_acceptance_date` datetime DEFAULT NULL,
   `city` varchar(50) NOT NULL,
-  `state_id` bigint(20) NOT NULL,
-  `country_id` bigint(20) NOT NULL,
+  `state_id` bigint NOT NULL,
+  `country_id` bigint NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`carrier_id`),
@@ -310,7 +310,7 @@ CREATE TABLE `trs_tbl_carriers` (
 
 LOCK TABLES `trs_tbl_carriers` WRITE;
 /*!40000 ALTER TABLE `trs_tbl_carriers` DISABLE KEYS */;
-INSERT INTO `trs_tbl_carriers` VALUES (1,'Default','','Default','default@default.com','Default','Default','Default',1,0,NULL,'Default','Default','2020-03-31','2020-04-28',NULL,NULL,'Default',668,231,1,'2020-04-18 23:50:20'),(2,'Prasanth Chivukula','Mr Chiv Trucking Company',NULL,'prashanth997@gmail.com','Near White House','7981850807','500062',14,1,NULL,'Default','Default',NULL,NULL,NULL,NULL,'Washington City',3975,231,0,'2021-08-25 06:00:58'),(3,'Collin Carwardine','TransReport Services Inc. ',NULL,'collin@transreportservices.com','po box 31007','5198264888','N1H8K1',7,1,NULL,'Default','Default',NULL,NULL,NULL,NULL,'Guelph',671,38,1,'2020-11-05 16:02:16'),(5,'PermiShare','PermiShare Trucking LLC',NULL,'sales@permishare.com','PO Box 31007','XXXXXXXXX','99999',1,0,NULL,'in_1JdcH2BoNjUyJwhUu4E9E8oi','sub_ISK1PAo4yPTu6V','2021-09-25','2021-10-25',NULL,'2020-11-25 10:53:49','Birmingham',3919,231,1,'2021-10-06 03:15:00'),(6,'Tony Gerber ','1210841 Ontario Limited',NULL,'tgerber@flashfreight.ca','5894 Eighth Line','519-821-8878','N0B 1B0',10,1,NULL,'Default','Default',NULL,NULL,NULL,'2020-11-27 18:28:39','Ariss',671,38,1,'2021-07-20 14:24:08'),(7,'TFX International Specialized Vehicle Transport','422692 Ontario Limited',NULL,'chri@tfxinternational.com','11 City View drive','(416) 243-8531','M9W 5A5',6,1,NULL,'Default','Default',NULL,NULL,NULL,NULL,'Etobicoke',671,38,0,'2021-08-20 14:41:55'),(8,'S & S Transport','1584412 Ontario Inc.',NULL,'chris@sstransport.ca','13521 Highway 7','416-433-7936','L7G 4S4',5,1,NULL,'Default','Default',NULL,NULL,NULL,'2020-12-04 11:09:32','Georgetown',671,38,1,'2021-07-20 14:24:26'),(9,'Sufian Shahid','Lux Transporting LLC',NULL,'lux20.invex@gmail.com','3855 Minuteman Cir','612-888-9829','46032',1,0,NULL,'in_1JfYVbBoNjUyJwhU0jjvdNVy','sub_IUKH2JjbCCIpms','2021-09-30','2021-10-30',NULL,'2020-11-30 19:17:46','Camel',3935,231,1,'2021-10-06 03:15:00'),(10,'Don Natch','Stones Transport Inc.',NULL,'don.n@stonestransport.com','134 Norfinch Drive, Suite 100','416-736-0444','M3N 1X7',5,1,NULL,'Default','Default',NULL,NULL,NULL,'2020-12-03 14:36:29','North York',671,38,1,'2021-07-20 14:24:22'),(11,'Pete Hennin','Environmental Services Inc.',NULL,'pete.hennin@usecology.ca','22153 King & Whittle Road RR #3','(519) 682-2903 ','N0P 2L0 ',5,1,NULL,'Default','Default',NULL,NULL,NULL,'2020-12-16 12:05:16','Tilbury',671,38,1,'2021-07-20 14:24:12'),(12,'Saif Algalham','Sabaa Enterprises LLC',NULL,'sabaaenterprises@gmail.com','2883 Amazon St','(313) 377-0769 ','48120',3,0,NULL,'in_1JcF8uBoNjUyJwhUIaZVA25x','sub_Ic8m2inStiq6IM','2021-09-21','2021-10-21',NULL,'2020-12-21 15:56:55','Dearborn',3945,231,1,'2021-10-06 03:15:00'),(13,'Mr chiv','Mr chiv trucking',NULL,'prasanth.chivukula@yahoo.com','G-1 SAI RESIDENCE, PLOT NO.109, VENKATESWARA NAGAR COLONY','7981850807','500062',5,0,NULL,'in_1ITa4yBoNjUyJwhU9mc2PI9l','sub_J5lcv3z95ChMT8','2021-03-10','2021-04-10','2021-04-10','2021-03-10 18:00:34','Adilabad',3919,231,0,'2021-04-10 00:00:00'),(14,'TruckinCentral','WHITE HORSE TRANSPORTATION INC ',NULL,'TruckinCentral@gmail.com','700 BRYDEN RD SUITE 131C','7344188860','43215',1,0,NULL,'in_1J5g3nBoNjUyJwhUjeZTJpFQ','sub_Jj8KUYT5FeasCN','2021-06-24','2021-07-24',NULL,'2021-06-23 20:04:48','COLUMBUS',3959,231,1,'2021-10-06 03:15:00'),(15,'Jacob Canchola','Pony Transport',NULL,'jacob@drivepony.com','13405 CR 1600, Suite 74','3614451375','79382',2,1,NULL,'Default','Default',NULL,NULL,NULL,'2021-07-09 14:22:36','Wolfforth',3970,231,1,'2021-07-09 18:22:36'),(16,'Christina Greer','ProFreight Dispatch Services LLC',NULL,'profreightdispatch2021@gmail.com','10322 Kentington Oak Dr','3464420570','77396',2,1,NULL,'Default','Default',NULL,NULL,NULL,NULL,'Humble',3970,231,0,'2021-08-13 17:57:09'),(17,'Brandon Culp','Once Transport LLC',NULL,'oncetransport@yahoo.com','14522 Grace Kellen Ave','2029096239','20613',1,1,NULL,'Default','Default',NULL,NULL,NULL,NULL,'Brandywine',3942,231,0,'2021-08-13 17:56:52'),(18,'Ahmed','White horse transportation',NULL,'ahmed@whitehorsetrans.com','700 BRYDEN RD SUITE 131C','7344188860','43215',1,0,NULL,'in_1JZHh6BoNjUyJwhU2pROr6jt','sub_JqV98RTiW7NbSf','2021-09-13','2021-10-13',NULL,'2021-07-13 12:07:38','COLUMBUS',3959,231,1,'2021-10-06 03:15:00'),(19,'Juan Herminio','Hielos Transportation',NULL,'btenorio05.bt@gmail.com','24171 Rothbury Dr','714-910-4825','92553',1,1,NULL,'Default','Default',NULL,NULL,NULL,NULL,'Moreno Valley',3924,231,1,'2021-07-28 15:58:22'),(20,'Teresa Holland','Fleming Fast Freight Inc. ',NULL,'teresa@flemingfastfreight.ca',' 545 Glengarry Crescent','(519) 843-5460','N1M 2W7',3,1,NULL,'Default','Default',NULL,NULL,NULL,'2021-08-17 07:29:50','Fergus',671,38,1,'2021-08-17 11:29:50'),(22,'Donna Durst','Great West Carriers Inc. ',NULL,'dmdurst@sympatico.ca','6808 Wellington Road','519-654-9699','N3C 2V4',1,1,NULL,'Default','Default',NULL,NULL,NULL,'2021-08-16 14:19:50','Cambridge',671,38,1,'2021-08-16 18:19:50'),(23,'Andrew Noade','Lakeside Produce Inc. ',NULL,'And@lakesideproduce.com','307 Hwy 77, RR # 2','519-322-1959 ','N8H 3V5',3,1,NULL,'Default','Default',NULL,NULL,NULL,NULL,'Leamington',671,38,1,'2021-08-16 18:11:47'),(24,'Brad Pickles','Verge Furniture Logistics Inc.',NULL,'brad@vergelogistics.com','36 Norbett Dr., Unit 2','905-305-8572','L4A 2G7',3,1,NULL,'Default','Default',NULL,NULL,NULL,'2021-08-20 10:32:21','Stouffville',671,38,1,'2021-08-20 14:32:21'),(25,'Ivadell Green','422692 Ontario Limited',NULL,'ivadell@tfxinternational.com','11 City View Drive','416-243-8531','M9W 5A5',6,1,NULL,'Default','Default',NULL,NULL,NULL,'2021-08-20 11:24:34','Etobicoke',671,38,1,'2021-08-20 15:24:34'),(26,'Germaine Square','Workhorse Hauling LLC',NULL,'workhorseh@gmail.com','2619 10TH ST','985 774 8320','70458',1,0,'9f9b699499b0a36209849a5deb0622faee8e4fac','Default','Default',NULL,NULL,NULL,NULL,'Slidell',3939,231,1,'2021-09-27 13:43:06'),(29,'Lori Gibbons ','Gary Gibbons',NULL,'gar-lor@hotmail.com','6932 Fairview Rd','519-521-2567','N5P 3S8',2,1,NULL,'Default','Default',NULL,NULL,NULL,'2021-09-09 11:23:59','St. Thomas',671,38,1,'2021-09-13 18:26:58'),(30,'Andrew Noade','Lakeside Produce Inc.',NULL,'AndrewN@lakesideproduce.com','307 Hwy 77, RR# 2','519-322-1959','N8H 3V5',3,1,NULL,'Default','Default',NULL,NULL,NULL,'2021-09-28 14:53:00','Leamington',671,38,1,'2021-09-28 18:53:00'),(31,'Paton Racing','Barry Paton',NULL,'toddpaton@toddpaton.com','544 Paris Rd.','(423) 967-6863','N3L 3E1',1,1,NULL,'Default','Default',NULL,NULL,NULL,'2021-09-30 16:02:17','Paris',671,38,1,'2021-09-30 20:02:17');
+INSERT INTO `trs_tbl_carriers` VALUES (1,'Default','','Default','default@default.com','Default','Default','Default',1,0,NULL,'Default','Default','2022-01-31','2022-04-28',NULL,NULL,'Default',668,231,1,'2020-04-18 23:50:20'),(2,'Prasanth Chivukula','CBD Trucking Company',NULL,'prashanth997@gmail.com','Near White House','7981850807','500062',14,1,NULL,'Default','Default',NULL,NULL,NULL,NULL,'Washington City',3975,231,0,'2021-08-25 06:00:58'),(3,'Collin Carwardine','TransReport Services Inc. ',NULL,'collin@transreportservices.com','po box 31007','5198264888','N1H8K1',7,1,NULL,'Default','Default',NULL,NULL,NULL,NULL,'Guelph',671,38,1,'2020-11-05 16:02:16'),(5,'User1','ABC Trucking LLC',NULL,'sales@permishare.com','PO Box 31007','XXXXXXXXX','99999',1,0,NULL,'in_1JdcH2BoNjUyJwhUu4E9E8oi','sub_ISK1PAo4yPTu6V','2022-01-25','2022-10-25',NULL,'2022-01-25 10:53:49','Birmingham',3919,231,1,'2021-10-06 03:15:00'),(6,'Tony Gerber ','Ontario Limited',NULL,'tgerber@flashfreight.ca','5894 Eighth Line','519-821-8878','N0B 1B0',10,1,NULL,'Default','Default',NULL,NULL,NULL,'2022-01-27 18:28:39','Ariss',671,38,1,'2021-07-20 14:24:08'),(7,'TFX International Specialized Vehicle Transport','422692 Ontario Limited',NULL,'chri@tfxinternational.com','11 City View drive','(416) 243-8531','M9W 5A5',6,1,NULL,'Default','Default',NULL,NULL,NULL,NULL,'Etobicoke',671,38,0,'2021-08-20 14:41:55'),(8,'S & S Transport','1584412 Ontario Inc.',NULL,'chris@sstransport.ca','13521 Highway 7','416-433-7936','L7G 4S4',5,1,NULL,'Default','Default',NULL,NULL,NULL,'2020-12-04 11:09:32','Georgetown',671,38,1,'2021-07-20 14:24:26'),(9,'Sufian Shahid','Lux Transporting LLC',NULL,'lux20.invex@gmail.com','3855 Minuteman Cir','612-888-9829','46032',1,0,NULL,'in_1JfYVbBoNjUyJwhU0jjvdNVy','sub_IUKH2JjbCCIpms','2022-01-30','2022-10-30',NULL,'2020-11-30 19:17:46','Camel',3935,231,1,'2021-10-06 03:15:00'),(10,'Don Natch','Stones Transport Inc.',NULL,'don.n@stonestransport.com','134 Norfinch Drive, Suite 100','416-736-0444','M3N 1X7',5,1,NULL,'Default','Default',NULL,NULL,NULL,'2020-12-03 14:36:29','North York',671,38,1,'2021-07-20 14:24:22'),(11,'Pete Hennin','Environmental Services Inc.',NULL,'pete.hennin@usecology.ca','22153 King & Whittle Road RR #3','(519) 682-2903 ','N0P 2L0 ',5,1,NULL,'Default','Default',NULL,NULL,NULL,'2020-12-16 12:05:16','Tilbury',671,38,1,'2021-07-20 14:24:12'),(12,'Saif Algalham','Sabaa Enterprises LLC',NULL,'sabaaenterprises@gmail.com','2883 Amazon St','(313) 377-0769 ','48120',3,0,NULL,'in_1JcF8uBoNjUyJwhUIaZVA25x','sub_Ic8m2inStiq6IM','2022-09-21','2022-10-21',NULL,'2020-12-21 15:56:55','Dearborn',3945,231,1,'2021-10-06 03:15:00'),(13,'Mr chiv','Mr chiv trucking',NULL,'prasanth.chivukula@yahoo.com','G-1 SAI RESIDENCE, PLOT NO.109, VENKATESWARA NAGAR COLONY','7981850807','500062',5,0,NULL,'in_1ITa4yBoNjUyJwhU9mc2PI9l','sub_J5lcv3z95ChMT8','2021-03-10','2021-04-10','2021-04-10','2021-03-10 18:00:34','Adilabad',3919,231,0,'2021-04-10 00:00:00'),(14,'TruckinCentral','WHITE HORSE TRANSPORTATION INC ',NULL,'TruckinCentral@gmail.com','700 BRYDEN RD SUITE 131C','7344188860','43215',1,0,NULL,'in_1J5g3nBoNjUyJwhUjeZTJpFQ','sub_Jj8KUYT5FeasCN','2021-06-24','2021-07-24',NULL,'2021-06-23 20:04:48','COLUMBUS',3959,231,1,'2021-10-06 03:15:00'),(15,'Jacob Canchola','Pony Transport',NULL,'jacob@drivepony.com','13405 CR 1600, Suite 74','3614451375','79382',2,1,NULL,'Default','Default',NULL,NULL,NULL,'2021-07-09 14:22:36','Wolfforth',3970,231,1,'2021-07-09 18:22:36'),(16,'Christina Greer','ProFreight Dispatch Services LLC',NULL,'profreightdispatch2021@gmail.com','10322 Kentington Oak Dr','3464420570','77396',2,1,NULL,'Default','Default',NULL,NULL,NULL,NULL,'Humble',3970,231,0,'2021-08-13 17:57:09'),(17,'Brandon Culp','Once Transport LLC',NULL,'oncetransport@yahoo.com','14522 Grace Kellen Ave','2029096239','20613',1,1,NULL,'Default','Default',NULL,NULL,NULL,NULL,'Brandywine',3942,231,0,'2021-08-13 17:56:52'),(18,'Ahmed','White horse transportation',NULL,'ahmed@whitehorsetrans.com','700 BRYDEN RD SUITE 131C','7344188860','43215',1,0,NULL,'in_1JZHh6BoNjUyJwhU2pROr6jt','sub_JqV98RTiW7NbSf','2021-09-13','2021-10-13',NULL,'2021-07-13 12:07:38','COLUMBUS',3959,231,1,'2021-10-06 03:15:00'),(19,'Juan Herminio','Hielos Transportation',NULL,'btenorio05.bt@gmail.com','24171 Rothbury Dr','714-910-4825','92553',1,1,NULL,'Default','Default',NULL,NULL,NULL,NULL,'Moreno Valley',3924,231,1,'2021-07-28 15:58:22'),(20,'Teresa Holland','Fleming Fast Freight Inc. ',NULL,'teresa@flemingfastfreight.ca',' 545 Glengarry Crescent','(519) 843-5460','N1M 2W7',3,1,NULL,'Default','Default',NULL,NULL,NULL,'2021-08-17 07:29:50','Fergus',671,38,1,'2021-08-17 11:29:50'),(22,'Donna Durst','Great West Carriers Inc. ',NULL,'dmdurst@sympatico.ca','6808 Wellington Road','519-654-9699','N3C 2V4',1,1,NULL,'Default','Default',NULL,NULL,NULL,'2021-08-16 14:19:50','Cambridge',671,38,1,'2021-08-16 18:19:50'),(23,'Andrew Noade','Lakeside Produce Inc. ',NULL,'And@lakesideproduce.com','307 Hwy 77, RR # 2','519-322-1959 ','N8H 3V5',3,1,NULL,'Default','Default',NULL,NULL,NULL,NULL,'Leamington',671,38,1,'2021-08-16 18:11:47'),(24,'Brad Pickles','Verge Furniture Logistics Inc.',NULL,'brad@vergelogistics.com','36 Norbett Dr., Unit 2','905-305-8572','L4A 2G7',3,1,NULL,'Default','Default',NULL,NULL,NULL,'2021-08-20 10:32:21','Stouffville',671,38,1,'2021-08-20 14:32:21'),(25,'Ivadell Green','422692 Ontario Limited',NULL,'ivadell@tfxinternational.com','11 City View Drive','416-243-8531','M9W 5A5',6,1,NULL,'Default','Default',NULL,NULL,NULL,'2021-08-20 11:24:34','Etobicoke',671,38,1,'2021-08-20 15:24:34'),(26,'Germaine Square','Workhorse Hauling LLC',NULL,'workhorseh@gmail.com','2619 10TH ST','985 774 8320','70458',1,0,'9f9b699499b0a36209849a5deb0622faee8e4fac','Default','Default',NULL,NULL,NULL,NULL,'Slidell',3939,231,1,'2021-09-27 13:43:06'),(29,'Lori Gibbons ','Gary Gibbons',NULL,'gar-lor@hotmail.com','6932 Fairview Rd','519-521-2567','N5P 3S8',2,1,NULL,'Default','Default',NULL,NULL,NULL,'2021-09-09 11:23:59','St. Thomas',671,38,1,'2021-09-13 18:26:58'),(30,'Andrew Noade','Lakeside Produce Inc.',NULL,'AndrewN@lakesideproduce.com','307 Hwy 77, RR# 2','519-322-1959','N8H 3V5',3,1,NULL,'Default','Default',NULL,NULL,NULL,'2021-09-28 14:53:00','Leamington',671,38,1,'2021-09-28 18:53:00'),(31,'Paton Racing','Barry Paton',NULL,'toddpaton@toddpaton.com','544 Paris Rd.','(423) 967-6863','N3L 3E1',1,1,NULL,'Default','Default',NULL,NULL,NULL,'2021-09-30 16:02:17','Paris',671,38,1,'2021-09-30 20:02:17');
 /*!40000 ALTER TABLE `trs_tbl_carriers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -322,8 +322,8 @@ DROP TABLE IF EXISTS `trs_tbl_corporate_info_documents`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_corporate_info_documents` (
-  `document_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `corporate_information_id` bigint(20) NOT NULL,
+  `document_id` bigint NOT NULL AUTO_INCREMENT,
+  `corporate_information_id` bigint NOT NULL,
   `document_name` varchar(50) DEFAULT NULL,
   `document_originalname` varchar(255) DEFAULT NULL,
   `document_s3_url` text NOT NULL,
@@ -334,9 +334,9 @@ CREATE TABLE `trs_tbl_corporate_info_documents` (
   `document_type` varchar(255) NOT NULL,
   `issue_date` datetime DEFAULT NULL,
   `exp_date` date DEFAULT NULL,
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`document_id`),
   KEY `corporate_information_id_constraint` (`corporate_information_id`),
@@ -362,12 +362,12 @@ DROP TABLE IF EXISTS `trs_tbl_corporate_information`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_corporate_information` (
-  `corporate_information_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `carrier_id` bigint(20) NOT NULL,
+  `corporate_information_id` bigint NOT NULL AUTO_INCREMENT,
+  `carrier_id` bigint NOT NULL,
   `company_legal_name` varchar(255) NOT NULL,
   `company_dba` varchar(255) DEFAULT NULL,
-  `country_id` bigint(20) NOT NULL,
-  `state_id` bigint(20) NOT NULL,
+  `country_id` bigint NOT NULL,
+  `state_id` bigint NOT NULL,
   `city` varchar(20) NOT NULL,
   `address_1` text NOT NULL,
   `zip_code` varchar(8) NOT NULL,
@@ -394,9 +394,9 @@ CREATE TABLE `trs_tbl_corporate_information` (
   `us_cbp_dtops_acc` varchar(20) DEFAULT NULL,
   `national_safety_code` varchar(15) DEFAULT NULL,
   `federal_business` varchar(15) DEFAULT NULL,
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`corporate_information_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
@@ -408,7 +408,7 @@ CREATE TABLE `trs_tbl_corporate_information` (
 
 LOCK TABLES `trs_tbl_corporate_information` WRITE;
 /*!40000 ALTER TABLE `trs_tbl_corporate_information` DISABLE KEYS */;
-INSERT INTO `trs_tbl_corporate_information` VALUES (1,2,'Mr Chiv Trucking Company','',231,3975,'Washington City','Near White House','500062','7981850807','',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,'2020-10-17 08:37:29',2,'2020-10-17 08:37:29'),(2,3,'PermiShare Trucking Inc','',231,3934,'Jacksonville','123 Main Street','62703','2171234567','',2,'1273673','aX@1!800','1234567','ctsp','aX@1!800','98-1234567','IL1234567','ILXXXXXXX','TA73918285','2021-03-22 04:00:00','123456','98-1234567','98-1234567','996534','TSRT',NULL,'Hub International','PXXXXXXXX','151974555',NULL,4,'2020-10-22 20:49:48',4,'2021-09-09 15:54:52'),(3,5,'PermiShare Trucking LLC','',38,671,'Toronto','123 Main Street','M4W 1K7','1234567890','',4,'1273673','aX@1!800','1234567','ctsp','aX@1!800','98-1234567','AL1234567','ALXXXXXXXXX','Y13456789','2020-12-31 05:00:00','123466','98-1234567','98-123467','996534','PSHR',NULL,'Your Insurance Co.','PXXXXXXXXX','987654321','987654321',7,'2020-11-25 15:22:21',7,'2020-11-25 15:22:21'),(4,6,'1210841 Ontario Limited','Flash Freight Systems',38,671,'Ariss','5896 8th Line','N0B 1B0','519-821-8878','',4,'758431','2F26RR0D','342097',NULL,NULL,'980210480','ON000051081','ON12146','T70007','2021-03-01 05:00:00','151335','07-054891-00-9','TF1377876','NA',NULL,'1160076395','Old republic Insurance Company of canada','100019574','124580442','882113095',8,'2020-11-28 15:04:51',8,'2020-11-29 15:51:35'),(5,9,'Lux Transporting LLC','',231,3935,'Carmel','3855 Minuteman Cir','46032',' 6128889829','',1,'3121098','','088014',NULL,NULL,'825019376',NULL,NULL,'AA1122000',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Lloyds',NULL,NULL,NULL,12,'2020-12-01 21:07:42',12,'2020-12-01 21:07:42'),(6,10,'Stones Transport Inc. ','',38,671,'North York ','134 Norfinch Drive, Suite 100','M3N 1X7','416-736-0444','',4,'789795','8E53DA6H','352717 ',NULL,NULL,'980200564','ON000006622','ON12205','TRVBSA1201','2020-12-16 05:00:00','187490','07-014023-00-5','980200564',NULL,NULL,'1164847114','Travelers Insurance Co.','S00014586','124319645','895807758',13,'2020-12-03 18:51:16',13,'2020-12-04 14:49:01'),(7,8,'1584412 Ontario Inc.','S & S Transport',38,671,'Georgetown','162 Guelph St. Unit 247','L7G 5X7','4167218396','2892011553',4,'1375703','3X62DN3H','524947',NULL,NULL,'980540288','ON000122599','ON15279',NULL,NULL,'622408','07-211183-00-6','680680510',NULL,'SSTP','1163597629',NULL,'100694237','151974995','871285607',11,'2020-12-04 16:36:59',11,'2020-12-04 16:39:28'),(8,11,'Environmental Services Inc.','',38,671,'Tilbury','22153 King & Whittle Road','N0P 2L0','5196822903','5196820503',4,'728142','0A80OX5O','335049',NULL,NULL,'980182036','ON006701994','ON12255','CA00004658AU20A','2021-08-01 04:00:00','252458','N/A','TF1345900','N/A',NULL,'1163422141','XL Specialty Insurance Company','E00008223','116904601','895842854',15,'2020-12-18 14:42:08',15,'2020-12-18 21:28:39'),(9,12,'Sabaa Enterprises INC','',231,3945,'Dearborn','2883 Amazon St','48120','3133770769','',1,'2952547',NULL,'2952547',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,'2020-12-22 16:33:25',16,'2020-12-22 16:33:25'),(10,15,'RHHC Carrier Company LLC','PONY TRANSPORT',231,3970,'Wolfforth','13405 CR 1600 STE 74','79382','8069557669','',1,'3433883',NULL,'1113357','ponytransport',NULL,'85-1226562',NULL,NULL,'140121190','2021-07-16 05:00:00',NULL,NULL,NULL,NULL,'PTPT',NULL,'THREE by BERKSHIRE HATHAWAY',NULL,NULL,NULL,20,'2021-07-09 18:29:50',20,'2021-07-09 18:38:04'),(11,22,'Great West Carriers Inc. ','',38,671,'Cambridge','6808 Wellington County Road 34','N3C 2R6','5198951875','',4,'571905','9N41SK0O','209753',NULL,NULL,'980136081','ON000013857','ON12348',NULL,NULL,'113903','N/A','980136081','N/A',NULL,'N/A',NULL,'G00005541','CVOR 105053857','133333369',29,'2021-08-19 18:56:00',29,'2021-08-23 18:19:30'),(12,20,'Fleming Fast Freight Inc. ','',38,671,'Fergus','545 Glengarry Crescent','N1M 2W7','5198435460','',3,NULL,NULL,NULL,NULL,NULL,NULL,'ON000082480',NULL,'64009271','2021-11-04 04:00:00',NULL,NULL,NULL,NULL,NULL,'1160266590','Economical Insurance Company ',NULL,'CVOR 128501249','872867999',27,'2021-08-23 18:00:53',27,'2021-08-23 19:21:44'),(13,24,'Verge Furniture Logistics Inc. ','',38,671,'Stouffville','36 Norbett Drive, Unit 2','L4A 2G7','9053058572','',4,'1268339','4R94LX7G','505034 COMMON',NULL,NULL,'980491811','ON000124160','ON14636','OLH21705162','2021-12-30 05:00:00','224065','07-034205-00-9','TF2222191','073078',NULL,'1163081483','Echelon Insurance Company ','V00036187','CVOR 149666531','855748679',31,'2021-08-23 18:47:01',31,'2021-08-23 18:58:48'),(14,25,'422692 Ontario Limited','TFX International Specialized Vehicle Transport ',38,671,'Etobicoke','11 City View Drive','M9W 5A5','4162438531','',4,'763766','6K47ST9Q','343736 COMMON',NULL,NULL,'980196728','ON00055580','ON12108','2027198','2021-11-03 04:00:00','154724','07-000526-00-5','TF1425597','251552',NULL,'1148411029','NORTHBRIDGE GENERAL INSURANCE COMPANY','400008098','CVOR 131307151','881885768',32,'2021-08-24 18:06:34',32,'2021-08-24 18:14:45'),(15,29,'Gary Gibbons','Fairview Flatbeds',38,671,'St. Thomas','6932 Fairview Rd.','N5P 3S8','5195212567','',4,'2586988','1O70IR8N','906791',NULL,NULL,'981229227','ON006900271','ON37011',NULL,NULL,'349516',NULL,'981229227',NULL,NULL,NULL,NULL,'G00744724','112-715-153','824328405',42,'2021-09-13 16:02:42',42,'2021-09-13 16:02:42'),(16,30,'Lakeside Produce Inc. ','',38,671,'Leamington ','307 Hwy 77, RR # 2','N8H 3V5','5193221959','',4,'758711','5W55QX3L','342662','','NA','980547584','ON000051093','ON12642','AF5174873','2021-11-05 04:00:00','253733','07-074570-00-6','980547584','NA',NULL,'1166017138','Intact Insurance Company','L00054245','CVOR 129-329-09','140510157',43,'2021-09-30 14:21:50',43,'2021-09-30 15:31:15'),(17,31,'Barry Paton','Paton Racing',38,671,'Paris','544 Paris Road','N3L 3E1','4239676817','',4,'1550615','3I13ET6G','NA','NA','NA','980197448','ON007400329','ON35763','52662A02','2022-09-26 04:00:00','338944',NULL,'980197448',NULL,NULL,NULL,'Kent and Essex Mutual Insurance Company',NULL,'CVOR 105-806-41','CRA 230586711',44,'2021-09-30 20:33:27',44,'2021-09-30 20:33:27');
+INSERT INTO `trs_tbl_corporate_information` VALUES (1,2,'Mr Chiv Trucking Company','',231,3975,'Washington City','Near White House','500062','7981850807','',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,'2020-10-17 08:37:29',2,'2020-10-17 08:37:29'),(2,3,'PermiShare Trucking Inc','',231,3934,'Jacksonville','123 Main Street','62703','2171234567','',2,'1273673','aX@1!800','1234567','ctsp','aX@1!800','98-1234567','IL1234567','ILXXXXXXX','TA73918285','2021-03-22 04:00:00','123456','98-1234567','98-1234567','996534','TSRT',NULL,'Hub International','PXXXXXXXX','151974555',NULL,4,'2020-10-22 20:49:48',4,'2021-09-09 15:54:52'),(3,5,'Marvel Trucking LLC','',38,671,'Toronto','123 Main Street','M4W 1K7','1234567890','',4,'1273673','aX@1!800','1234567','ctsp','aX@1!800','98-1234567','AL1234567','ALXXXXXXXXX','Y13456789','2020-12-31 05:00:00','123466','98-1234567','98-123467','996534','PSHR',NULL,'Your Insurance Co.','PXXXXXXXXX','987654321','987654321',7,'2020-11-25 15:22:21',7,'2022-03-26 16:03:53'),(4,6,'1210841 Ontario Limited','Flash Freight Systems',38,671,'Ariss','5896 8th Line','N0B 1B0','519-821-8878','',4,'758431','2F26RR0D','342097',NULL,NULL,'980210480','ON000051081','ON12146','T70007','2021-03-01 05:00:00','151335','07-054891-00-9','TF1377876','NA',NULL,'1160076395','Old republic Insurance Company of canada','100019574','124580442','882113095',8,'2020-11-28 15:04:51',8,'2020-11-29 15:51:35'),(5,9,'Lux Transporting LLC','',231,3935,'Carmel','3855 Minuteman Cir','46032',' 6128889829','',1,'3121098','','088014',NULL,NULL,'825019376',NULL,NULL,'AA1122000',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Lloyds',NULL,NULL,NULL,12,'2020-12-01 21:07:42',12,'2020-12-01 21:07:42'),(6,10,'Stones Transport Inc. ','',38,671,'North York ','134 Norfinch Drive, Suite 100','M3N 1X7','416-736-0444','',4,'789795','8E53DA6H','352717 ',NULL,NULL,'980200564','ON000006622','ON12205','TRVBSA1201','2020-12-16 05:00:00','187490','07-014023-00-5','980200564',NULL,NULL,'1164847114','Travelers Insurance Co.','S00014586','124319645','895807758',13,'2020-12-03 18:51:16',13,'2020-12-04 14:49:01'),(7,8,'1584412 Ontario Inc.','S & S Transport',38,671,'Georgetown','162 Guelph St. Unit 247','L7G 5X7','4167218396','2892011553',4,'1375703','3X62DN3H','524947',NULL,NULL,'980540288','ON000122599','ON15279',NULL,NULL,'622408','07-211183-00-6','680680510',NULL,'SSTP','1163597629',NULL,'100694237','151974995','871285607',11,'2020-12-04 16:36:59',11,'2020-12-04 16:39:28'),(8,11,'Environmental Services Inc.','',38,671,'Tilbury','22153 King & Whittle Road','N0P 2L0','5196822903','5196820503',4,'728142','0A80OX5O','335049',NULL,NULL,'980182036','ON006701994','ON12255','CA00004658AU20A','2021-08-01 04:00:00','252458','N/A','TF1345900','N/A',NULL,'1163422141','XL Specialty Insurance Company','E00008223','116904601','895842854',15,'2020-12-18 14:42:08',15,'2020-12-18 21:28:39'),(9,12,'Sabaa Enterprises INC','',231,3945,'Dearborn','2883 Amazon St','48120','3133770769','',1,'2952547',NULL,'2952547',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,'2020-12-22 16:33:25',16,'2020-12-22 16:33:25'),(10,15,'RHHC Carrier Company LLC','PONY TRANSPORT',231,3970,'Wolfforth','13405 CR 1600 STE 74','79382','8069557669','',1,'3433883',NULL,'1113357','ponytransport',NULL,'85-1226562',NULL,NULL,'140121190','2021-07-16 05:00:00',NULL,NULL,NULL,NULL,'PTPT',NULL,'THREE by BERKSHIRE HATHAWAY',NULL,NULL,NULL,20,'2021-07-09 18:29:50',20,'2021-07-09 18:38:04'),(11,22,'Great West Carriers Inc. ','',38,671,'Cambridge','6808 Wellington County Road 34','N3C 2R6','5198951875','',4,'571905','9N41SK0O','209753',NULL,NULL,'980136081','ON000013857','ON12348',NULL,NULL,'113903','N/A','980136081','N/A',NULL,'N/A',NULL,'G00005541','CVOR 105053857','133333369',29,'2021-08-19 18:56:00',29,'2021-08-23 18:19:30'),(12,20,'Fleming Fast Freight Inc. ','',38,671,'Fergus','545 Glengarry Crescent','N1M 2W7','5198435460','',3,NULL,NULL,NULL,NULL,NULL,NULL,'ON000082480',NULL,'64009271','2021-11-04 04:00:00',NULL,NULL,NULL,NULL,NULL,'1160266590','Economical Insurance Company ',NULL,'CVOR 128501249','872867999',27,'2021-08-23 18:00:53',27,'2021-08-23 19:21:44'),(13,24,'Verge Furniture Logistics Inc. ','',38,671,'Stouffville','36 Norbett Drive, Unit 2','L4A 2G7','9053058572','',4,'1268339','4R94LX7G','505034 COMMON',NULL,NULL,'980491811','ON000124160','ON14636','OLH21705162','2021-12-30 05:00:00','224065','07-034205-00-9','TF2222191','073078',NULL,'1163081483','Echelon Insurance Company ','V00036187','CVOR 149666531','855748679',31,'2021-08-23 18:47:01',31,'2021-08-23 18:58:48'),(14,25,'422692 Ontario Limited','TFX International Specialized Vehicle Transport ',38,671,'Etobicoke','11 City View Drive','M9W 5A5','4162438531','',4,'763766','6K47ST9Q','343736 COMMON',NULL,NULL,'980196728','ON00055580','ON12108','2027198','2021-11-03 04:00:00','154724','07-000526-00-5','TF1425597','251552',NULL,'1148411029','NORTHBRIDGE GENERAL INSURANCE COMPANY','400008098','CVOR 131307151','881885768',32,'2021-08-24 18:06:34',32,'2021-08-24 18:14:45'),(15,29,'Gary Gibbons','Fairview Flatbeds',38,671,'St. Thomas','6932 Fairview Rd.','N5P 3S8','5195212567','',4,'2586988','1O70IR8N','906791',NULL,NULL,'981229227','ON006900271','ON37011',NULL,NULL,'349516',NULL,'981229227',NULL,NULL,NULL,NULL,'G00744724','112-715-153','824328405',42,'2021-09-13 16:02:42',42,'2021-09-13 16:02:42'),(16,30,'Lakeside Produce Inc. ','',38,671,'Leamington ','307 Hwy 77, RR # 2','N8H 3V5','5193221959','',4,'758711','5W55QX3L','342662','','NA','980547584','ON000051093','ON12642','AF5174873','2021-11-05 04:00:00','253733','07-074570-00-6','980547584','NA',NULL,'1166017138','Intact Insurance Company','L00054245','CVOR 129-329-09','140510157',43,'2021-09-30 14:21:50',43,'2021-09-30 15:31:15'),(17,31,'Barry Paton','Paton Racing',38,671,'Paris','544 Paris Road','N3L 3E1','4239676817','',4,'1550615','3I13ET6G','NA','NA','NA','980197448','ON007400329','ON35763','52662A02','2022-09-26 04:00:00','338944',NULL,'980197448',NULL,NULL,NULL,'Kent and Essex Mutual Insurance Company',NULL,'CVOR 105-806-41','CRA 230586711',44,'2021-09-30 20:33:27',44,'2021-09-30 20:33:27');
 /*!40000 ALTER TABLE `trs_tbl_corporate_information` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -420,12 +420,12 @@ DROP TABLE IF EXISTS `trs_tbl_countries`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_countries` (
-  `country_id` bigint(10) NOT NULL AUTO_INCREMENT,
+  `country_id` bigint NOT NULL AUTO_INCREMENT,
   `country_short_code` varchar(5) NOT NULL,
-  `country_phonecode` int(10) NOT NULL,
+  `country_phonecode` int NOT NULL,
   `country_name` varchar(255) NOT NULL,
-  `is_active` tinyint(4) NOT NULL DEFAULT '0',
-  `is_deleted` tinyint(4) NOT NULL DEFAULT '1',
+  `is_active` tinyint NOT NULL DEFAULT '0',
+  `is_deleted` tinyint NOT NULL DEFAULT '1',
   PRIMARY KEY (`country_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=247 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -448,19 +448,19 @@ DROP TABLE IF EXISTS `trs_tbl_document_share_history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_document_share_history` (
-  `share_history_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `share_history_id` bigint NOT NULL AUTO_INCREMENT,
   `shared_to_email` varchar(100) NOT NULL,
   `shared_date` date NOT NULL,
   `document_type` tinyint(1) NOT NULL COMMENT '1--> Driver 2-->Asset 3-->Corporate Info',
-  `document_id` bigint(20) NOT NULL,
-  `driver_id` bigint(20) NOT NULL,
-  `carrier_id` bigint(20) NOT NULL,
+  `document_id` bigint NOT NULL,
+  `driver_id` bigint NOT NULL,
+  `carrier_id` bigint NOT NULL,
   PRIMARY KEY (`share_history_id`),
   KEY `share_hist_driver_id_constraint` (`driver_id`),
   KEY `share_hist_carriet_id_constarint` (`carrier_id`),
   CONSTRAINT `share_hist_carriet_id_constarint` FOREIGN KEY (`carrier_id`) REFERENCES `trs_tbl_carriers` (`carrier_id`),
   CONSTRAINT `share_hist_driver_id_constraint` FOREIGN KEY (`driver_id`) REFERENCES `trs_tbl_drivers` (`driver_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -481,10 +481,10 @@ DROP TABLE IF EXISTS `trs_tbl_driver_asset_history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_driver_asset_history` (
-  `asset_history_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `driver_id` bigint(20) NOT NULL,
-  `asset_id` bigint(20) DEFAULT NULL,
-  `carrier_id` bigint(20) NOT NULL,
+  `asset_history_id` bigint NOT NULL AUTO_INCREMENT,
+  `driver_id` bigint NOT NULL,
+  `asset_id` bigint DEFAULT NULL,
+  `carrier_id` bigint NOT NULL,
   `date` date NOT NULL,
   `to_date` date DEFAULT NULL,
   PRIMARY KEY (`asset_history_id`),
@@ -494,7 +494,7 @@ CREATE TABLE `trs_tbl_driver_asset_history` (
   CONSTRAINT `asset_history_asset_id` FOREIGN KEY (`asset_id`) REFERENCES `trs_tbl_assets` (`asset_id`),
   CONSTRAINT `asset_history_carrier_id_constraint` FOREIGN KEY (`carrier_id`) REFERENCES `trs_tbl_carriers` (`carrier_id`),
   CONSTRAINT `asset_history_diver_id` FOREIGN KEY (`driver_id`) REFERENCES `trs_tbl_drivers` (`driver_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=268 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=268 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -515,9 +515,9 @@ DROP TABLE IF EXISTS `trs_tbl_driver_documents`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_driver_documents` (
-  `document_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `driver_id` bigint(20) NOT NULL,
-  `carrier_id` bigint(20) NOT NULL,
+  `document_id` bigint NOT NULL AUTO_INCREMENT,
+  `driver_id` bigint NOT NULL,
+  `carrier_id` bigint NOT NULL,
   `document_name` varchar(50) DEFAULT NULL,
   `document_originalname` varchar(255) NOT NULL,
   `document_s3_url` text NOT NULL,
@@ -527,9 +527,9 @@ CREATE TABLE `trs_tbl_driver_documents` (
   `is_removed_from_home` tinyint(1) NOT NULL DEFAULT '0',
   `issue_date` datetime DEFAULT NULL,
   `exp_date` date DEFAULT NULL,
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`document_id`),
   KEY `driver_documents_id_constraint` (`driver_id`),
@@ -557,12 +557,12 @@ DROP TABLE IF EXISTS `trs_tbl_driver_grid_columns`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_driver_grid_columns` (
-  `driver_grid_column_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `carrier_id` bigint(20) NOT NULL,
+  `driver_grid_column_id` bigint NOT NULL AUTO_INCREMENT,
+  `carrier_id` bigint NOT NULL,
   `grid_columns` varchar(12) NOT NULL COMMENT '111111111111-->View All  000000000000-->View None',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`driver_grid_column_id`),
   KEY `driver_grid_carrier_id_constraint` (`carrier_id`),
@@ -588,7 +588,7 @@ DROP TABLE IF EXISTS `trs_tbl_drivers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_drivers` (
-  `driver_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `driver_id` bigint NOT NULL AUTO_INCREMENT,
   `driver_first_name` varchar(30) NOT NULL,
   `driver_last_name` varchar(30) NOT NULL,
   `cell_phone` varchar(20) NOT NULL,
@@ -598,7 +598,7 @@ CREATE TABLE `trs_tbl_drivers` (
   `password_reset_token` text,
   `dl_number` varchar(50) NOT NULL,
   `dl_class` varchar(50) NOT NULL,
-  `current_active_asset_id` bigint(20) DEFAULT NULL,
+  `current_active_asset_id` bigint DEFAULT NULL,
   `driver_firebase_id` text,
   `driver_profoile_pic_url` text,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
@@ -606,16 +606,16 @@ CREATE TABLE `trs_tbl_drivers` (
   `address1` text,
   `city` varchar(20) NOT NULL,
   `zip` varchar(45) NOT NULL,
-  `country_id` bigint(20) NOT NULL,
-  `state_id` bigint(20) NOT NULL,
+  `country_id` bigint NOT NULL,
+  `state_id` bigint NOT NULL,
   `start_date` date NOT NULL,
   `inactive_date` date DEFAULT NULL,
   `comments` varchar(255) DEFAULT NULL,
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `carrier_id` bigint(20) NOT NULL,
+  `carrier_id` bigint NOT NULL,
   PRIMARY KEY (`driver_id`),
   KEY `driver_country_id_constraint` (`country_id`),
   KEY `driver_state_id_constraint` (`state_id`),
@@ -634,7 +634,7 @@ CREATE TABLE `trs_tbl_drivers` (
 
 LOCK TABLES `trs_tbl_drivers` WRITE;
 /*!40000 ALTER TABLE `trs_tbl_drivers` DISABLE KEYS */;
-INSERT INTO `trs_tbl_drivers` VALUES (1,'Production envi','New Driver','7981850807','prasanth.chivukula@yahoo.com',1,'$2a$10$1xKSr/q5QTuhMCpVeYyC7e64MqGaEm1Lxgr3qOFv0Bpbbqg0mU4Fm',NULL,'1101111011','A+',NULL,NULL,NULL,1,0,'Near White House','Washington City','500062',231,3975,'2020-10-01',NULL,'',2,'2020-10-17 10:03:38',2,'2021-07-30 19:54:36',2),(2,'Kumar','Siva','8801786672','sivakumar.k369@gmail.com',1,'$2a$10$3DO/F/rExFtKlY71zDe94.hhhCz79VELNbTRdP9Z4U0BwnRyrIKs6','$2a$10$3DO/F/rExFtKlY71zDe94.hhhCz79VELNbTRdP9Z4U0BwnRyrIKs6','ABCD','A',3,NULL,NULL,1,1,'Near White house','Washington','500081',231,3919,'2020-10-20',NULL,'',2,'2020-10-21 12:49:19',2,'2021-08-11 09:33:59',2),(3,'Collin','Smith','5199995555','collin@transreportservices.com',1,'$2a$10$A90EiWaZW0iUm6fSvlkWVeVF5nt7Bgav52nPjgb1zD1/GiaKRS2yu',NULL,'C0717732880414','G',6,'ch-XoQUdWkU4pIRRFxDQMk:APA91bHnh_wLY4gdgm68c1ea_YR9QkyJswc9uC6ZbwDycA2-y3jZi-sjyeQ1veJyIlOEuEdR7ubyVjr1zXQZzH6CPZlJVNfCoffNwEjm-bAOLvkIU48jz60O-dw4m0PZmsqrBkwogmmm','https://permishare.s3.us-east-2.amazonaws.com/dev/driver-documents/profilePic.png',1,0,'14 Amos Drive','Guelph','N1L 0M2',38,671,'1988-04-14',NULL,'',3,'2020-10-22 19:10:34',3,'2021-10-05 15:30:44',3),(4,'Clive','Carwardine','5198307807','clive@transreportservices.com',1,'$2a$10$eF0RQ4XrryJTVa.2RPOKSuFAg5FjJ.pqNJ8Nq0Ijz1noSUSCYTbOS',NULL,'C07171325581008','AZ',NULL,NULL,NULL,1,1,'20 Kelly Court','Guelph','N1K1W3',38,671,'2020-10-22',NULL,'',4,'2020-10-22 19:48:31',4,'2020-10-22 20:10:12',3),(5,'Clive','Sanders','5551234567','clivecarwardine@gmail.com',1,'$2a$10$HUAHIFu9u55DIr6CpD.VD.oxqRj9RFHjFIdeeD4gkdJ4BRdvk7S3S',NULL,'C123456789','AZ',1,'cwe1arihB3Y:APA91bEQDeihZ_boYpBuMA4xBAGweQn7L3oUz2bMPjIpLD3qHpdRFLuZg8LhcBuQ9WwFMuoL5a0eSIdwO1XaK6wtn9WZwc1YN6-j1sDKc1rNja71FNNHsqTMbUlBNNxQ_6ZgCBYytWjv',NULL,1,0,'20 Any Street','Raleigh','61534',231,3957,'2020-10-22',NULL,'',4,'2020-10-22 20:18:11',4,'2021-10-05 21:48:35',3),(6,'Konduri','Raj','8179035467','raj@optionmatrix.com',1,'$2a$10$3hgikaVSvTfz0yGyNnbfQOoMvkGsZZYVrNcQw1U8.3W4/Jt5MqLGa',NULL,'10112122','A',NULL,NULL,NULL,1,0,'Near White house','Ottawa','500055',38,663,'2020-10-21',NULL,'',2,'2020-10-22 20:22:04',2,'2020-10-22 20:23:26',2),(7,'Raj','Konduri','9988998888','rajkvs785@gmail.com',1,'$2a$10$QzL8nAQeuGKozdo5sU7QhOCClHgIoRJrrCUi0Y5moqBZD8uESP3US','$2a$10$bo0J77ijKYa9HNwD/OZiZew8/.JzMOwzXz0qjc3sV7/9Ayx3KBgZq','1012120121','A',NULL,NULL,NULL,1,0,'Near White house','Ontario','500050',38,665,'2020-10-18',NULL,'',2,'2020-10-22 20:30:43',2,'2020-10-22 20:34:30',2),(8,'Bob','Smith','8882632633','sales@permishare.com',1,'$2a$10$SxeScJKkbvy9igbjkb.sSO9AVBcITd0k1P7IBnnUzVso6DWWX8tme',NULL,'F1265845645845','AZ',1,NULL,NULL,1,1,'','Halifax','K9T 5R2',38,669,'2020-10-01',NULL,'',3,'2020-10-29 18:48:53',3,'2020-12-01 16:51:29',3),(9,'Thomas','Dowd','5551234567','admin@permishare.com',0,'$2a$10$QawnJQJi9I4mV31e2WBY6eU55OMwHFlI8xBFox1q6GGdsan0PDqqe',NULL,'123456789','D',NULL,NULL,NULL,1,0,'999 Any Street','Fort Worth','76102',231,3970,'2019-11-24',NULL,'',4,'2020-11-01 22:28:26',4,'2021-08-09 18:02:53',3),(10,'C','Driver','5559876543','clive@transreportservices,com',0,NULL,NULL,'D123456789','A',NULL,NULL,NULL,0,1,'PO Box','Sacramento','94203',231,3924,'2020-03-01','2020-11-09',NULL,1,'2020-11-02 11:24:23',1,'2020-11-28 18:12:21',3),(11,'Bob','Dylan','8545565252','bobby@gmail.com',0,NULL,NULL,'ASRH435463456','AZ',NULL,NULL,NULL,1,1,'14','Toronto','N1L 8K1',38,671,'2020-10-31',NULL,NULL,1,'2020-11-02 14:32:55',1,'2020-11-03 21:07:00',3),(12,'Jake','Nash','8883265959','driverd@permishare.com',0,NULL,NULL,'985465485454','AZ',NULL,NULL,NULL,1,0,'123 Sample St.','Laval','H7S2P1',38,673,'2020-11-02',NULL,NULL,1,'2020-11-13 19:22:22',1,'2021-08-09 18:03:09',3),(13,'Jake','Welsch','8883265960','drivere@permishare.com',0,NULL,NULL,'852456325145','AZ',NULL,NULL,NULL,1,0,'321 Sample Dr.','Orlando','32819',231,3930,'2020-11-03',NULL,NULL,1,'2020-11-13 19:22:22',1,'2021-08-09 18:03:24',3),(14,'William','Ross','8883265961','driverf@permishare.com',0,NULL,NULL,'565236524156','AZ',NULL,NULL,NULL,1,0,'564 Sample Ct.','Mississauga','L4W5R2',38,671,'2020-11-04',NULL,NULL,1,'2020-11-13 19:22:22',1,'2021-08-09 18:03:36',3),(15,'Nicholas','Watson','8883265962','driverg@permishare.com',0,NULL,NULL,'524626565845','AZ',NULL,NULL,NULL,1,0,'987 Sample Dr.','Bridgeport','13057',231,3956,'2020-11-05',NULL,NULL,1,'2020-11-13 19:22:22',1,'2021-08-09 18:03:51',3),(16,'Erin','Quinn','8883265963','driverh@permishare.com',0,NULL,NULL,'556465656595','AZ',NULL,NULL,NULL,1,0,'852 Sample St.','Portage la Praire','R1N4A6',38,665,'2020-11-06',NULL,NULL,1,'2020-11-13 19:22:22',1,'2021-08-09 18:04:06',3),(17,'Robert','Gibson','8883265964','driveri@permishare.com',0,NULL,NULL,'856598546523','AZ ',NULL,NULL,NULL,1,0,'856 Sample Ct. ','Somerset','42501',231,3938,'2020-11-07',NULL,NULL,1,'2020-11-13 19:22:22',1,'2021-08-09 18:04:22',3),(18,'Joe','Smith','5555655555','joesmith@joesmith.com',0,'$2a$10$GScZ5OdvsUVC0DUrxZQupOxR9e7a0YrgRThZH1EOxP.xK/yCegi2.','$2a$10$GScZ5OdvsUVC0DUrxZQupOxR9e7a0YrgRThZH1EOxP.xK/yCegi2.','78456854542','AZ',NULL,NULL,NULL,1,0,'123 Fake Street','Winnipeg','K1L 0F2',38,665,'2020-11-17',NULL,'',3,'2020-11-17 19:11:28',3,'2020-11-17 19:11:28',3),(19,'Sales','Permishare','1234567890','sales@permishare.com',1,'$2a$10$PGJvbBUiophhMimphbwyqej665JYtBIMq.feRoPRdmbg0lYxa.NPW',NULL,'1234567890','A',NULL,NULL,NULL,1,0,'','Birmingham','123456',231,3919,'2020-11-25',NULL,'',7,'2020-11-25 15:03:51',7,'2021-08-23 14:38:42',5),(20,'Richard','Rateree II','6786779423','Rateree@yahoo.com',0,'$2a$10$qGaTfpxjwGstXPQQlEIQgOAoIe5FM3nBKh7zH2ewD7GYuaaWD0Zbq','$2a$10$qGaTfpxjwGstXPQQlEIQgOAoIe5FM3nBKh7zH2ewD7GYuaaWD0Zbq','052776498','A',NULL,NULL,NULL,1,0,'3324 Springside Rdg','Decatur','30034',231,3931,'2020-12-01',NULL,'',12,'2020-12-01 21:19:07',12,'2020-12-07 15:06:49',9),(21,'Tommy','Smith IV','2144227092','tommy_smith82@yahoo.com',0,'$2a$10$zpXkkz1C6ahYfmTjANeJs.ZE9jqUm.WYTRTjeQ3SDNYBGstOdidP.','$2a$10$zpXkkz1C6ahYfmTjANeJs.ZE9jqUm.WYTRTjeQ3SDNYBGstOdidP.','15907887','A',NULL,NULL,NULL,1,0,'3718 Fawn Valley Dr Apt. 2070','Dallas','75224',231,3970,'2020-11-02',NULL,'',12,'2020-12-02 17:32:25',12,'2020-12-02 17:32:25',9),(22,'Charles','Pappas','2535690228','charles@charlespappas.com',0,'$2a$10$A2jIVuOKYvcwTfwW1DKV3.VoqepMmSzUCUz/TxZwJyBAqMkyuRpNe','$2a$10$A2jIVuOKYvcwTfwW1DKV3.VoqepMmSzUCUz/TxZwJyBAqMkyuRpNe','WDL74T29C63B','A',NULL,NULL,NULL,1,0,'21818 108th Street Ct E','Buckley','98321',231,3975,'2020-11-13',NULL,'',12,'2020-12-02 17:49:14',12,'2020-12-02 17:51:10',9),(23,'Tyron','Gilliard','5023374682','lavargilliard@gmail.com',0,'$2a$10$0NYsvfaeDJX0COQjXJ/u..Khq8VikhdaiMhkJlkL2.2XLcgxzza1C','$2a$10$0NYsvfaeDJX0COQjXJ/u..Khq8VikhdaiMhkJlkL2.2XLcgxzza1C','0740-03-2371','A',NULL,NULL,NULL,1,0,'1329 E Court Ave','Jeffersonville, IN','47130',231,3935,'2020-11-02',NULL,'',12,'2020-12-02 18:32:37',12,'2020-12-02 18:32:37',9),(24,'Terry','Dorsey','404-451-4001','dorsey_express@yahoo.com',0,'$2a$10$2qKM6DG9.3oJ3BoveheZSethq8lDcPN/QyPStX.2CmTYg4d85nNQ6','$2a$10$2qKM6DG9.3oJ3BoveheZSethq8lDcPN/QyPStX.2CmTYg4d85nNQ6','013513125','A',NULL,NULL,NULL,1,0,'2311 Jones Rd NW','Atlanta','30318-5915',231,3931,'2020-10-23',NULL,'',12,'2020-12-02 19:49:46',12,'2020-12-07 14:38:08',9),(25,'Eric','Stiff','678-770-0799','es@gmail.com',0,'$2a$10$xz3kCtHRtZUuXARXWlh.UuSRBISKRoQ1MdUZ2KJ6.vMAU/zi6mNNa','$2a$10$xz3kCtHRtZUuXARXWlh.UuSRBISKRoQ1MdUZ2KJ6.vMAU/zi6mNNa','057544535','A',NULL,NULL,NULL,1,0,'','Kennesaw','30144',231,3931,'2020-12-09',NULL,'',12,'2020-12-09 21:31:02',12,'2020-12-09 21:34:16',9),(26,'Tommy','Thompson','903-669-5163','tt@gmail.com',0,'$2a$10$XasXyxInPRnuBnrVsIalhu.np/JGuNtJ2LFjBujGdQ9JOgyRUGt7C','$2a$10$XasXyxInPRnuBnrVsIalhu.np/JGuNtJ2LFjBujGdQ9JOgyRUGt7C','M083638467','A',NULL,NULL,NULL,1,0,'','Ardmore','73401',231,3960,'2020-12-09',NULL,'',12,'2020-12-09 21:47:28',12,'2020-12-09 22:03:38',9),(27,'Kumar Siva','Siva Kumar','8801786672','sivakumar.k1310@gmail.com',1,'$2a$10$OP8fSWttly7BGzFGCC5OrOz/KCe/LyMCasJz/sbKj/PcDARllw.Yi',NULL,'AAAAA','A',NULL,NULL,NULL,1,0,'In Andhra pradesh assembly','Hyderabad','500081',231,3930,'2020-12-15',NULL,'New Customer',2,'2020-12-21 17:31:08',2,'2021-09-27 09:27:44',2),(28,'Ahmed','Algalham','832 387 0524','ahmeda@gmail.com',0,'$2a$10$yanzXpLMIRKDj4k05LDO..EQwgPJ1vWPPLWw.jIWTK.iqXsHULQ.i','$2a$10$yanzXpLMIRKDj4k05LDO..EQwgPJ1vWPPLWw.jIWTK.iqXsHULQ.i','A424035158620','E, CA',NULL,NULL,NULL,1,0,'','Dearborn','48120',231,3945,'2020-12-28',NULL,'',16,'2020-12-28 18:09:02',16,'2021-01-01 15:24:52',12),(29,'Fahd','Riyashi','313 663 0069','fahdr@gmail.com',0,'$2a$10$GLBK2LYybHubaXaLlhshUuAt4ThTal7CrgC2rxgebNq1j.5rkbBz.','$2a$10$GLBK2LYybHubaXaLlhshUuAt4ThTal7CrgC2rxgebNq1j.5rkbBz.','R200244615062','CA',NULL,NULL,NULL,1,0,'','Melvindale','48122',231,3945,'2020-12-30',NULL,'',16,'2021-01-01 15:21:16',16,'2021-01-01 15:24:09',12),(30,'Gamal','Alshakdary','313 258 0678','gamala@gmail.com',0,'$2a$10$96jupEZhv2w7mQEXwmg0henKaEB5av.zVWf0tSbszNKiGjMullNa.','$2a$10$96jupEZhv2w7mQEXwmg0henKaEB5av.zVWf0tSbszNKiGjMullNa.','A422271622194','CA',NULL,NULL,NULL,1,0,'','Dearborn','48124',231,3945,'2020-12-30',NULL,'',16,'2021-01-01 15:27:06',16,'2021-01-01 15:37:45',12),(31,'Saif','Algalham','313 377 0769','saifa@gmail.com',0,'$2a$10$bTIXXGw1miFTY3inbKNmae3lPCNbPU8SeT/PyyJfSVzTZPRe9QrJ2','$2a$10$bTIXXGw1miFTY3inbKNmae3lPCNbPU8SeT/PyyJfSVzTZPRe9QrJ2','A424758035002','E, CA',NULL,NULL,NULL,1,0,'','Dearborn','48120',231,3945,'2020-12-30',NULL,'',16,'2021-01-01 15:40:37',16,'2021-01-01 15:41:14',12),(32,'Tanala','Vijay','8585858587','vijaykumartanala@gmail.com',1,'$2a$10$MOruXzeX6nfEVWYMqIfG4u1RbWLQwcapnDOpGDD6n3KOCgjus39vO',NULL,'212','A',3,NULL,NULL,1,0,'grtg','sas','sdsd',38,663,'2021-03-09',NULL,'',2,'2021-03-12 14:01:05',2,'2021-09-27 09:27:45',2),(33,'Federico','Canchola','3614451375','permianpony@gmail.com',1,'$2a$10$/73w2vbBDHUkL3aUYroBfeLwpO37DD9hmje2ZOfyAMqwX7vLsCGb6',NULL,'22536588','C',NULL,NULL,NULL,1,0,'7021 22nd PL','Lubbock','79407',231,3970,'2020-01-01',NULL,'',20,'2021-07-09 18:44:23',20,'2021-07-09 18:51:33',15),(34,'Test','iOS Driver','8801786672','sivakumar.k369@gmail.com',1,'$2a$10$p1.hGzEoatJD0GohTw1wDOl.qLfgQRxQ7uHeLeY0e3KhPq864vTL.','$2a$10$jGvf28ESkjxKFo62Evj.w.fnLU.5DJsyinKUM8UwewlXAtxoMGcnC','DL-12345142134','C',NULL,'cMJtcqWg5kfNusw3jXTmL2:APA91bH7jpUo2f45kGpimRa10M29u-w0Gt-PSrdgMhQSQuJ9R749g6KDUSvnZlwMZPYvRXjAJU4Il2VJ9eDR0lGJVJUkEJq9Jl_yKrPgLLEvdKQd8WV9V7vEvqNv7NvGlv3UmHGNRPKj','https://permishare.s3.us-east-2.amazonaws.com/dev/driver-documents/profilePic.png',1,0,'Test Address','Toronto','OU12',38,671,'2021-08-01',NULL,'',3,'2021-08-12 05:23:31',3,'2021-10-05 13:14:14',3),(35,'Gary','Gibbons','5195212567','gar-lor@hotmail.com',0,'$2a$10$XvIX301tGWIbWRzQ5D5LOuPn6kmT0YN.UEKOG6fwbjfdyVD3br4n2','$2a$10$XvIX301tGWIbWRzQ5D5LOuPn6kmT0YN.UEKOG6fwbjfdyVD3br4n2','123456789','AZ',NULL,NULL,NULL,1,0,'6932 Fairview Rd.','St. Thomas','N5P 3S8',38,671,'2021-09-13',NULL,'',42,'2021-09-13 19:02:21',42,'2021-09-13 19:02:21',29),(36,'Dylan','Bob','5465545458','jimbo@hinb.com',0,NULL,NULL,'87564585468','G',NULL,NULL,NULL,1,0,'12','Guelph','N1L 0M2',38,671,'2021-10-04',NULL,'Great guy!',1,'2021-10-04 15:40:08',1,'2021-10-04 15:40:08',3),(37,'Ridhima','Rao','999999999','ridhimarao8@gmail.com',0,NULL,NULL,'C0717732880415','RR',NULL,NULL,NULL,0,0,'Test Address','Test','10009',231,3924,'2021-10-05','2021-10-06','NA',1,'2021-10-05 09:09:17',1,'2021-10-06 00:01:00',3);
+INSERT INTO `trs_tbl_drivers` VALUES (1,'Production envi','New Driver','7981850807','prasanth.chivukula@yahoo.com',1,'$2a$10$1xKSr/q5QTuhMCpVeYyC7e64MqGaEm1Lxgr3qOFv0Bpbbqg0mU4Fm',NULL,'1101111011','A+',NULL,NULL,NULL,1,0,'Near White House','Washington City','500062',231,3975,'2020-10-01',NULL,'',2,'2020-10-17 10:03:38',2,'2021-07-30 19:54:36',2),(2,'Kumar','Siva','8801786672','sivakumar.k369@gmail.com',1,'$2a$10$3DO/F/rExFtKlY71zDe94.hhhCz79VELNbTRdP9Z4U0BwnRyrIKs6','$2a$10$3DO/F/rExFtKlY71zDe94.hhhCz79VELNbTRdP9Z4U0BwnRyrIKs6','ABCD','A',3,NULL,NULL,1,1,'Near White house','Washington','500081',231,3919,'2020-10-20',NULL,'',2,'2020-10-21 12:49:19',2,'2021-08-11 09:33:59',2),(3,'Collin','Smith','5199995555','collin@transreportservices.com',1,'$2a$10$A90EiWaZW0iUm6fSvlkWVeVF5nt7Bgav52nPjgb1zD1/GiaKRS2yu',NULL,'C0717732880414','G',6,'ch-XoQUdWkU4pIRRFxDQMk:APA91bHnh_wLY4gdgm68c1ea_YR9QkyJswc9uC6ZbwDycA2-y3jZi-sjyeQ1veJyIlOEuEdR7ubyVjr1zXQZzH6CPZlJVNfCoffNwEjm-bAOLvkIU48jz60O-dw4m0PZmsqrBkwogmmm','https://permishare.s3.us-east-2.amazonaws.com/dev/driver-documents/profilePic.png',1,0,'14 Amos Drive','Guelph','N1L 0M2',38,671,'1988-04-14',NULL,'',3,'2020-10-22 19:10:34',3,'2021-10-05 15:30:44',3),(4,'Clive','Carwardine','5198307807','clive@transreportservices.com',1,'$2a$10$eF0RQ4XrryJTVa.2RPOKSuFAg5FjJ.pqNJ8Nq0Ijz1noSUSCYTbOS',NULL,'C07171325581008','AZ',NULL,NULL,NULL,1,1,'20 Kelly Court','Guelph','N1K1W3',38,671,'2020-10-22',NULL,'',4,'2020-10-22 19:48:31',4,'2020-10-22 20:10:12',3),(5,'Clive','Sanders','5551234567','clivecarwardine@gmail.com',1,'$2a$10$HUAHIFu9u55DIr6CpD.VD.oxqRj9RFHjFIdeeD4gkdJ4BRdvk7S3S',NULL,'C123456789','AZ',1,'cwe1arihB3Y:APA91bEQDeihZ_boYpBuMA4xBAGweQn7L3oUz2bMPjIpLD3qHpdRFLuZg8LhcBuQ9WwFMuoL5a0eSIdwO1XaK6wtn9WZwc1YN6-j1sDKc1rNja71FNNHsqTMbUlBNNxQ_6ZgCBYytWjv',NULL,1,0,'20 Any Street','Raleigh','61534',231,3957,'2020-10-22',NULL,'',4,'2020-10-22 20:18:11',4,'2021-10-05 21:48:35',3),(6,'Konduri','Raj','8179035467','raj@optionmatrix.com',1,'$2a$10$3hgikaVSvTfz0yGyNnbfQOoMvkGsZZYVrNcQw1U8.3W4/Jt5MqLGa',NULL,'10112122','A',NULL,NULL,NULL,1,0,'Near White house','Ottawa','500055',38,663,'2020-10-21',NULL,'',2,'2020-10-22 20:22:04',2,'2020-10-22 20:23:26',2),(7,'Raj','Konduri','9988998888','rajkvs785@gmail.com',1,'$2a$10$QzL8nAQeuGKozdo5sU7QhOCClHgIoRJrrCUi0Y5moqBZD8uESP3US','$2a$10$bo0J77ijKYa9HNwD/OZiZew8/.JzMOwzXz0qjc3sV7/9Ayx3KBgZq','1012120121','A',NULL,NULL,NULL,1,0,'Near White house','Ontario','500050',38,665,'2020-10-18',NULL,'',2,'2020-10-22 20:30:43',2,'2020-10-22 20:34:30',2),(8,'Bob','Smith','8882632633','sales@permishare.com',1,'$2a$10$SxeScJKkbvy9igbjkb.sSO9AVBcITd0k1P7IBnnUzVso6DWWX8tme',NULL,'F1265845645845','AZ',1,NULL,NULL,1,1,'','Halifax','K9T 5R2',38,669,'2020-10-01',NULL,'',3,'2020-10-29 18:48:53',3,'2020-12-01 16:51:29',3),(9,'Thomas','Dowd','5551234567','admin@permishare.com',0,'$2a$10$QawnJQJi9I4mV31e2WBY6eU55OMwHFlI8xBFox1q6GGdsan0PDqqe',NULL,'123456789','D',NULL,NULL,NULL,1,0,'999 Any Street','Fort Worth','76102',231,3970,'2019-11-24',NULL,'',4,'2020-11-01 22:28:26',4,'2021-08-09 18:02:53',3),(10,'C','Driver','5559876543','clive@transreportservices,com',0,NULL,NULL,'D123456789','A',NULL,NULL,NULL,0,1,'PO Box','Sacramento','94203',231,3924,'2020-03-01','2020-11-09',NULL,1,'2020-11-02 11:24:23',1,'2020-11-28 18:12:21',3),(11,'Bob','Dylan','8545565252','bobby@gmail.com',0,NULL,NULL,'ASRH435463456','AZ',NULL,NULL,NULL,1,1,'14','Toronto','N1L 8K1',38,671,'2020-10-31',NULL,NULL,1,'2020-11-02 14:32:55',1,'2020-11-03 21:07:00',3),(12,'Jake','Nash','8883265959','driverd@permishare.com',0,NULL,NULL,'985465485454','AZ',NULL,NULL,NULL,1,0,'123 Sample St.','Laval','H7S2P1',38,673,'2020-11-02',NULL,NULL,1,'2020-11-13 19:22:22',1,'2021-08-09 18:03:09',3),(13,'Jake','Welsch','8883265960','drivere@permishare.com',0,NULL,NULL,'852456325145','AZ',NULL,NULL,NULL,1,0,'321 Sample Dr.','Orlando','32819',231,3930,'2020-11-03',NULL,NULL,1,'2020-11-13 19:22:22',1,'2021-08-09 18:03:24',3),(14,'William','Ross','8883265961','driverf@permishare.com',0,NULL,NULL,'565236524156','AZ',NULL,NULL,NULL,1,0,'564 Sample Ct.','Mississauga','L4W5R2',38,671,'2020-11-04',NULL,NULL,1,'2020-11-13 19:22:22',1,'2021-08-09 18:03:36',3),(15,'Nicholas','Watson','8883265962','driverg@permishare.com',0,NULL,NULL,'524626565845','AZ',NULL,NULL,NULL,1,0,'987 Sample Dr.','Bridgeport','13057',231,3956,'2020-11-05',NULL,NULL,1,'2020-11-13 19:22:22',1,'2021-08-09 18:03:51',3),(16,'Erin','Quinn','8883265963','driverh@permishare.com',0,NULL,NULL,'556465656595','AZ',NULL,NULL,NULL,1,0,'852 Sample St.','Portage la Praire','R1N4A6',38,665,'2020-11-06',NULL,NULL,1,'2020-11-13 19:22:22',1,'2021-08-09 18:04:06',3),(17,'Robert','Gibson','8883265964','driveri@permishare.com',0,NULL,NULL,'856598546523','AZ ',NULL,NULL,NULL,1,0,'856 Sample Ct. ','Somerset','42501',231,3938,'2020-11-07',NULL,NULL,1,'2020-11-13 19:22:22',1,'2021-08-09 18:04:22',3),(18,'Joe','Smith','5555655555','joesmith@joesmith.com',0,'$2a$10$GScZ5OdvsUVC0DUrxZQupOxR9e7a0YrgRThZH1EOxP.xK/yCegi2.','$2a$10$GScZ5OdvsUVC0DUrxZQupOxR9e7a0YrgRThZH1EOxP.xK/yCegi2.','78456854542','AZ',NULL,NULL,NULL,1,0,'123 Fake Street','Winnipeg','K1L 0F2',38,665,'2020-11-17',NULL,'',3,'2020-11-17 19:11:28',3,'2020-11-17 19:11:28',3),(19,'Sales','Marvel','1234567890','sales@permishare.com',1,'$2a$10$PGJvbBUiophhMimphbwyqej665JYtBIMq.feRoPRdmbg0lYxa.NPW',NULL,'1234567890','A',NULL,NULL,NULL,1,0,'','Birmingham','123456',231,3919,'2020-11-25',NULL,'',7,'2020-11-25 15:03:51',7,'2022-03-26 16:04:17',5),(20,'Richard','Rateree II','6786779423','Rateree@yahoo.com',0,'$2a$10$qGaTfpxjwGstXPQQlEIQgOAoIe5FM3nBKh7zH2ewD7GYuaaWD0Zbq','$2a$10$qGaTfpxjwGstXPQQlEIQgOAoIe5FM3nBKh7zH2ewD7GYuaaWD0Zbq','052776498','A',NULL,NULL,NULL,1,0,'3324 Springside Rdg','Decatur','30034',231,3931,'2020-12-01',NULL,'',12,'2020-12-01 21:19:07',12,'2020-12-07 15:06:49',9),(21,'Tommy','Smith IV','2144227092','tommy_smith82@yahoo.com',0,'$2a$10$zpXkkz1C6ahYfmTjANeJs.ZE9jqUm.WYTRTjeQ3SDNYBGstOdidP.','$2a$10$zpXkkz1C6ahYfmTjANeJs.ZE9jqUm.WYTRTjeQ3SDNYBGstOdidP.','15907887','A',NULL,NULL,NULL,1,0,'3718 Fawn Valley Dr Apt. 2070','Dallas','75224',231,3970,'2020-11-02',NULL,'',12,'2020-12-02 17:32:25',12,'2020-12-02 17:32:25',9),(22,'Charles','Pappas','2535690228','charles@charlespappas.com',0,'$2a$10$A2jIVuOKYvcwTfwW1DKV3.VoqepMmSzUCUz/TxZwJyBAqMkyuRpNe','$2a$10$A2jIVuOKYvcwTfwW1DKV3.VoqepMmSzUCUz/TxZwJyBAqMkyuRpNe','WDL74T29C63B','A',NULL,NULL,NULL,1,0,'21818 108th Street Ct E','Buckley','98321',231,3975,'2020-11-13',NULL,'',12,'2020-12-02 17:49:14',12,'2020-12-02 17:51:10',9),(23,'Tyron','Gilliard','5023374682','lavargilliard@gmail.com',0,'$2a$10$0NYsvfaeDJX0COQjXJ/u..Khq8VikhdaiMhkJlkL2.2XLcgxzza1C','$2a$10$0NYsvfaeDJX0COQjXJ/u..Khq8VikhdaiMhkJlkL2.2XLcgxzza1C','0740-03-2371','A',NULL,NULL,NULL,1,0,'1329 E Court Ave','Jeffersonville, IN','47130',231,3935,'2020-11-02',NULL,'',12,'2020-12-02 18:32:37',12,'2020-12-02 18:32:37',9),(24,'Terry','Dorsey','404-451-4001','dorsey_express@yahoo.com',0,'$2a$10$2qKM6DG9.3oJ3BoveheZSethq8lDcPN/QyPStX.2CmTYg4d85nNQ6','$2a$10$2qKM6DG9.3oJ3BoveheZSethq8lDcPN/QyPStX.2CmTYg4d85nNQ6','013513125','A',NULL,NULL,NULL,1,0,'2311 Jones Rd NW','Atlanta','30318-5915',231,3931,'2020-10-23',NULL,'',12,'2020-12-02 19:49:46',12,'2020-12-07 14:38:08',9),(25,'Eric','Stiff','678-770-0799','es@gmail.com',0,'$2a$10$xz3kCtHRtZUuXARXWlh.UuSRBISKRoQ1MdUZ2KJ6.vMAU/zi6mNNa','$2a$10$xz3kCtHRtZUuXARXWlh.UuSRBISKRoQ1MdUZ2KJ6.vMAU/zi6mNNa','057544535','A',NULL,NULL,NULL,1,0,'','Kennesaw','30144',231,3931,'2020-12-09',NULL,'',12,'2020-12-09 21:31:02',12,'2020-12-09 21:34:16',9),(26,'Tommy','Thompson','903-669-5163','tt@gmail.com',0,'$2a$10$XasXyxInPRnuBnrVsIalhu.np/JGuNtJ2LFjBujGdQ9JOgyRUGt7C','$2a$10$XasXyxInPRnuBnrVsIalhu.np/JGuNtJ2LFjBujGdQ9JOgyRUGt7C','M083638467','A',NULL,NULL,NULL,1,0,'','Ardmore','73401',231,3960,'2020-12-09',NULL,'',12,'2020-12-09 21:47:28',12,'2020-12-09 22:03:38',9),(27,'Kumar Siva','Siva Kumar','8801786672','sivakumar.k1310@gmail.com',1,'$2a$10$OP8fSWttly7BGzFGCC5OrOz/KCe/LyMCasJz/sbKj/PcDARllw.Yi',NULL,'AAAAA','A',NULL,NULL,NULL,1,0,'In Andhra pradesh assembly','Hyderabad','500081',231,3930,'2020-12-15',NULL,'New Customer',2,'2020-12-21 17:31:08',2,'2021-09-27 09:27:44',2),(28,'Ahmed','Algalham','832 387 0524','ahmeda@gmail.com',0,'$2a$10$yanzXpLMIRKDj4k05LDO..EQwgPJ1vWPPLWw.jIWTK.iqXsHULQ.i','$2a$10$yanzXpLMIRKDj4k05LDO..EQwgPJ1vWPPLWw.jIWTK.iqXsHULQ.i','A424035158620','E, CA',NULL,NULL,NULL,1,0,'','Dearborn','48120',231,3945,'2020-12-28',NULL,'',16,'2020-12-28 18:09:02',16,'2021-01-01 15:24:52',12),(29,'Fahd','Riyashi','313 663 0069','fahdr@gmail.com',0,'$2a$10$GLBK2LYybHubaXaLlhshUuAt4ThTal7CrgC2rxgebNq1j.5rkbBz.','$2a$10$GLBK2LYybHubaXaLlhshUuAt4ThTal7CrgC2rxgebNq1j.5rkbBz.','R200244615062','CA',NULL,NULL,NULL,1,0,'','Melvindale','48122',231,3945,'2020-12-30',NULL,'',16,'2021-01-01 15:21:16',16,'2021-01-01 15:24:09',12),(30,'Gamal','Alshakdary','313 258 0678','gamala@gmail.com',0,'$2a$10$96jupEZhv2w7mQEXwmg0henKaEB5av.zVWf0tSbszNKiGjMullNa.','$2a$10$96jupEZhv2w7mQEXwmg0henKaEB5av.zVWf0tSbszNKiGjMullNa.','A422271622194','CA',NULL,NULL,NULL,1,0,'','Dearborn','48124',231,3945,'2020-12-30',NULL,'',16,'2021-01-01 15:27:06',16,'2021-01-01 15:37:45',12),(31,'Saif','Algalham','313 377 0769','saifa@gmail.com',0,'$2a$10$bTIXXGw1miFTY3inbKNmae3lPCNbPU8SeT/PyyJfSVzTZPRe9QrJ2','$2a$10$bTIXXGw1miFTY3inbKNmae3lPCNbPU8SeT/PyyJfSVzTZPRe9QrJ2','A424758035002','E, CA',NULL,NULL,NULL,1,0,'','Dearborn','48120',231,3945,'2020-12-30',NULL,'',16,'2021-01-01 15:40:37',16,'2021-01-01 15:41:14',12),(32,'Tanala','Vijay','8585858587','vijaykumartanala@gmail.com',1,'$2a$10$MOruXzeX6nfEVWYMqIfG4u1RbWLQwcapnDOpGDD6n3KOCgjus39vO',NULL,'212','A',3,NULL,NULL,1,0,'grtg','sas','sdsd',38,663,'2021-03-09',NULL,'',2,'2021-03-12 14:01:05',2,'2021-09-27 09:27:45',2),(33,'Federico','Canchola','3614451375','permianpony@gmail.com',1,'$2a$10$/73w2vbBDHUkL3aUYroBfeLwpO37DD9hmje2ZOfyAMqwX7vLsCGb6',NULL,'22536588','C',NULL,NULL,NULL,1,0,'7021 22nd PL','Lubbock','79407',231,3970,'2020-01-01',NULL,'',20,'2021-07-09 18:44:23',20,'2021-07-09 18:51:33',15),(34,'Test','iOS Driver','8801786672','sivakumar.k369@gmail.com',1,'$2a$10$p1.hGzEoatJD0GohTw1wDOl.qLfgQRxQ7uHeLeY0e3KhPq864vTL.','$2a$10$jGvf28ESkjxKFo62Evj.w.fnLU.5DJsyinKUM8UwewlXAtxoMGcnC','DL-12345142134','C',NULL,'cMJtcqWg5kfNusw3jXTmL2:APA91bH7jpUo2f45kGpimRa10M29u-w0Gt-PSrdgMhQSQuJ9R749g6KDUSvnZlwMZPYvRXjAJU4Il2VJ9eDR0lGJVJUkEJq9Jl_yKrPgLLEvdKQd8WV9V7vEvqNv7NvGlv3UmHGNRPKj','https://permishare.s3.us-east-2.amazonaws.com/dev/driver-documents/profilePic.png',1,0,'Test Address','Toronto','OU12',38,671,'2021-08-01',NULL,'',3,'2021-08-12 05:23:31',3,'2021-10-05 13:14:14',3),(35,'Gary','Gibbons','5195212567','gar-lor@hotmail.com',0,'$2a$10$XvIX301tGWIbWRzQ5D5LOuPn6kmT0YN.UEKOG6fwbjfdyVD3br4n2','$2a$10$XvIX301tGWIbWRzQ5D5LOuPn6kmT0YN.UEKOG6fwbjfdyVD3br4n2','123456789','AZ',NULL,NULL,NULL,1,0,'6932 Fairview Rd.','St. Thomas','N5P 3S8',38,671,'2021-09-13',NULL,'',42,'2021-09-13 19:02:21',42,'2021-09-13 19:02:21',29),(36,'Dylan','Bob','5465545458','jimbo@hinb.com',0,NULL,NULL,'87564585468','G',NULL,NULL,NULL,1,0,'12','Guelph','N1L 0M2',38,671,'2021-10-04',NULL,'Great guy!',1,'2021-10-04 15:40:08',1,'2021-10-04 15:40:08',3),(37,'Ridhima','Rao','999999999','ridhimarao8@gmail.com',0,NULL,NULL,'C0717732880415','RR',NULL,NULL,NULL,0,0,'Test Address','Test','10009',231,3924,'2021-10-05','2021-10-06','NA',1,'2021-10-05 09:09:17',1,'2021-10-06 00:01:00',3);
 /*!40000 ALTER TABLE `trs_tbl_drivers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -646,16 +646,16 @@ DROP TABLE IF EXISTS `trs_tbl_fleets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_fleets` (
-  `fleet_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `fleet_id` bigint NOT NULL AUTO_INCREMENT,
   `fleet_name` varchar(30) NOT NULL,
-  `carrier_id` bigint(20) NOT NULL,
+  `carrier_id` bigint NOT NULL,
   `comments` text,
   `is_irp` tinyint(1) NOT NULL DEFAULT '1',
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`fleet_id`),
   KEY `fleet_carrier_id_constraint` (`carrier_id`),
@@ -681,8 +681,8 @@ DROP TABLE IF EXISTS `trs_tbl_home_alerts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_home_alerts` (
-  `document_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `carrier_id` bigint(20) NOT NULL,
+  `document_id` bigint NOT NULL AUTO_INCREMENT,
+  `carrier_id` bigint NOT NULL,
   `documentName` varchar(50) NOT NULL,
   `documentType` varchar(50) NOT NULL,
   `referene` varchar(30) NOT NULL,
@@ -694,7 +694,7 @@ CREATE TABLE `trs_tbl_home_alerts` (
   PRIMARY KEY (`document_id`),
   KEY `alerts_carrier_id_constraint` (`carrier_id`),
   CONSTRAINT `alerts_carrier_id_constraint` FOREIGN KEY (`carrier_id`) REFERENCES `trs_tbl_carriers` (`carrier_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -714,17 +714,17 @@ DROP TABLE IF EXISTS `trs_tbl_ifta_assets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_ifta_assets` (
-  `ifta_asset_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `ifta_year_id` bigint(20) NOT NULL,
-  `carrier_id` bigint(20) DEFAULT NULL,
-  `fleet_id` bigint(20) NOT NULL,
-  `asset_id` bigint(20) NOT NULL,
+  `ifta_asset_id` bigint NOT NULL AUTO_INCREMENT,
+  `ifta_year_id` bigint NOT NULL,
+  `carrier_id` bigint DEFAULT NULL,
+  `fleet_id` bigint NOT NULL,
+  `asset_id` bigint NOT NULL,
   `decal_first` varchar(10) NOT NULL,
   `decal_second` varchar(10) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ifta_asset_id`),
   KEY `ifta_fleet_id_constraint` (`fleet_id`),
@@ -756,18 +756,18 @@ DROP TABLE IF EXISTS `trs_tbl_ifta_year`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_ifta_year` (
-  `ifta_year_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ifta_year_id` bigint NOT NULL AUTO_INCREMENT,
   `year_name` varchar(10) NOT NULL,
-  `carrier_id` bigint(20) NOT NULL,
+  `carrier_id` bigint NOT NULL,
   `year_document_path` varchar(255) DEFAULT NULL,
   `year_document_name` varchar(50) DEFAULT NULL,
   `document_exist` tinyint(1) NOT NULL DEFAULT '0',
   `is_removed_from_home` tinyint(1) NOT NULL DEFAULT '0',
   `comments` text,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ifta_year_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
@@ -791,13 +791,13 @@ DROP TABLE IF EXISTS `trs_tbl_irp`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_irp` (
-  `irp_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `fleet_id` bigint(20) NOT NULL,
-  `carrier_id` bigint(20) NOT NULL,
+  `irp_id` bigint NOT NULL AUTO_INCREMENT,
+  `fleet_id` bigint NOT NULL,
+  `carrier_id` bigint NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`irp_id`),
   KEY `fleet_irp_id_constraint` (`fleet_id`),
@@ -825,18 +825,18 @@ DROP TABLE IF EXISTS `trs_tbl_irp_fleet_documents`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_irp_fleet_documents` (
-  `document_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `document_id` bigint NOT NULL AUTO_INCREMENT,
   `document_name` varchar(255) NOT NULL,
-  `irp_id` bigint(20) NOT NULL,
-  `fleet_id` bigint(20) NOT NULL,
-  `year_id` bigint(20) NOT NULL,
+  `irp_id` bigint NOT NULL,
+  `fleet_id` bigint NOT NULL,
+  `year_id` bigint NOT NULL,
   `document_path` varchar(255) NOT NULL,
   `document_originalname` varchar(255) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   `is_removed_from_home` tinyint(1) NOT NULL DEFAULT '0',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`document_id`),
   KEY `irp_fleet_documents_id_constraint` (`irp_id`),
@@ -866,16 +866,16 @@ DROP TABLE IF EXISTS `trs_tbl_irp_fleet_year`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_irp_fleet_year` (
-  `year_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `irp_id` bigint(20) NOT NULL,
-  `fleet_id` bigint(20) NOT NULL,
-  `carrier_id` bigint(20) NOT NULL,
+  `year_id` bigint NOT NULL AUTO_INCREMENT,
+  `irp_id` bigint NOT NULL,
+  `fleet_id` bigint NOT NULL,
+  `carrier_id` bigint NOT NULL,
   `year_duration` varchar(255) NOT NULL,
   `inactive_date` date NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`year_id`),
   KEY `irp_year_id_constraint` (`irp_id`),
@@ -905,14 +905,14 @@ DROP TABLE IF EXISTS `trs_tbl_irp_weight_groups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_irp_weight_groups` (
-  `weight_group_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `irp_id` bigint(20) NOT NULL,
+  `weight_group_id` bigint NOT NULL AUTO_INCREMENT,
+  `irp_id` bigint NOT NULL,
   `max_weight_group` varchar(30) NOT NULL,
   `number_of_combined_axels` varchar(30) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`weight_group_id`),
   KEY `irp_weight_group_constraint` (`irp_id`),
@@ -938,15 +938,15 @@ DROP TABLE IF EXISTS `trs_tbl_irs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_irs` (
-  `irs_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `irs_id` bigint NOT NULL AUTO_INCREMENT,
   `year` varchar(30) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
-  `carrier_id` bigint(20) NOT NULL,
-  `created_by` bigint(20) NOT NULL,
+  `carrier_id` bigint NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`irs_id`),
   KEY `irs_carrier_id_constraint` (`carrier_id`),
@@ -972,13 +972,13 @@ DROP TABLE IF EXISTS `trs_tbl_irs_assets_for_document`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_irs_assets_for_document` (
-  `asset_document_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `document_id` bigint(20) NOT NULL,
-  `asset_id` bigint(20) NOT NULL,
+  `asset_document_id` bigint NOT NULL AUTO_INCREMENT,
+  `document_id` bigint NOT NULL,
+  `asset_id` bigint NOT NULL,
   `status` tinyint(1) NOT NULL COMMENT '1-->Yes  0-->No',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`asset_document_id`),
   KEY `irs_document_asset_constraint` (`document_id`),
@@ -1006,16 +1006,16 @@ DROP TABLE IF EXISTS `trs_tbl_irs_year_documents`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_irs_year_documents` (
-  `document_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `document_id` bigint NOT NULL AUTO_INCREMENT,
   `document_name` varchar(100) NOT NULL,
   `document_path` varchar(255) NOT NULL,
   `document_originalname` varchar(255) NOT NULL,
-  `irs_id` bigint(20) NOT NULL,
+  `irs_id` bigint NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   `is_removed_from_home` tinyint(1) NOT NULL DEFAULT '0',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`document_id`),
   KEY `irs_year_id_document_constraint` (`irs_id`)
@@ -1040,16 +1040,16 @@ DROP TABLE IF EXISTS `trs_tbl_packages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_packages` (
-  `package_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `package_id` bigint NOT NULL AUTO_INCREMENT,
   `package_level` varchar(3) NOT NULL,
   `package_name` varchar(50) NOT NULL,
   `number_of_fleets` varchar(10) NOT NULL,
   `monthly_price` varchar(10) NOT NULL,
-  `max_asset_size` int(4) NOT NULL,
+  `max_asset_size` int NOT NULL,
   `stripe_plan_id` varchar(100) NOT NULL,
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`package_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
@@ -1073,13 +1073,13 @@ DROP TABLE IF EXISTS `trs_tbl_permissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_permissions` (
-  `permission_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `role_id` bigint(20) NOT NULL,
-  `right_master_id` bigint(20) NOT NULL,
+  `permission_id` bigint NOT NULL AUTO_INCREMENT,
+  `role_id` bigint NOT NULL,
+  `right_master_id` bigint NOT NULL,
   `permission_type` varchar(4) NOT NULL DEFAULT '0000',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`permission_id`),
   KEY `role_id_constraint` (`role_id`),
@@ -1105,7 +1105,7 @@ DROP TABLE IF EXISTS `trs_tbl_right_master`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_right_master` (
-  `right_master_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `right_master_id` bigint NOT NULL AUTO_INCREMENT,
   `right_master_name` text NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
@@ -1131,13 +1131,13 @@ DROP TABLE IF EXISTS `trs_tbl_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_roles` (
-  `role_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `role_id` bigint NOT NULL AUTO_INCREMENT,
   `role_name` varchar(30) NOT NULL,
-  `carrier_id` bigint(20) NOT NULL,
+  `carrier_id` bigint NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `created_by` bigint(20) NOT NULL,
-  `modified_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
+  `modified_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`role_id`),
@@ -1163,11 +1163,11 @@ DROP TABLE IF EXISTS `trs_tbl_settings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_settings` (
-  `settings_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `settings_id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   PRIMARY KEY (`settings_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1190,13 +1190,13 @@ DROP TABLE IF EXISTS `trs_tbl_settings_for_carriers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_settings_for_carriers` (
-  `carrier_settings_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `settings_id` bigint(20) NOT NULL,
+  `carrier_settings_id` bigint NOT NULL AUTO_INCREMENT,
+  `settings_id` bigint NOT NULL,
   `setting_value` varchar(255) DEFAULT NULL,
-  `carrier_id` bigint(20) NOT NULL,
-  `created_by` bigint(20) NOT NULL,
+  `carrier_id` bigint NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`carrier_settings_id`),
   KEY `settings_for_carriers_constraint` (`settings_id`),
@@ -1222,11 +1222,11 @@ DROP TABLE IF EXISTS `trs_tbl_states`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_states` (
-  `state_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `state_id` bigint NOT NULL AUTO_INCREMENT,
   `state_name` varchar(255) NOT NULL,
-  `is_active` tinyint(4) NOT NULL DEFAULT '0',
-  `is_deleted` tinyint(4) NOT NULL DEFAULT '1',
-  `country_id` bigint(20) NOT NULL,
+  `is_active` tinyint NOT NULL DEFAULT '0',
+  `is_deleted` tinyint NOT NULL DEFAULT '1',
+  `country_id` bigint NOT NULL,
   PRIMARY KEY (`state_id`),
   KEY `states_country_constraint` (`country_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4122 DEFAULT CHARSET=latin1;
@@ -1250,11 +1250,11 @@ DROP TABLE IF EXISTS `trs_tbl_super_admin_clients_grid_columns`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_super_admin_clients_grid_columns` (
-  `grid_column_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `grid_column_id` bigint NOT NULL AUTO_INCREMENT,
   `grid_columns` varchar(10) NOT NULL COMMENT '1111111111-->View All 0000000000-->View None',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`grid_column_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
@@ -1266,7 +1266,7 @@ CREATE TABLE `trs_tbl_super_admin_clients_grid_columns` (
 
 LOCK TABLES `trs_tbl_super_admin_clients_grid_columns` WRITE;
 /*!40000 ALTER TABLE `trs_tbl_super_admin_clients_grid_columns` DISABLE KEYS */;
-INSERT INTO `trs_tbl_super_admin_clients_grid_columns` VALUES (1,'1110011111',1,'2020-11-11 22:38:58',1,'2021-09-07 20:35:23');
+INSERT INTO `trs_tbl_super_admin_clients_grid_columns` VALUES (1,'1110001011',1,'2020-11-11 22:38:58',1,'2022-03-31 01:39:28');
 /*!40000 ALTER TABLE `trs_tbl_super_admin_clients_grid_columns` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1278,21 +1278,21 @@ DROP TABLE IF EXISTS `trs_tbl_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trs_tbl_users` (
-  `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL AUTO_INCREMENT,
   `user_name` text NOT NULL,
   `user_email` text NOT NULL,
   `password` text NOT NULL,
   `password_reset_token` text,
   `is_verified` tinyint(1) NOT NULL DEFAULT '0',
   `phone` text NOT NULL,
-  `role_id` bigint(20) NOT NULL,
+  `role_id` bigint NOT NULL,
   `user_type` tinyint(1) NOT NULL COMMENT '1-->Admin 2-->Carrier',
-  `carrier_id` bigint(20) DEFAULT NULL,
+  `carrier_id` bigint DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `created_by` bigint(20) NOT NULL,
+  `created_by` bigint NOT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) NOT NULL,
+  `modified_by` bigint NOT NULL,
   `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`),
   KEY `user_role_constarint` (`role_id`),
@@ -1306,7 +1306,7 @@ CREATE TABLE `trs_tbl_users` (
 
 LOCK TABLES `trs_tbl_users` WRITE;
 /*!40000 ALTER TABLE `trs_tbl_users` DISABLE KEYS */;
-INSERT INTO `trs_tbl_users` VALUES (1,'Collin','admin@transreportservices.com','$2a$10$Mx05KrcDb051PTfKMyoYOOFBIpCy87FnCtwsFt0q6x74fj3fWgQsG','$2a$10$yornL1h4hZ1dPiemNlLUQeZlGoGHna8kNKOMjEWIC9ygxiihnhBje',1,'5198264888',1,1,1,1,0,1,'2020-04-18 23:50:21',1,'2020-04-20 14:42:02'),(2,'Prasanth Chivukula','prashanth.chivukula1997@gmail.com','$2a$10$MfdUP8sDoSYOKZlBl0sEp.CI2Shsz6A192BgfuNyTciTQBki5oGyq',NULL,1,'7981850807',2,2,2,1,0,1,'2020-10-17 08:14:18',1,'2021-01-05 15:38:34'),(3,'Collin Carwardine','collin@transreportservices.com','$2a$10$OsgMAxSkqBsm.aooBH68sOM1ol3WXJGZ9Mn/pRCUlpU1XTGJ8eetO',NULL,1,'5198264888',4,2,3,1,0,1,'2020-10-22 19:01:48',1,'2020-12-17 21:36:38'),(4,'Clive Carwardine','clive@transreportservices.com','$2a$10$6n0MvVukJ8wV7/kDNNFdyOveXYaLCtRxlnD46zhSfMGSe3.lLvXc.',NULL,1,'5198307807',4,2,3,1,0,3,'2020-10-22 19:06:20',3,'2021-09-21 19:18:48'),(5,'Clive Carwardine','clivecarwardine@gmail.com','$2a$10$s0SORMZ26tTJ/R5lMc5r9.s3F.2vr46zXH7HAOgeBzzSKFWugwqsi',NULL,1,'5198307807',4,2,3,1,1,4,'2020-10-22 19:50:22',4,'2020-11-28 19:20:54'),(7,'PermiShare','sales@permishare.com','$2a$10$FgHE3L293vRLAEgsapQMFO.oCpmCRahqBYiFX27Ler/n1e7MDH80a',NULL,1,'XXXXXXXXX',8,2,5,1,0,1,'2020-11-25 14:53:49',1,'2021-05-03 14:39:49'),(8,'Tony Gerber ','tgerber@flashfreight.ca','$2a$10$Q6.mgQF8eBTibaWq10.cS.S4jCcYeMi.HbeykayRiVyc7ZDN8/rfW',NULL,1,'519-821-8878',10,2,6,1,0,1,'2020-11-27 21:19:02',1,'2020-11-27 22:28:39'),(9,'Clive Carwardine','clivecarwardine@gmail.com','$2a$10$j9.TgfhBK6TvXD.QZTeZbO.Ca5Zje8o9fiC/iIml4ux91N0xdG.Ze',NULL,1,'5198307807',10,2,6,1,1,8,'2020-11-28 19:22:25',8,'2020-11-28 19:36:47'),(10,'TFX International Specialized Vehicle Transport','christine@tfxinternational.com','$2a$10$GJq89D98m.AYuLKGInwIf.2jKs65P1kXAak.pld9Lz00h1oehGhHS','$2a$10$GJq89D98m.AYuLKGInwIf.2jKs65P1kXAak.pld9Lz00h1oehGhHS',0,'(416) 243-8531',13,2,7,1,0,1,'2020-11-30 19:53:06',1,'2020-11-30 19:53:06'),(11,'S & S Transport','chris@sstransport.ca','$2a$10$Qap1lHJg/ZYUTSAMvAI5buJsIuk5rbywQU3gtE45bFDoitTXNhntO',NULL,1,'416-433-7936',15,2,8,1,0,1,'2020-11-30 20:29:09',1,'2020-12-04 15:09:32'),(12,'Sufian Shahid','lux20.invex@gmail.com','$2a$10$WfmdViV3Il8p0RnDVULzTeH7a1NPK7QHtNn81vQDQ61lOag3Xqj/u',NULL,1,'612-888-9829',17,2,9,1,0,1,'2020-11-30 23:17:46',1,'2020-11-30 23:19:30'),(13,'Don Natch','don.n@stonestransport.com','$2a$10$5O2uieJ46jYBtD1KYHbi9On1uomeLICDMkkSMhrh3t2jzIsP2LTDO',NULL,1,'416-736-0444',19,2,10,1,0,1,'2020-12-03 18:31:26',1,'2020-12-03 18:36:29'),(14,'Cathy Berardicurti','cathy@sstransport.ca','$2a$10$1MJ4Yiej7JbGWyZhtgO76uUhP70Ya0lV/QowGhizOqjR5XmOezYzu','$2a$10$1MJ4Yiej7JbGWyZhtgO76uUhP70Ya0lV/QowGhizOqjR5XmOezYzu',0,'6473857936',15,2,8,1,0,11,'2020-12-14 15:40:49',11,'2020-12-14 15:40:49'),(15,'Pete Hennin','pete.hennin@usecology.ca','$2a$10$17iXArRaxK2zi9Shmy5Y7OiikwQ8qs/MKWc2weaQDgCDuWCZPautG',NULL,1,'(519) 682-2903 ',21,2,11,1,0,1,'2020-12-16 14:17:25',1,'2020-12-16 16:05:16'),(16,'Saif Algalham','sabaaenterprises@gmail.com','$2a$10$zQON7.D0PJ90qSZ5kl7GSeYyBv7Hv2swNMsdvRVJrmGyoSIrFHOKy',NULL,1,'(313) 377-0769 ',24,2,12,1,0,1,'2020-12-21 19:56:56',1,'2020-12-21 20:43:06'),(17,'Mr chiv','prasanth.chivukula@yahoo.com','$2a$10$KSD7ljbc3/ypX87V/GLgoOvKUiLG.S4KnfsQo4A99ucgDhNkxTwm6',NULL,1,'7981850807',26,2,13,1,0,1,'2021-03-10 22:00:34',1,'2021-03-12 14:52:39'),(18,'Sairam','sairam392781@gmail.com','$2a$10$qVFGF.DXSerm8e4PODedMev5zOoOS3jIqm7J7Mh1r6RZn7elWXK.S',NULL,1,'8787878787',2,2,2,1,0,2,'2021-03-12 14:04:59',2,'2021-03-12 14:06:27'),(19,'TruckinCentral','TruckinCentral@gmail.com','$2a$10$P/FFXgNRXa1VgCAI63LW0.oEJ1QaXqbmf7hb399fNpQmzrU/vJeIy',NULL,1,'7344188860',28,2,14,1,0,1,'2021-06-24 00:04:48',1,'2021-06-24 08:41:48'),(20,'Jacob Canchola','jacob@drivepony.com','$2a$10$/AUKkPIf3FSUXTUEhm9zveDtZEx2rvtNa0IF0cfzmTjkVHdu.zXnS',NULL,1,'3614451375',30,2,15,1,0,1,'2021-07-09 15:19:55',1,'2021-07-09 18:22:36'),(21,'TESTER','permianpony@gmail.com','$2a$10$qnRFTFfZZqN.elkSsZgmLO6ketvFYgsWx/8VFwt9YH.jUwz8Plb.u',NULL,1,'3614451375',31,2,15,1,0,20,'2021-07-09 18:36:39',20,'2021-07-09 18:52:54'),(22,'Christina Greer','profreightdispatch2021@gmail.com','$2a$10$HaTu/VZoLHGGbMhN7avBse4NEr4ytQLuoykxbdeVO7i2sw1fACy0O','$2a$10$HaTu/VZoLHGGbMhN7avBse4NEr4ytQLuoykxbdeVO7i2sw1fACy0O',0,'3464420570',32,2,16,1,0,1,'2021-07-10 12:25:17',1,'2021-07-10 12:25:17'),(23,'Brandon Culp','oncetransport@yahoo.com','$2a$10$EUmaUhIV6HUG4Ge7rx8zWOcKeud7ZRfzz2xwBRlxS.vzs6vU2OadW','$2a$10$EUmaUhIV6HUG4Ge7rx8zWOcKeud7ZRfzz2xwBRlxS.vzs6vU2OadW',0,'2029096239',34,2,17,1,0,1,'2021-07-10 12:27:02',1,'2021-07-10 12:27:02'),(24,'Ahmed','ahmed@whitehorsetrans.com','$2a$10$QxhmS6WhsODEJbWXxG2j4uPDEB3EaN1J1eCKXKTXSO8nyr/LjS6qC','$2a$10$QxhmS6WhsODEJbWXxG2j4uPDEB3EaN1J1eCKXKTXSO8nyr/LjS6qC',1,'7344188860',36,2,18,1,0,1,'2021-07-13 16:07:38',1,'2021-10-02 08:11:16'),(25,'Grant Horst ','ghorst@flashfreight.ca','$2a$10$jV9lIGKbSB/BTbeFseuj1OYduObbjIchmWXkfJE0bLVdA7JfqWsTy',NULL,1,'519-821-8878',12,2,6,1,0,8,'2021-07-27 13:24:29',8,'2021-07-27 14:21:56'),(26,'Juan Herminio','btenorio05.bt@gmail.com','$2a$10$/ASAVJ4mMeeZ/lewZzNEKuZDrlK3LGJcdmHrj3P7F7yXeqfbdKcii','$2a$10$/ASAVJ4mMeeZ/lewZzNEKuZDrlK3LGJcdmHrj3P7F7yXeqfbdKcii',0,'714-910-4825',38,2,19,1,0,1,'2021-07-28 15:58:22',1,'2021-07-28 15:58:22'),(27,'Teresa Holland','teresa@flemingfastfreight.ca','$2a$10$y5chZ2NSQ6C1wNiKEHzdWutJWQNE8wQL9KRLNW8ZL9oY6PXVZK6DW',NULL,1,'(519) 843-5460',40,2,20,1,0,1,'2021-08-16 18:01:53',1,'2021-08-17 11:29:49'),(28,'Lori Gibbons','gar-lor@hotmail.com','$2a$10$Xmicm9RT/GKTiG10d65Yo.ubMZy7oFxVoOs174fagHGhnIY19cr7a','$2a$10$Xmicm9RT/GKTiG10d65Yo.ubMZy7oFxVoOs174fagHGhnIY19cr7a',0,'(519) 521-2567',42,2,21,1,1,1,'2021-08-16 18:05:24',1,'2021-09-09 05:04:25'),(29,'Donna Durst','dmdurst@sympatico.ca','$2a$10$mBjRaAQl.aWjQw9yf2/aweELD338UzBc8FGqQoZG89w5Nhftp/c/.',NULL,1,'519-654-9699',44,2,22,1,0,1,'2021-08-16 18:09:31',1,'2021-08-16 18:19:50'),(30,'Andrew Noade','AndrewN@lakesideproduce.com','$2a$10$cdAd8kxiGbfxhGMuojGa1ug/4eBwGZct9/jrpb1GduPI1yRC3xwxu','$2a$10$cdAd8kxiGbfxhGMuojGa1ug/4eBwGZct9/jrpb1GduPI1yRC3xwxu',0,'519-322-1959 ',46,2,23,1,1,1,'2021-08-16 18:11:47',1,'2021-09-30 07:35:23'),(31,'Brad Pickles','brad@vergelogistics.com','$2a$10$s92fx5SLBZl9k0KkQL2a6ekCHChPJLHfbWoJiSeiC.Qm55Ccdgc2C',NULL,1,'905-305-8572',48,2,24,1,0,1,'2021-08-16 18:14:29',1,'2021-08-20 14:32:21'),(32,'Ivadell Green','ivadell@tfxinternational.com','$2a$10$C4nHZAirQSDVtE5fIMpureUSMc4hxEbuDRfH9jolAli2TMvs97qfy',NULL,1,'416-243-8531',50,2,25,1,0,1,'2021-08-20 14:47:52',1,'2021-08-20 15:24:34'),(33,'Ron Verge','ron@vergelogistics.com','$2a$10$D/Ydv30y1yjz7gq0kgh/fuOi6ZClK8EW8CmqLvXJ8RQETi9lNXhTK','$2a$10$D/Ydv30y1yjz7gq0kgh/fuOi6ZClK8EW8CmqLvXJ8RQETi9lNXhTK',0,'9058412798',49,2,24,1,0,31,'2021-08-24 18:14:27',31,'2021-08-24 18:14:27'),(34,'Andrew Faller','ajf@vergelogistics.com','$2a$10$rCsp5KE5T6r9kxuiRttA9O6zhuc96aWriuPIiEegYVDoQVM4O52GO','$2a$10$rCsp5KE5T6r9kxuiRttA9O6zhuc96aWriuPIiEegYVDoQVM4O52GO',0,'9053058572',49,2,24,1,0,31,'2021-08-24 18:15:24',31,'2021-08-24 18:15:24'),(35,'Diane Galaski','diane@vergelogistics.com','$2a$10$jBG4MFHwjDqn/.30wnhUGuyrjp0QQwo1YwXwnDLdUy.LHx2.Fqyca','$2a$10$jBG4MFHwjDqn/.30wnhUGuyrjp0QQwo1YwXwnDLdUy.LHx2.Fqyca',0,'9053058572',49,2,24,1,0,31,'2021-08-24 18:16:41',31,'2021-08-24 18:16:41'),(36,'Jim Fleming','jim@flemingfastfreight.ca','$2a$10$VNcpmKPSAulxpuTDSRS1zO6M04OLHMmcYWlNkjJGv/17JaFKZmbVS','$2a$10$VNcpmKPSAulxpuTDSRS1zO6M04OLHMmcYWlNkjJGv/17JaFKZmbVS',0,'5198317705',41,2,20,1,0,27,'2021-08-24 18:20:02',27,'2021-08-24 18:20:02'),(37,'Marina Perlin','marina@stonestransport.com','$2a$10$Uh9OLRKjI/WOtv3jMMkiFuMXVlQRtmN/KC3RAAJ2QY6IQkDF5M882','$2a$10$Uh9OLRKjI/WOtv3jMMkiFuMXVlQRtmN/KC3RAAJ2QY6IQkDF5M882',0,'4167360444',20,2,10,1,0,13,'2021-08-24 19:18:37',13,'2021-08-24 19:18:37'),(38,'Mark Fainshtein','mark@stonestransport.com','$2a$10$XsWl9vIl0vYTZknc9oUJIOeD4WHt41u7VkGzqzGHlpdiyNr.XVvYW','$2a$10$XsWl9vIl0vYTZknc9oUJIOeD4WHt41u7VkGzqzGHlpdiyNr.XVvYW',0,'4167360444',20,2,10,1,0,13,'2021-08-24 19:19:26',13,'2021-08-24 19:19:26'),(39,'Germaine Square','workhorseh@gmail.com','$2a$10$hrZnrYl58bFG53zaEkT.m.D0dhR0DLd8P0rw.dQ7Mr3AaotfuNhhK','$2a$10$hrZnrYl58bFG53zaEkT.m.D0dhR0DLd8P0rw.dQ7Mr3AaotfuNhhK',0,'985 774 8320',53,2,26,1,0,1,'2021-08-25 14:30:00',1,'2021-08-25 14:30:00'),(40,'Ridhima Test','ridhima@optionmatrix.com','$2a$10$9/VLwp1yOyL/G3sJhFJcweQdmRpf49LiCXcWZ8m8DOtlwh59MvlaG','$2a$10$9/VLwp1yOyL/G3sJhFJcweQdmRpf49LiCXcWZ8m8DOtlwh59MvlaG',0,'5555555555',54,2,27,1,1,1,'2021-09-07 15:10:29',1,'2021-09-09 05:04:25'),(41,'Ridhima','ridhimarao8@gmail.com','$2a$10$3gg0DpgR5ZjukG3VDIMHR.YHxvsbPUU6piPMEdpOcLI.1pI3nawg.','$2a$10$3gg0DpgR5ZjukG3VDIMHR.YHxvsbPUU6piPMEdpOcLI.1pI3nawg.',0,'5556665454',56,2,28,1,1,1,'2021-09-08 13:55:32',1,'2021-09-09 05:04:25'),(42,'Lori Gibbons ','gar-lor@hotmail.com','$2a$10$xMDC/WjiorBdPOomUOl0.uH0bkY.LPw2/iWNOyR7yIHwgm.xyt14y',NULL,1,'519-521-2567',58,2,29,1,0,1,'2021-09-09 15:02:33',1,'2021-09-09 15:23:59'),(43,'Andrew Noade','AndrewN@lakesideproduce.com','$2a$10$oyzOi9Yyb75Bgixp47jf.uQG3TKyXC59WpeORf7oVY0VzHS9qxQlm','$2a$10$oyzOi9Yyb75Bgixp47jf.uQG3TKyXC59WpeORf7oVY0VzHS9qxQlm',1,'519-322-1959',60,2,30,1,0,1,'2021-09-24 15:35:42',1,'2021-09-30 07:19:32'),(44,'Paton Racing','toddpaton@toddpaton.com','$2a$10$fft/T6y8WjFInWsxE/3bR.ldGYwckEU2hA7YF9h11OL12s.Pma.Vm',NULL,1,'(423) 967-6863',62,2,31,1,0,1,'2021-09-30 19:51:28',1,'2021-09-30 20:02:17');
+INSERT INTO `trs_tbl_users` VALUES (1,'Collin','admin@digibook.com','$2a$10$Mx05KrcDb051PTfKMyoYOOFBIpCy87FnCtwsFt0q6x74fj3fWgQsG','$2a$10$yornL1h4hZ1dPiemNlLUQeZlGoGHna8kNKOMjEWIC9ygxiihnhBje',1,'5198264888',1,1,1,1,0,1,'2020-04-18 23:50:21',1,'2022-03-30 20:16:07'),(2,'Prasanth Chivukula','prashanth.chivukula1997@gmail.com','$2a$10$MfdUP8sDoSYOKZlBl0sEp.CI2Shsz6A192BgfuNyTciTQBki5oGyq',NULL,1,'7981850807',2,2,2,1,0,1,'2020-10-17 08:14:18',1,'2021-01-05 15:38:34'),(3,'Collin Carwardine','collin@transreportservices.com','$2a$10$OsgMAxSkqBsm.aooBH68sOM1ol3WXJGZ9Mn/pRCUlpU1XTGJ8eetO',NULL,1,'5198264888',4,2,3,1,0,1,'2020-10-22 19:01:48',1,'2020-12-17 21:36:38'),(4,'Clive Carwardine','clive@transreportservices.com','$2a$10$6n0MvVukJ8wV7/kDNNFdyOveXYaLCtRxlnD46zhSfMGSe3.lLvXc.',NULL,1,'5198307807',4,2,3,1,0,3,'2020-10-22 19:06:20',3,'2021-09-21 19:18:48'),(5,'Clive Carwardine','clivecarwardine@gmail.com','$2a$10$s0SORMZ26tTJ/R5lMc5r9.s3F.2vr46zXH7HAOgeBzzSKFWugwqsi',NULL,1,'5198307807',4,2,3,1,1,4,'2020-10-22 19:50:22',4,'2020-11-28 19:20:54'),(7,'PermiShare','sales@permishare.com','$2a$10$FgHE3L293vRLAEgsapQMFO.oCpmCRahqBYiFX27Ler/n1e7MDH80a',NULL,1,'XXXXXXXXX',8,2,5,1,0,1,'2020-11-25 14:53:49',1,'2021-05-03 14:39:49'),(8,'Tony Gerber ','tgerber@flashfreight.ca','$2a$10$Q6.mgQF8eBTibaWq10.cS.S4jCcYeMi.HbeykayRiVyc7ZDN8/rfW',NULL,1,'519-821-8878',10,2,6,1,0,1,'2020-11-27 21:19:02',1,'2020-11-27 22:28:39'),(9,'Clive Carwardine','clivecarwardine@gmail.com','$2a$10$j9.TgfhBK6TvXD.QZTeZbO.Ca5Zje8o9fiC/iIml4ux91N0xdG.Ze',NULL,1,'5198307807',10,2,6,1,1,8,'2020-11-28 19:22:25',8,'2020-11-28 19:36:47'),(10,'TFX International Specialized Vehicle Transport','christine@tfxinternational.com','$2a$10$GJq89D98m.AYuLKGInwIf.2jKs65P1kXAak.pld9Lz00h1oehGhHS','$2a$10$GJq89D98m.AYuLKGInwIf.2jKs65P1kXAak.pld9Lz00h1oehGhHS',0,'(416) 243-8531',13,2,7,1,0,1,'2020-11-30 19:53:06',1,'2020-11-30 19:53:06'),(11,'S & S Transport','chris@sstransport.ca','$2a$10$Qap1lHJg/ZYUTSAMvAI5buJsIuk5rbywQU3gtE45bFDoitTXNhntO',NULL,1,'416-433-7936',15,2,8,1,0,1,'2020-11-30 20:29:09',1,'2020-12-04 15:09:32'),(12,'Sufian Shahid','lux20.invex@gmail.com','$2a$10$WfmdViV3Il8p0RnDVULzTeH7a1NPK7QHtNn81vQDQ61lOag3Xqj/u',NULL,1,'612-888-9829',17,2,9,1,0,1,'2020-11-30 23:17:46',1,'2020-11-30 23:19:30'),(13,'Don Natch','don.n@stonestransport.com','$2a$10$5O2uieJ46jYBtD1KYHbi9On1uomeLICDMkkSMhrh3t2jzIsP2LTDO',NULL,1,'416-736-0444',19,2,10,1,0,1,'2020-12-03 18:31:26',1,'2020-12-03 18:36:29'),(14,'Cathy Berardicurti','cathy@sstransport.ca','$2a$10$1MJ4Yiej7JbGWyZhtgO76uUhP70Ya0lV/QowGhizOqjR5XmOezYzu','$2a$10$1MJ4Yiej7JbGWyZhtgO76uUhP70Ya0lV/QowGhizOqjR5XmOezYzu',0,'6473857936',15,2,8,1,0,11,'2020-12-14 15:40:49',11,'2020-12-14 15:40:49'),(15,'Pete Hennin','pete.hennin@usecology.ca','$2a$10$17iXArRaxK2zi9Shmy5Y7OiikwQ8qs/MKWc2weaQDgCDuWCZPautG',NULL,1,'(519) 682-2903 ',21,2,11,1,0,1,'2020-12-16 14:17:25',1,'2020-12-16 16:05:16'),(16,'Saif Algalham','sabaaenterprises@gmail.com','$2a$10$zQON7.D0PJ90qSZ5kl7GSeYyBv7Hv2swNMsdvRVJrmGyoSIrFHOKy',NULL,1,'(313) 377-0769 ',24,2,12,1,0,1,'2020-12-21 19:56:56',1,'2020-12-21 20:43:06'),(17,'Mr chiv','prasanth.chivukula@yahoo.com','$2a$10$KSD7ljbc3/ypX87V/GLgoOvKUiLG.S4KnfsQo4A99ucgDhNkxTwm6',NULL,1,'7981850807',26,2,13,1,0,1,'2021-03-10 22:00:34',1,'2021-03-12 14:52:39'),(18,'Sairam','sairam392781@gmail.com','$2a$10$qVFGF.DXSerm8e4PODedMev5zOoOS3jIqm7J7Mh1r6RZn7elWXK.S',NULL,1,'8787878787',2,2,2,1,0,2,'2021-03-12 14:04:59',2,'2021-03-12 14:06:27'),(19,'TruckinCentral','TruckinCentral@gmail.com','$2a$10$P/FFXgNRXa1VgCAI63LW0.oEJ1QaXqbmf7hb399fNpQmzrU/vJeIy',NULL,1,'7344188860',28,2,14,1,0,1,'2021-06-24 00:04:48',1,'2021-06-24 08:41:48'),(20,'Jacob Canchola','jacob@drivepony.com','$2a$10$/AUKkPIf3FSUXTUEhm9zveDtZEx2rvtNa0IF0cfzmTjkVHdu.zXnS',NULL,1,'3614451375',30,2,15,1,0,1,'2021-07-09 15:19:55',1,'2021-07-09 18:22:36'),(21,'TESTER','permianpony@gmail.com','$2a$10$qnRFTFfZZqN.elkSsZgmLO6ketvFYgsWx/8VFwt9YH.jUwz8Plb.u',NULL,1,'3614451375',31,2,15,1,0,20,'2021-07-09 18:36:39',20,'2021-07-09 18:52:54'),(22,'Christina Greer','profreightdispatch2021@gmail.com','$2a$10$HaTu/VZoLHGGbMhN7avBse4NEr4ytQLuoykxbdeVO7i2sw1fACy0O','$2a$10$HaTu/VZoLHGGbMhN7avBse4NEr4ytQLuoykxbdeVO7i2sw1fACy0O',0,'3464420570',32,2,16,1,0,1,'2021-07-10 12:25:17',1,'2021-07-10 12:25:17'),(23,'Brandon Culp','oncetransport@yahoo.com','$2a$10$EUmaUhIV6HUG4Ge7rx8zWOcKeud7ZRfzz2xwBRlxS.vzs6vU2OadW','$2a$10$EUmaUhIV6HUG4Ge7rx8zWOcKeud7ZRfzz2xwBRlxS.vzs6vU2OadW',0,'2029096239',34,2,17,1,0,1,'2021-07-10 12:27:02',1,'2021-07-10 12:27:02'),(24,'Ahmed','ahmed@whitehorsetrans.com','$2a$10$QxhmS6WhsODEJbWXxG2j4uPDEB3EaN1J1eCKXKTXSO8nyr/LjS6qC','$2a$10$QxhmS6WhsODEJbWXxG2j4uPDEB3EaN1J1eCKXKTXSO8nyr/LjS6qC',1,'7344188860',36,2,18,1,0,1,'2021-07-13 16:07:38',1,'2021-10-02 08:11:16'),(25,'Grant Horst ','ghorst@flashfreight.ca','$2a$10$jV9lIGKbSB/BTbeFseuj1OYduObbjIchmWXkfJE0bLVdA7JfqWsTy',NULL,1,'519-821-8878',12,2,6,1,0,8,'2021-07-27 13:24:29',8,'2021-07-27 14:21:56'),(26,'Juan Herminio','btenorio05.bt@gmail.com','$2a$10$/ASAVJ4mMeeZ/lewZzNEKuZDrlK3LGJcdmHrj3P7F7yXeqfbdKcii','$2a$10$/ASAVJ4mMeeZ/lewZzNEKuZDrlK3LGJcdmHrj3P7F7yXeqfbdKcii',0,'714-910-4825',38,2,19,1,0,1,'2021-07-28 15:58:22',1,'2021-07-28 15:58:22'),(27,'Teresa Holland','teresa@flemingfastfreight.ca','$2a$10$y5chZ2NSQ6C1wNiKEHzdWutJWQNE8wQL9KRLNW8ZL9oY6PXVZK6DW',NULL,1,'(519) 843-5460',40,2,20,1,0,1,'2021-08-16 18:01:53',1,'2021-08-17 11:29:49'),(28,'Lori Gibbons','gar-lor@hotmail.com','$2a$10$Xmicm9RT/GKTiG10d65Yo.ubMZy7oFxVoOs174fagHGhnIY19cr7a','$2a$10$Xmicm9RT/GKTiG10d65Yo.ubMZy7oFxVoOs174fagHGhnIY19cr7a',0,'(519) 521-2567',42,2,21,1,1,1,'2021-08-16 18:05:24',1,'2021-09-09 05:04:25'),(29,'Donna Durst','dmdurst@sympatico.ca','$2a$10$mBjRaAQl.aWjQw9yf2/aweELD338UzBc8FGqQoZG89w5Nhftp/c/.',NULL,1,'519-654-9699',44,2,22,1,0,1,'2021-08-16 18:09:31',1,'2021-08-16 18:19:50'),(30,'Andrew Noade','AndrewN@lakesideproduce.com','$2a$10$cdAd8kxiGbfxhGMuojGa1ug/4eBwGZct9/jrpb1GduPI1yRC3xwxu','$2a$10$cdAd8kxiGbfxhGMuojGa1ug/4eBwGZct9/jrpb1GduPI1yRC3xwxu',0,'519-322-1959 ',46,2,23,1,1,1,'2021-08-16 18:11:47',1,'2021-09-30 07:35:23'),(31,'Brad Pickles','brad@vergelogistics.com','$2a$10$s92fx5SLBZl9k0KkQL2a6ekCHChPJLHfbWoJiSeiC.Qm55Ccdgc2C',NULL,1,'905-305-8572',48,2,24,1,0,1,'2021-08-16 18:14:29',1,'2021-08-20 14:32:21'),(32,'Ivadell Green','ivadell@tfxinternational.com','$2a$10$C4nHZAirQSDVtE5fIMpureUSMc4hxEbuDRfH9jolAli2TMvs97qfy',NULL,1,'416-243-8531',50,2,25,1,0,1,'2021-08-20 14:47:52',1,'2021-08-20 15:24:34'),(33,'Ron Verge','ron@vergelogistics.com','$2a$10$D/Ydv30y1yjz7gq0kgh/fuOi6ZClK8EW8CmqLvXJ8RQETi9lNXhTK','$2a$10$D/Ydv30y1yjz7gq0kgh/fuOi6ZClK8EW8CmqLvXJ8RQETi9lNXhTK',0,'9058412798',49,2,24,1,0,31,'2021-08-24 18:14:27',31,'2021-08-24 18:14:27'),(34,'Andrew Faller','ajf@vergelogistics.com','$2a$10$rCsp5KE5T6r9kxuiRttA9O6zhuc96aWriuPIiEegYVDoQVM4O52GO','$2a$10$rCsp5KE5T6r9kxuiRttA9O6zhuc96aWriuPIiEegYVDoQVM4O52GO',0,'9053058572',49,2,24,1,0,31,'2021-08-24 18:15:24',31,'2021-08-24 18:15:24'),(35,'Diane Galaski','diane@vergelogistics.com','$2a$10$jBG4MFHwjDqn/.30wnhUGuyrjp0QQwo1YwXwnDLdUy.LHx2.Fqyca','$2a$10$jBG4MFHwjDqn/.30wnhUGuyrjp0QQwo1YwXwnDLdUy.LHx2.Fqyca',0,'9053058572',49,2,24,1,0,31,'2021-08-24 18:16:41',31,'2021-08-24 18:16:41'),(36,'Jim Fleming','jim@flemingfastfreight.ca','$2a$10$VNcpmKPSAulxpuTDSRS1zO6M04OLHMmcYWlNkjJGv/17JaFKZmbVS','$2a$10$VNcpmKPSAulxpuTDSRS1zO6M04OLHMmcYWlNkjJGv/17JaFKZmbVS',0,'5198317705',41,2,20,1,0,27,'2021-08-24 18:20:02',27,'2021-08-24 18:20:02'),(37,'Marina Perlin','marina@stonestransport.com','$2a$10$Uh9OLRKjI/WOtv3jMMkiFuMXVlQRtmN/KC3RAAJ2QY6IQkDF5M882','$2a$10$Uh9OLRKjI/WOtv3jMMkiFuMXVlQRtmN/KC3RAAJ2QY6IQkDF5M882',0,'4167360444',20,2,10,1,0,13,'2021-08-24 19:18:37',13,'2021-08-24 19:18:37'),(38,'Mark Fainshtein','mark@stonestransport.com','$2a$10$XsWl9vIl0vYTZknc9oUJIOeD4WHt41u7VkGzqzGHlpdiyNr.XVvYW','$2a$10$XsWl9vIl0vYTZknc9oUJIOeD4WHt41u7VkGzqzGHlpdiyNr.XVvYW',0,'4167360444',20,2,10,1,0,13,'2021-08-24 19:19:26',13,'2021-08-24 19:19:26'),(39,'Germaine Square','workhorseh@gmail.com','$2a$10$hrZnrYl58bFG53zaEkT.m.D0dhR0DLd8P0rw.dQ7Mr3AaotfuNhhK','$2a$10$hrZnrYl58bFG53zaEkT.m.D0dhR0DLd8P0rw.dQ7Mr3AaotfuNhhK',0,'985 774 8320',53,2,26,1,0,1,'2021-08-25 14:30:00',1,'2021-08-25 14:30:00'),(40,'Ridhima Test','ridhima@optionmatrix.com','$2a$10$9/VLwp1yOyL/G3sJhFJcweQdmRpf49LiCXcWZ8m8DOtlwh59MvlaG','$2a$10$9/VLwp1yOyL/G3sJhFJcweQdmRpf49LiCXcWZ8m8DOtlwh59MvlaG',0,'5555555555',54,2,27,1,1,1,'2021-09-07 15:10:29',1,'2021-09-09 05:04:25'),(41,'Ridhima','ridhimarao8@gmail.com','$2a$10$3gg0DpgR5ZjukG3VDIMHR.YHxvsbPUU6piPMEdpOcLI.1pI3nawg.','$2a$10$3gg0DpgR5ZjukG3VDIMHR.YHxvsbPUU6piPMEdpOcLI.1pI3nawg.',0,'5556665454',56,2,28,1,1,1,'2021-09-08 13:55:32',1,'2021-09-09 05:04:25'),(42,'Lori Gibbons ','gar-lor@hotmail.com','$2a$10$xMDC/WjiorBdPOomUOl0.uH0bkY.LPw2/iWNOyR7yIHwgm.xyt14y',NULL,1,'519-521-2567',58,2,29,1,0,1,'2021-09-09 15:02:33',1,'2021-09-09 15:23:59'),(43,'Andrew Noade','AndrewN@lakesideproduce.com','$2a$10$oyzOi9Yyb75Bgixp47jf.uQG3TKyXC59WpeORf7oVY0VzHS9qxQlm','$2a$10$oyzOi9Yyb75Bgixp47jf.uQG3TKyXC59WpeORf7oVY0VzHS9qxQlm',1,'519-322-1959',60,2,30,1,0,1,'2021-09-24 15:35:42',1,'2021-09-30 07:19:32'),(44,'Paton Racing','toddpaton@toddpaton.com','$2a$10$fft/T6y8WjFInWsxE/3bR.ldGYwckEU2hA7YF9h11OL12s.Pma.Vm',NULL,1,'(423) 967-6863',62,2,31,1,0,1,'2021-09-30 19:51:28',1,'2021-09-30 20:02:17');
 /*!40000 ALTER TABLE `trs_tbl_users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1319,4 +1319,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-05 22:16:11
+-- Dump completed on 2022-03-30 21:36:56
